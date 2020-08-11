@@ -26,9 +26,15 @@
                         <StackPanel Grid.Row="0">
                             <Label Content="Time Manage" HorizontalAlignment="Center" FontSize="20"></Label>
 
-                            <DataGrid AutoGenerateColumns="False" Margin="5" Name="schedule" >
-                                
-                                   
+                            <DataGrid AutoGenerateColumns="False" Margin="5" Name="ScheduleDG" IsReadOnly="True" >
+                                <DataGrid.Columns>
+                                <DataGridTextColumn Header="Id" Binding="{Binding Id}"/>
+                                <DataGridTextColumn Header="Working Days" Binding="{Binding Working_days_count}"/>
+                                <DataGridTextColumn Header="Days" Binding="{Binding Working_days}"/>
+                                <DataGridTextColumn Header="Working Time" Binding="{Binding working_time_hrs}"/>
+                                <DataGridTextColumn Header="Working Time" Binding="{Binding Working_time_mins}"/>
+                                <DataGridTextColumn Header="Time Slot Duration" Binding="{Binding Working_duration}"/>
+                                </DataGrid.Columns>
                             </DataGrid>
                         </StackPanel>
                         <StackPanel Grid.Row="1">

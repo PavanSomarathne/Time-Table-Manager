@@ -6,15 +6,15 @@ using System.Text;
 
 namespace TimeTableManager.Models
 {
-    class myDbContext : DbContext
+    public class MyDbContext : DbContext
     {
-        public myDbContext(DbContextOptions<myDbContext> options) : base(options)
+        public MyDbContext(DbContextOptions<MyDbContext> options) : base(options)
         {
             Database.EnsureCreated();
 
         }
 
-        public DbSet<Schedule> schedules { get; set; }
+        public DbSet<Schedule> Schedules { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -26,7 +26,7 @@ namespace TimeTableManager.Models
         {
             return new Schedule[]
                 {
-                    new Schedule{ Id=1, Working_days_count=3,Working_days="Moday,Tuesday,Friday",working_time_hrs=5,Working_days_mins=30,Working_duration=1}
+                    new Schedule{ Id=1, Working_days_count=3,Working_days="Moday,Tuesday,Friday",working_time_hrs=5,Working_time_mins=30,Working_duration=1}
                 };
         }
     }

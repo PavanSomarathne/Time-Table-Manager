@@ -21,10 +21,17 @@ namespace TimeTableManager
     /// </summary>
     public partial class Schedule : Window
     {
-
-        public Schedule()
+        MyDbContext dbContext1;
+        public Schedule(MyDbContext dbContext)
         {
+            this.dbContext1 = dbContext;
             InitializeComponent();
+            GetSchedule();
+        }
+
+        private void GetSchedule() 
+        {
+            ScheduleDG.ItemsSource = dbContext1.Schedules.ToList();
         }
     }
 }
