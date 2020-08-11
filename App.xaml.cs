@@ -22,7 +22,7 @@ namespace TimeTableManager
         {
             ServiceCollection services = new ServiceCollection();
             services.AddDbContext<MyDbContext>(option => {
-                option.UseSqlite("Data Source = Schedule.db");
+                option.UseSqlite("Data Source = TimeTableManager.db");
             
             });
 
