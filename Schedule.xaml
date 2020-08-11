@@ -1,0 +1,83 @@
+﻿<Window x:Class="TimeTableManager.Schedule"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:TimeTableManager"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="768" Width="1366">
+
+    <Border Padding="20">
+        <StackPanel>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="2.2*"/>
+                    <ColumnDefinition Width="*"/>
+
+                </Grid.ColumnDefinitions>
+
+                <StackPanel Grid.Column="0">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="2*" />
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+
+                        <StackPanel Grid.Row="0">
+                            <Label Content="Time Manage" HorizontalAlignment="Center" FontSize="20"></Label>
+
+                            <DataGrid AutoGenerateColumns="False" Margin="5" Name="schedule" >
+                                
+                                   
+                            </DataGrid>
+                        </StackPanel>
+                        <StackPanel Grid.Row="1">
+
+                        </StackPanel>
+                    </Grid>
+                </StackPanel>
+
+                <StackPanel Grid.Column="1">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="2*" />
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+
+                        <StackPanel Grid.Row="0">
+                            <!-- Working days-->
+                            <TextBlock Text="Working days per week" FontWeight="Bold"/>
+                            <TextBox Padding="2"></TextBox>
+
+                            <!-- Working days in a week-->
+                            <TextBlock Text="Working days per week" FontWeight="Bold"/>
+                            <CheckBox Content="Monday"></CheckBox>
+                            <CheckBox Content="Tuesday"></CheckBox>
+                            <CheckBox Content="Wednessday"></CheckBox>
+                            <CheckBox Content="Thursday"></CheckBox>
+                            <CheckBox Content="Friday"></CheckBox>
+                            <CheckBox Content="Saturday"></CheckBox>
+                            <CheckBox Content="Sunday"></CheckBox>
+
+                            <!-- Working Time per day-->
+                            <TextBlock Text="Working time per day(Including lunch)" FontWeight="Bold"/>
+                            <TextBox Padding="2"></TextBox>
+
+                            <!--Time slot duration-->
+                            <TextBlock Text="Time slot duration" FontWeight="Bold"/>
+                            <ComboBox Padding="2"></ComboBox>
+                        </StackPanel>
+                        <StackPanel Grid.Row="1">
+                            <StackPanel>
+                                <Button Content="Add"></Button>
+                                <Button Content="Update"></Button>
+                                <Button Content="Delete"></Button>
+                            </StackPanel>
+                        </StackPanel>
+                    </Grid>
+                 
+                </StackPanel>
+            </Grid>
+        </StackPanel>
+    </Border>
+</Window>
