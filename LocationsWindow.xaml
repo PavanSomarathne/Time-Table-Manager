@@ -1,0 +1,38 @@
+﻿<Window x:Class="TimeTableManager.LocationsWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:TimeTableManager"
+        mc:Ignorable="d"
+        Title="LocationsWindow" Height="768" Width="1366">
+    <Grid>
+        <Rectangle Margin="1068,0,2,0" Stroke="#FF8D3BFF" Height="492" VerticalAlignment="Top">
+            <Rectangle.Fill>
+                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                    <GradientStop Color="White"/>
+                    <GradientStop Color="White" Offset="1"/>
+                </LinearGradientBrush>
+            </Rectangle.Fill>
+        </Rectangle>
+        <Button Content="Add New Room" HorizontalAlignment="Left" Margin="1091,0,0,399" VerticalAlignment="Bottom" Height="31" Width="255" Background="White" FontWeight="Bold"/>
+        <Button Content="Change Room Details" HorizontalAlignment="Left" Margin="1091,0,0,360" VerticalAlignment="Bottom" Height="31" Width="256" FontWeight="Bold"/>
+        <Button Content="Delete Room" HorizontalAlignment="Left" Margin="1091,0,0,324" VerticalAlignment="Bottom" Height="31" Width="255" FontWeight="Bold"/>
+        <Label Content="Location Management" HorizontalAlignment="Left" Margin="1121,10,0,0" VerticalAlignment="Top" FontWeight="Normal" FontSize="20"/>
+        <Rectangle Margin="0,492,0,10" Stroke="Black" HorizontalAlignment="Center" Width="1364"/>
+        <TextBox HorizontalAlignment="Left" Margin="1085,116,0,0" Text="TextBox" TextWrapping="Wrap" VerticalAlignment="Top" Width="261" Height="32" FontWeight="Bold" FontSize="16" IsEnabled="False"/>
+        <Rectangle HorizontalAlignment="Center" Height="50" Stroke="Black" VerticalAlignment="Top" Width="1363" Fill="#FF6839FF" Panel.ZIndex="-1"/>
+        <Button Content="Manage Buildings" HorizontalAlignment="Left" Margin="1091,0,0,288" VerticalAlignment="Bottom" Height="31" Width="256" Background="White" FontWeight="Bold"/>
+        <Label Content="Selected Room Id&#xD;&#xA;" HorizontalAlignment="Left" Margin="1081,90,0,0" VerticalAlignment="Top" FontWeight="Bold"/>
+        <TextBox HorizontalAlignment="Left" Margin="1085,179,0,0" Text="TextBox" TextWrapping="Wrap" VerticalAlignment="Top" Width="261" Height="30" FontWeight="Bold" FontSize="14"/>
+        <Label Content="Building&#xA;" HorizontalAlignment="Left" Margin="1081,153,0,0" VerticalAlignment="Top" FontWeight="Bold"/>
+        <TextBox HorizontalAlignment="Left" Margin="1085,179,0,0" Text="TextBox" TextWrapping="Wrap" VerticalAlignment="Top" Width="261" Height="30" FontWeight="Bold" FontSize="14" IsEnabled="False"/>
+        <Label Content="Building&#xA;" HorizontalAlignment="Left" Margin="1081,153,0,0" VerticalAlignment="Top" FontWeight="Bold"/>
+        <TextBox HorizontalAlignment="Left" Margin="1085,235,0,0" Text="TextBox" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Height="30" FontWeight="Bold" FontSize="14" IsEnabled="False"/>
+        <Label Content="Capacity&#xA;" HorizontalAlignment="Left" Margin="1081,209,0,0" VerticalAlignment="Top" FontWeight="Bold"/>
+        <TextBox HorizontalAlignment="Left" Margin="1219,235,0,0" Text="TextBox" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Height="30" FontWeight="Bold" FontSize="14" IsEnabled="False"/>
+        <Label Content="Type&#xA;" HorizontalAlignment="Left" Margin="1219,209,0,0" VerticalAlignment="Top" FontWeight="Bold"/>
+        <DataGrid Margin="2,0,880,260" Height="437" VerticalAlignment="Bottom"/>
+
+    </Grid>
+</Window>
