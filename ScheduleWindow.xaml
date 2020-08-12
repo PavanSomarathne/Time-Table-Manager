@@ -28,13 +28,13 @@
 
                             <DataGrid AutoGenerateColumns="False" Margin="5" Name="ScheduleDG" IsReadOnly="True" >
                                 <DataGrid.Columns>
-                                <DataGridTextColumn Header="Id" Binding="{Binding Id}"/>
-                                <DataGridTextColumn Header="Working Days" Binding="{Binding Working_days_count}"/>
-                                <DataGridTextColumn Header="Days" Binding="{Binding Working_days}"/>
-                                <DataGridTextColumn Header="Working Time" Binding="{Binding working_time_hrs}"/>
-                                <DataGridTextColumn Header="Working Time" Binding="{Binding Working_time_mins}"/>
-                                <DataGridTextColumn Header="Time Slot Duration" Binding="{Binding Working_duration}"/>
-                                   
+                                    <DataGridTextColumn Header="Id" Binding="{Binding Id}"/>
+                                    <DataGridTextColumn Header="Working Days" Binding="{Binding Working_days_count}"/>
+                                    <DataGridTextColumn Header="Days" Binding="{Binding Working_days}"/>
+                                    <DataGridTextColumn Header="Working Time" Binding="{Binding working_time_hrs}"/>
+                                    <DataGridTextColumn Header="Working Time" Binding="{Binding Working_time_mins}"/>
+                                    <DataGridTextColumn Header="Time Slot Duration" Binding="{Binding Working_duration}"/>
+
                                     <DataGridTemplateColumn Header="Update" >
                                         <DataGridTemplateColumn.CellTemplate>
                                             <DataTemplate>
@@ -67,17 +67,17 @@
                             <!-- Working days in a week-->
                             <TextBlock Text="Working days per week" FontWeight="Bold"/>
                             <StackPanel x:Name="checkboxes">
-                                <CheckBox Checked="myCheckBox_Checked" x:Name="MondayCheckBox" Content="Monday"></CheckBox>
-                                <CheckBox Checked="myCheckBox_Checked" x:Name="TuesdayCheckBox" Content="Tuesday"></CheckBox>
-                                <CheckBox Checked="myCheckBox_Checked" x:Name="WednessdayCheckBox" Content="Wednessday"></CheckBox>
-                                <CheckBox Checked="myCheckBox_Checked" x:Name="ThursdayCheckBox" Content="Thursday"></CheckBox>
-                                <CheckBox Checked="myCheckBox_Checked" x:Name="FridayCheckBox" Content="Friday"></CheckBox>
-                                <CheckBox Checked="myCheckBox_Checked" x:Name="SaturdayCheckBox" Content="Saturday"></CheckBox>
-                                <CheckBox Checked="myCheckBox_Checked" x:Name="SundayCheckBox" Content="Sunday"></CheckBox>
+                                <CheckBox Checked="myCheckBox_Checked" Unchecked="myCheckBox_Unchecked" x:Name="MondayCheckBox" Content="Monday"></CheckBox>
+                                <CheckBox Checked="myCheckBox_Checked" Unchecked="myCheckBox_Unchecked" x:Name="TuesdayCheckBox" Content="Tuesday"></CheckBox>
+                                <CheckBox Checked="myCheckBox_Checked" Unchecked="myCheckBox_Unchecked" x:Name="WednessdayCheckBox" Content="Wednessday"></CheckBox>
+                                <CheckBox Checked="myCheckBox_Checked" Unchecked="myCheckBox_Unchecked" x:Name="ThursdayCheckBox" Content="Thursday"></CheckBox>
+                                <CheckBox Checked="myCheckBox_Checked" Unchecked="myCheckBox_Unchecked" x:Name="FridayCheckBox" Content="Friday"></CheckBox>
+                                <CheckBox Checked="myCheckBox_Checked" Unchecked="myCheckBox_Unchecked" x:Name="SaturdayCheckBox" Content="Saturday"></CheckBox>
+                                <CheckBox Checked="myCheckBox_Checked" Unchecked="myCheckBox_Unchecked" x:Name="SundayCheckBox" Content="Sunday"></CheckBox>
                             </StackPanel>
                             <!-- Working Time per day-->
                             <TextBlock Text="Working time per day(Including lunch)" FontWeight="Bold"/>
-                            
+
                             <Grid>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="2*"/>
@@ -93,17 +93,22 @@
                             </Grid>
                             <!--Time slot duration-->
                             <TextBlock Text="Time slot duration" FontWeight="Bold"/>
-                            <ComboBox Padding="2" Text="{Binding Working_duration}"></ComboBox>
+                            <ComboBox Name="duration" SelectedIndex="1" Padding="2" Text="{Binding Working_duration}" >
+                                <ComboBoxItem >One Hour</ComboBoxItem>
+                                <ComboBoxItem>Thirty Minutes</ComboBoxItem>
+                            </ComboBox>
                         </StackPanel>
                         <StackPanel Grid.Row="1">
                             <StackPanel>
                                 <Button x:Name="AddButton" Content="Add" Click="AddSchedule"></Button>
                                 <Button x:Name="UpdateButton" Content="Update" Click="UpdateSchedule"></Button>
                                 <Button x:Name="DeleteButton" Content="Delete" Click="DeleteSchedule"></Button>
+
+
                             </StackPanel>
                         </StackPanel>
                     </Grid>
-                 
+
                 </StackPanel>
             </Grid>
         </StackPanel>

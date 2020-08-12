@@ -26,7 +26,7 @@ namespace TimeTableManager.Models
         {
             return new Schedule[]
                 {
-                    new Schedule{ Id=1, Working_days_count=3,Working_days="Moday,Tuesday,Friday",working_time_hrs=5,Working_time_mins=30,Working_duration=1}
+                    new Schedule{ Id=1, Working_days_count=3,Working_days="Monday,Tuesday,Friday",working_time_hrs=5,Working_time_mins=30,Working_duration="One Hour"}
                 };
         }
     }

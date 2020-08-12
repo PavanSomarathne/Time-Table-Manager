@@ -6,6 +6,54 @@
         xmlns:local="clr-namespace:TimeTableManager"
         mc:Ignorable="d"
         Title="MainWindow" Height="700" Width="1280">
+    <Border Padding="20">
+        <StackPanel>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="2.2*"/>
+                    <ColumnDefinition Width="*"/>
 
-    
+                </Grid.ColumnDefinitions>
+
+                <StackPanel Grid.Column="0">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="2*" />
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+
+                        <StackPanel Grid.Row="0">
+                            <Label Content="Time Manage" HorizontalAlignment="Center" FontSize="20"></Label>
+
+                           
+                        </StackPanel>
+                        <StackPanel Grid.Row="1">
+
+                        </StackPanel>
+                    </Grid>
+                </StackPanel>
+
+                <StackPanel Grid.Column="1">
+                    <Grid x:Name="AddNewScheduleGrid">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="2*" />
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+
+                        
+                        <StackPanel Grid.Row="1">
+                            <StackPanel>
+                                <Button x:Name="ManageSchedule" Content="Manage Schedule" Click="buttonclick1"></Button>
+                                <Button  Content="Manage Lecturers" ></Button>
+                                <Button  Content="Manage Halls" ></Button>
+                               
+                            </StackPanel>
+                        </StackPanel>
+                    </Grid>
+
+                </StackPanel>
+            </Grid>
+        </StackPanel>
+    </Border>
+
 </Window>
