@@ -1,4 +1,4 @@
-﻿<Window x:Class="TimeTableManager.Schedule"
+﻿<Window x:Class="TimeTableManager.ScheduleWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -34,6 +34,14 @@
                                 <DataGridTextColumn Header="Working Time" Binding="{Binding working_time_hrs}"/>
                                 <DataGridTextColumn Header="Working Time" Binding="{Binding Working_time_mins}"/>
                                 <DataGridTextColumn Header="Time Slot Duration" Binding="{Binding Working_duration}"/>
+                                   
+                                    <DataGridTemplateColumn Header="Update" >
+                                        <DataGridTemplateColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <Button Content="Select" Click="UpdateScheduleForEdit"/>
+                                            </DataTemplate>
+                                        </DataGridTemplateColumn.CellTemplate>
+                                    </DataGridTemplateColumn>
                                 </DataGrid.Columns>
                             </DataGrid>
                         </StackPanel>
@@ -44,40 +52,54 @@
                 </StackPanel>
 
                 <StackPanel Grid.Column="1">
-                    <Grid>
+                    <Grid x:Name="AddNewScheduleGrid">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="2*" />
                             <RowDefinition Height="*"/>
                         </Grid.RowDefinitions>
 
                         <StackPanel Grid.Row="0">
+                            <Label Content="Add a Schedule" HorizontalAlignment="Center" VerticalAlignment="Center" />
                             <!-- Working days-->
                             <TextBlock Text="Working days per week" FontWeight="Bold"/>
-                            <TextBox Padding="2"></TextBox>
+                            <TextBox x:Name="test" Padding="2" Text="{Binding Working_days_count}"></TextBox>
 
                             <!-- Working days in a week-->
                             <TextBlock Text="Working days per week" FontWeight="Bold"/>
-                            <CheckBox Content="Monday"></CheckBox>
-                            <CheckBox Content="Tuesday"></CheckBox>
-                            <CheckBox Content="Wednessday"></CheckBox>
-                            <CheckBox Content="Thursday"></CheckBox>
-                            <CheckBox Content="Friday"></CheckBox>
-                            <CheckBox Content="Saturday"></CheckBox>
-                            <CheckBox Content="Sunday"></CheckBox>
-
+                            <StackPanel x:Name="checkboxes">
+                                <CheckBox Checked="myCheckBox_Checked" x:Name="MondayCheckBox" Content="Monday"></CheckBox>
+                                <CheckBox Checked="myCheckBox_Checked" x:Name="TuesdayCheckBox" Content="Tuesday"></CheckBox>
+                                <CheckBox Checked="myCheckBox_Checked" x:Name="WednessdayCheckBox" Content="Wednessday"></CheckBox>
+                                <CheckBox Checked="myCheckBox_Checked" x:Name="ThursdayCheckBox" Content="Thursday"></CheckBox>
+                                <CheckBox Checked="myCheckBox_Checked" x:Name="FridayCheckBox" Content="Friday"></CheckBox>
+                                <CheckBox Checked="myCheckBox_Checked" x:Name="SaturdayCheckBox" Content="Saturday"></CheckBox>
+                                <CheckBox Checked="myCheckBox_Checked" x:Name="SundayCheckBox" Content="Sunday"></CheckBox>
+                            </StackPanel>
                             <!-- Working Time per day-->
                             <TextBlock Text="Working time per day(Including lunch)" FontWeight="Bold"/>
-                            <TextBox Padding="2"></TextBox>
+                            
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="2*"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="2*"/>
+                                    <ColumnDefinition Width="*"/>
 
+                                </Grid.ColumnDefinitions>
+                                <TextBox Padding="2" Grid.Column="0" Text="{Binding working_time_hrs}"></TextBox>
+                                <Label Content="Hrs" Grid.Column="1" HorizontalAlignment="Left" />
+                                <TextBox Padding="2" Grid.Column="2" Text="{Binding Working_time_mins}"></TextBox>
+                                <Label Content="Mins" Grid.Column="3" HorizontalAlignment="Left" />
+                            </Grid>
                             <!--Time slot duration-->
                             <TextBlock Text="Time slot duration" FontWeight="Bold"/>
-                            <ComboBox Padding="2"></ComboBox>
+                            <ComboBox Padding="2" Text="{Binding Working_duration}"></ComboBox>
                         </StackPanel>
                         <StackPanel Grid.Row="1">
                             <StackPanel>
-                                <Button Content="Add"></Button>
-                                <Button Content="Update"></Button>
-                                <Button Content="Delete"></Button>
+                                <Button x:Name="AddButton" Content="Add" Click="AddSchedule"></Button>
+                                <Button x:Name="UpdateButton" Content="Update" Click="UpdateSchedule"></Button>
+                                <Button x:Name="DeleteButton" Content="Delete" Click="DeleteSchedule"></Button>
                             </StackPanel>
                         </StackPanel>
                     </Grid>
