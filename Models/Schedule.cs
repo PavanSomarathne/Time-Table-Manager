@@ -13,8 +13,8 @@ namespace TimeTableManager.Models
 
         public int Working_time_mins { get; set; }
         public int Working_duration { get; set; }
-        
 
 
+       
     }
 }
