@@ -36,7 +36,7 @@ namespace TimeTableManager.Models
         {
             return new Building[]
                 {
-                    new Building{ Id=1, Name="New Building"}
+                    new Building{ Id = -1,Bid="NB", Name="New Building"}
                 };
         }
     }
