@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using TimeTableManager.Models;
 
 namespace TimeTableManager
 {
@@ -24,5 +25,10 @@ namespace TimeTableManager
         {
             InitializeComponent();
         }
+        public void buttonclick1(object sender, RoutedEventArgs e)
+        {
+            
+        }
     }
+
 }
