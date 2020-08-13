@@ -18,6 +18,12 @@
                 <Button Content="Update Building" Height="31" Width="255" Background="White" FontWeight="Bold" Margin="0,20,0,0"/>
                 <Button Content="Delete Building" Height="31" Width="255" Background="White" FontWeight="Bold" Margin="0,20,0,0"/>
             </StackPanel>
+            <DataGrid DockPanel.Dock="Left" Width="1063" Name="BuildingDG" Height="654">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Building ID" Binding="{Binding Id}"/>
+                    <DataGridTextColumn Header="Building Name" Binding="{Binding Name}"/>
+                </DataGrid.Columns>
+            </DataGrid>
         </DockPanel>
 
 
