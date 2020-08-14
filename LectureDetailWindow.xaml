@@ -1,0 +1,116 @@
+﻿<Window x:Class="TimeTableManager.LectureDetailWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:TimeTableManager"
+        mc:Ignorable="d"
+        Title="LectureDetailWindow" Height="768" Width="1366">
+
+    <Border Padding="20">
+        <Grid>
+            <Grid.RowDefinitions >
+                <RowDefinition Height="20"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            
+            <Label Grid.Row="0" FontWeight="Bold" FontSize="8" HorizontalAlignment="Left" VerticalAlignment="Center" Content="Home"></Label>
+         
+
+            <StackPanel Grid.Row="1" Margin="5 12 5 0">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="2*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+
+
+
+                    <Border  Grid.Column="0" BorderBrush="Black" BorderThickness="1" Margin="0 15 0 0">
+                      
+                          
+                            <DataGrid  AutoGenerateColumns="False" Margin="5" Name="LectureDG" IsReadOnly="True">
+
+                                <DataGrid.Columns>
+
+                                    <DataGridTextColumn Header="Name" Binding="{Binding LecName}"/>
+                                    <DataGridTextColumn Header="LecId" Binding="{Binding EmpId}"/>
+                                    <DataGridTextColumn Header="Faculty" Binding="{Binding Faculty}"/>
+                                    <DataGridTextColumn Header="Department" Binding="{Binding Department}"/>
+                                    <DataGridTextColumn Header="Center" Binding="{Binding Center}"/>
+                                    <DataGridTextColumn Header="Building" Binding="{Binding Building}"/>
+                                    <DataGridTextColumn Header="Level" Binding="{Binding EmpLevel}"/>
+                                    <DataGridTextColumn Header="Ranking" Binding="{Binding Rank}"/>
+                                </DataGrid.Columns>
+
+                            </DataGrid>
+
+              
+                    </Border>
+                    <StackPanel Grid.Column="1" Margin="4" x:Name="AddNewLecturedetails">
+
+                        <Label HorizontalAlignment="Center" FontSize="20" Content="Lecture Details Management"></Label>
+                        <Label Content="Lecture Name" Margin="8 10 0 0"></Label>
+                        <TextBox Padding="2" Margin="8 0 0 0" Text="{Binding LecName}" />
+                        <Label Content="Lecture ID" Margin="8 10 0 0"></Label>
+                        <TextBox Padding="2" Margin="8 0 0 0" Text="{Binding EmpId}" x:Name="LecIdName" TextChanged="LecIdSelectChnged" />
+                        <Label Content="Faculty" Margin="8 10 0 0"></Label>
+                        <ComboBox Padding="2" Margin="8 0 0 0" Text="{Binding Faculty}">
+                            <ComboBoxItem>Computing</ComboBoxItem>
+                            <ComboBoxItem>Engineering</ComboBoxItem>
+                            <ComboBoxItem>Business</ComboBoxItem>
+                            <ComboBoxItem>Humanities and Sciences</ComboBoxItem>
+                        </ComboBox>
+
+                        <Label Content="Department" Margin="8 10 0 0"></Label>
+                        <ComboBox Padding="2" Margin="8 0 0 0" Text="{Binding Department}">
+                            <ComboBoxItem>Software Engineering</ComboBoxItem>
+                            <ComboBoxItem>Networking</ComboBoxItem>
+                            <ComboBoxItem>Electrical</ComboBoxItem>
+                            <ComboBoxItem>Cyber security</ComboBoxItem>
+                        </ComboBox>
+                        
+                        <Label Content="Center" Margin="8 10 0 0"></Label>
+                        <ComboBox Padding="2" Margin="8 0 0 0" Text="{Binding Center}">
+                            <ComboBoxItem>Malabe</ComboBoxItem>
+                            <ComboBoxItem>Metro</ComboBoxItem>
+                            <ComboBoxItem>Matara</ComboBoxItem>
+                            <ComboBoxItem>Kandy</ComboBoxItem>
+                            <ComboBoxItem>Kurunagala</ComboBoxItem>
+                            <ComboBoxItem>Kurunagala</ComboBoxItem>
+                            <ComboBoxItem>Jaffna</ComboBoxItem>
+                        </ComboBox>
+
+                        <Label Content="Building" Margin="8 10 0 0"></Label>
+                        <ComboBox Padding="2" Margin="8 0 0 0" Text="{Binding Building}">
+                            <ComboBoxItem></ComboBoxItem>
+                            <ComboBoxItem>Main Building</ComboBoxItem>
+                            <ComboBoxItem>Engineering</ComboBoxItem>
+                            <ComboBoxItem>health building</ComboBoxItem>
+                        </ComboBox>
+
+                        <Label Content="Level" Margin="8 10 0 0"></Label>
+                        <ComboBox Padding="2" Margin="8 0 0 0" Text="{Binding EmpLevel}" x:Name="LecLevel" SelectionChanged="LecLevel_SelectionChanged">
+                            <ComboBoxItem>1</ComboBoxItem>
+                            <ComboBoxItem>2</ComboBoxItem>
+                            <ComboBoxItem>3</ComboBoxItem>
+                            <ComboBoxItem>4</ComboBoxItem>
+                            <ComboBoxItem>5</ComboBoxItem>
+                            <ComboBoxItem>6</ComboBoxItem>
+                            <ComboBoxItem>7</ComboBoxItem>
+                        </ComboBox>
+
+                        <Label Content="Rankingl" Margin="8 10 0 0"></Label>
+                        <TextBox IsReadOnly="True" Background="#eee" Padding="2"  Margin="8 0 0 0" x:Name="rankDetail" Text="{Binding Rank}"></TextBox>
+
+                        <Button Content="Add Lecture" FontWeight="Bold" Margin="8 25 0 0" Padding="8" Click="AddLecturerDt"></Button>
+                    </StackPanel>
+                </Grid>
+            </StackPanel>
+        </Grid>
+
+     
+    </Border>
+</Window>

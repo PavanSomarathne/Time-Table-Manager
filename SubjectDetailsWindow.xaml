@@ -1,0 +1,112 @@
+﻿<Window x:Class="TimeTableManager.SubjectDetailsWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:TimeTableManager"
+        mc:Ignorable="d"
+               Title="LectureDetailWindow" Height="768" Width="1366">
+    <Border Padding="20">
+        <Grid>
+            <Grid.RowDefinitions >
+                <RowDefinition Height="20"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+
+            <Label Grid.Row="0" FontWeight="Bold" FontSize="8" HorizontalAlignment="Left" VerticalAlignment="Center" Content="Home"></Label>
+
+
+            <StackPanel Grid.Row="1" Margin="5 12 5 0">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1.5*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+
+
+
+                    <Border  Grid.Column="0" BorderBrush="Black" BorderThickness="1" Margin="0 15 0 0">
+
+
+                        <DataGrid  AutoGenerateColumns="False" Margin="5" Name="SubjectDG" IsReadOnly="True">
+
+                            <DataGrid.Columns>
+
+                                <DataGridTextColumn Header="Subject" Binding="{Binding SubjectName}"/>
+                                <DataGridTextColumn Header=" Subject Code" Binding="{Binding SubjectCode}"/>
+                                <DataGridTextColumn Header="Offered Year " Binding="{Binding OfferedYear}"/>
+                                <DataGridTextColumn Header="Offered Semester " Binding="{Binding OfferedSemester}"/>
+                                <DataGridTextColumn Header="Lecture Hours " Binding="{Binding LecHours}"/>
+                                <DataGridTextColumn Header="Tutorial Hours" Binding="{Binding TutorialHours}"/>
+                                <DataGridTextColumn Header="Lab Hours" Binding="{Binding LabHours}"/>
+                                <DataGridTextColumn Header="Evaluation Hours " Binding="{Binding EvalHours}"/>
+
+                                <DataGridTemplateColumn Header="  Update ">
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <Button Content="Update" Click="UpdateSubjecttForEdit"></Button>
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
+
+
+                                <DataGridTemplateColumn Header="  Delete ">
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <Button Content="Delete" Click="DeleteSubjectForEdit"></Button>
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
+
+
+
+                            </DataGrid.Columns>
+
+                        </DataGrid>
+
+
+                    </Border>
+                    <StackPanel Grid.Column="1" Margin="4" x:Name="AddSubjectdetails">
+
+                        <Label HorizontalAlignment="Center" FontSize="20" Content="Subject Details Management"></Label>
+                        <Label Content="Subject Name" Margin="8 10 0 0"></Label>
+                        <TextBox Padding="2" Margin="8 0 0 0" Text="{Binding SubjectName}" />
+                        <Label Content="Subject Code" Margin="8 10 0 0"></Label>
+                        <TextBox Padding="2" Margin="8 0 0 0" Text="{Binding SubjectCode}" />
+                        <Label Content="OfferedYear" Margin="8 10 0 0"></Label>
+                        <ComboBox Padding="2" Margin="8 0 0 0" Text="{Binding OfferedYear}">
+                            <ComboBoxItem>1st Year</ComboBoxItem>
+                            <ComboBoxItem>2st Year</ComboBoxItem>
+                            <ComboBoxItem>3st Year</ComboBoxItem>
+                            <ComboBoxItem>4st Year</ComboBoxItem>
+                        </ComboBox>
+
+                        <Label Content="Offered Semester" Margin="8 10 0 0"></Label>
+                        <ComboBox Padding="2" Margin="8 0 0 0" Text="{Binding OfferedSemester}">
+                            <ComboBoxItem>1st Semster</ComboBoxItem>
+                            <ComboBoxItem>2nd Semester</ComboBoxItem>
+                        </ComboBox>
+
+                        <Label Content="Lecture Hours" Margin="8 10 0 0"></Label>
+                        <TextBox Padding="2" Margin="8 0 0 0" Text="{Binding LecHours}" />
+
+                        <Label Content="Tutorial Hours" Margin="8 10 0 0"></Label>
+                        <TextBox Padding="2" Margin="8 0 0 0" Text="{Binding TutorialHours}" />
+
+                        <Label Content="Lab Hours" Margin="8 10 0 0"></Label>
+                        <TextBox Padding="2" Margin="8 0 0 0" Text="{Binding LabHours}" />
+
+                        <Label Content="Evaluation Hours" Margin="8 10 0 0"></Label>
+                        <TextBox Padding="2" Margin="8 0 0 0" Text="{Binding EvalHours}" />
+
+                        <Button Content="Add Subject" FontWeight="Bold" Name="ADbuttn" Margin="8 55 0 0" Padding="8" Click="AddSubjectDetails" ></Button>
+                    </StackPanel>
+                </Grid>
+            </StackPanel>
+        </Grid>
+
+
+    </Border>
+</Window>
