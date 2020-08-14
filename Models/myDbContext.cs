@@ -22,13 +22,11 @@ namespace TimeTableManager.Models
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Building>()
- .HasMany(c => c.RoomsAS)
- .WithOne(e => e.BuildingAS);
-            modelBuilder.Entity<Schedule>().HasData(GetSchedules());
-            modelBuilder.Entity<Building>().HasData(GetBuildings());
-           
+            .HasMany(c => c.RoomsAS)
+            .WithOne(e => e.BuildingAS);
 
- 
+            modelBuilder.Entity<Schedule>().HasData(GetSchedules());
+            //modelBuilder.Entity<Building>().HasData(GetBuildings());
 
             base.OnModelCreating(modelBuilder);
         }

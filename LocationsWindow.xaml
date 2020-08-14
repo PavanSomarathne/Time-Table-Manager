@@ -44,17 +44,17 @@
         <StackPanel Width="300" Grid.Column="2" Grid.Row="0" Grid.RowSpan="3" materialDesign:ShadowAssist.ShadowDepth="Depth4" >
             <Label Content="Location Management"  FontWeight="Normal" FontSize="20" HorizontalAlignment="Center"/>
             <Label Content="Selected Room Id&#xD;&#xA;" FontWeight="Bold" Margin="5,20,0,4" Height="30"/>
-            <TextBox Text="TextBox" TextWrapping="Wrap"  Width="261" Height="30" FontWeight="Bold" FontSize="14"/>
+            <TextBox x:Name="TxtRid" Text="TextBox" TextWrapping="Wrap"  Width="261" Height="30" FontWeight="Bold" FontSize="14"/>
             <Label Content="Building&#xA;" FontWeight="Bold" Width="300" Height="30" Margin="5,5,0,0"/>
-            <TextBox Text="TextBox" TextWrapping="Wrap" Width="261" Height="30" FontWeight="Bold" FontSize="14" IsEnabled="False"/>
+            <TextBox x:Name="TxtBuilding" Text="TextBox" TextWrapping="Wrap" Width="261" Height="30" FontWeight="Bold" FontSize="14" IsEnabled="False"/>
             <StackPanel Orientation="Horizontal" Margin="0,5,0,0" >
                 <StackPanel >
                     <Label Content="Capacity&#xA;" HorizontalAlignment="Left"  VerticalAlignment="Top" FontWeight="Bold" Height="30" Margin="5,0,0,0"/>
-                    <TextBox  Text="TextBox" TextWrapping="Wrap"  Width="120" Height="30" FontWeight="Bold" FontSize="14" IsEnabled="False" Margin="20,0,0,0"/>
+                    <TextBox x:Name="TxtCapacity" Text="TextBox" TextWrapping="Wrap"  Width="120" Height="30" FontWeight="Bold" FontSize="14" IsEnabled="False" Margin="20,0,0,0"/>
                 </StackPanel>
                 <StackPanel Margin="11,0,0,0" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" >
                     <Label Content="Type&#xA;" HorizontalAlignment="Left"  VerticalAlignment="Top" FontWeight="Bold" Height="30"/>
-                    <TextBox Text="TextBox" TextWrapping="Wrap" Width="120" Height="30" FontWeight="Bold" FontSize="14" IsEnabled="False" Margin="10,0,0,0"/>
+                    <TextBox x:Name="TxtType" Text="TextBox" TextWrapping="Wrap" Width="120" Height="30" FontWeight="Bold" FontSize="14" IsEnabled="False" Margin="10,0,0,0"/>
                 </StackPanel>
             </StackPanel>
             <Button Content="Add New Room" Height="31" Width="270"  FontWeight="Bold" Margin="0,20,0,0"/>
