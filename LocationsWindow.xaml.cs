@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
@@ -19,11 +20,18 @@ namespace TimeTableManager
     public partial class LocationsWindow : Window
     {
         MyDbContext dbContext1;
+        Building SeletedBuilding = new Building();
         public LocationsWindow(MyDbContext dbContext)
         {
             InitializeComponent();
             this.dbContext1 = dbContext;
   
+        }
+
+        private void GetRooms()
+        {
+            RoomsDG.ItemsSource = dbContext1.Rooms.ToList();
+
         }
 
 

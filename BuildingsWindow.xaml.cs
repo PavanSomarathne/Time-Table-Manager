@@ -33,9 +33,8 @@ namespace TimeTableManager
 
         private void GetBuildings()
         {
-            BuildingDG.ItemsSource = null;
             BuildingDG.ItemsSource = dbContext1.Buildings.ToList();
-            Console.WriteLine(dbContext1.Buildings.ToList());
+  
 
         }
 
