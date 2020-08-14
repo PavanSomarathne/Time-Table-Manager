@@ -1,0 +1,65 @@
+﻿<Window x:Class="TimeTableManager.BuildingsWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:TimeTableManager"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+        TextElement.FontWeight="Regular"
+        TextElement.FontSize="13"
+        TextOptions.TextFormattingMode="Ideal"
+        TextOptions.TextRenderingMode="Auto"
+        Background="{DynamicResource MaterialDesignPaper}"
+        FontFamily="{DynamicResource MaterialDesignFont}"
+        mc:Ignorable="d"
+        Title="BuildingsWindow" Height="768" Width="1366">
+    
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="3*"/>
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <StackPanel Width="300" Background="White" Grid.Column="1" Grid.RowSpan="2">
+            <Label Content="Building Management" FontWeight="Normal" FontSize="20" HorizontalAlignment="Center" Margin="0,20,0,0"/>
+            <Label Content="Building Id&#xA;" FontWeight="Bold" Margin="20,50,0,0" HorizontalAlignment="Left"/>
+            <TextBox x:Name="txtId" Text="TextBox" TextWrapping="Wrap" Width="260" Height="32" FontWeight="Bold" FontSize="16" IsEnabled="True"/>
+            <Label Content="Building Name&#xA;" FontWeight="Bold" Margin="20,20,0,0"/>
+            <TextBox x:Name="txtName" Text="TextBox" TextWrapping="Wrap" Width="260" Height="32" FontWeight="Bold" FontSize="16" IsEnabled="True"/>
+            <Button Content="Add Building" Height="31" Width="256" Background="White" FontWeight="Bold" Margin="0,100,0,0" Click="AddBuilding"/>
+            <Button Content="Update Building" Height="31" Width="255" Background="White" FontWeight="Bold" Margin="0,20,0,0" Click="UpdateBuilding"/>
+            <Button Content="Delete Building" Height="31" Width="255" Background="White" FontWeight="Bold" Margin="0,20,0,0" Click="DeleteBuilding"/>
+        </StackPanel>
+
+        <DataGrid Grid.Column="0" Grid.Row="1" DockPanel.Dock="Left" Width="Auto" Name="BuildingDG" Height="Auto" AutoGenerateColumns="False" SelectionChanged="UpdateSelection" HorizontalAlignment="Left" Margin="5,5,5,2" >
+
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Building ID" Binding="{Binding Bid}" Width="*"/>
+                <DataGridTextColumn Header="Building Name" Binding="{Binding Name}" Width="3*"/>
+            </DataGrid.Columns>
+
+
+
+        </DataGrid>
+        <Rectangle Grid.Column="0" Grid.Row="0" Stroke="Black" >
+            <Rectangle.Fill>
+                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0" MappingMode="Absolute">
+                    <GradientStop Color="#FF7B4AFD"/>
+                    <GradientStop Color="#FF6328FF" Offset="1"/>
+                </LinearGradientBrush>
+            </Rectangle.Fill>
+        </Rectangle>
+        <StackPanel Orientation="Horizontal" >
+            <TextBox  HorizontalAlignment="Left"  Grid.Row="1" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+            <TextBox  HorizontalAlignment="Left"  Grid.Row="1" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+        </StackPanel>
+
+
+    </Grid>
+</Window>
