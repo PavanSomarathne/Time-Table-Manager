@@ -14,9 +14,9 @@ namespace TimeTableManager.Models
         }
       
         public DbSet<Schedule> Schedules { get; set; }
+        public DbSet<Building> Buildings { get; set; }
         public DbSet<LecturerDetails> LectureInformation { get; set; }
         public DbSet<SubjectDetails> SubjectInformation { get; set; }
-        public DbSet<Building> Buildings { get; set; }
 
         public DbSet<Room> Rooms { get; set; }
 
