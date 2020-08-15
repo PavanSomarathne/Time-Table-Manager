@@ -22,17 +22,33 @@ namespace TimeTableManager
     {
         MyDbContext dbContext1;
         Building SeletedBuilding = new Building();
+        Room RoomToEdit = new Room();
 
-        public AddNewRoomWindow(MyDbContext dbContext)
+        public AddNewRoomWindow(MyDbContext dbContext, Room room)
         {
+            RoomToEdit = room;
             dbContext1 = dbContext;
             InitializeComponent();
             GetBuildings();
+
+            if (RoomToEdit != null)
+            {
+                EnableUpdateMode();
+            }
         }
 
         private void GetBuildings()
         {
             CBBuilding.ItemsSource = dbContext1.Buildings.ToList();
+
+        }
+
+        private void EnableUpdateMode()
+        {
+            TxtRid.Text = RoomToEdit.Rid;
+            TxtCapacity.Text = RoomToEdit.Capacity.ToString();
+            CBBuilding.SelectedItem = RoomToEdit.BuildingAS;
+            CBType.SelectedValue = RoomToEdit.Type;
 
         }
 
@@ -83,6 +99,10 @@ namespace TimeTableManager
         }
 
 
+        private void Close(Object s, RoutedEventArgs e)
+        {
+            this.Close();
+        }
 
         private bool ValidateInput()
         {
@@ -104,7 +124,7 @@ namespace TimeTableManager
                 return false;
             }
 
-            if  (CBBuilding.SelectedIndex == -1)
+            if (CBBuilding.SelectedIndex == -1)
             {
                 CBBuilding.Focus();
                 return false;

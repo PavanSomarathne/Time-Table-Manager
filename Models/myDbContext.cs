@@ -59,10 +59,6 @@ namespace TimeTableManager.Models
                 };
         }
 
-
-
-    }
-
         private Building[] GetBuildings()
         {
             return new Building[]
