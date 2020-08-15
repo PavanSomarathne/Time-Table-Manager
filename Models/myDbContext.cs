@@ -26,8 +26,11 @@ namespace TimeTableManager.Models
             .HasMany(c => c.RoomsAS)
             .WithOne(e => e.BuildingAS);
 
+            modelBuilder.Entity<Building>()
+                .HasMany(q => q.LecturesDSA)
+                .WithOne(k => k.BuildinDSA);
+
             modelBuilder.Entity<Schedule>().HasData(GetSchedules());
-            modelBuilder.Entity<LecturerDetails>().HasData(GetLectureDetails());
             modelBuilder.Entity<SubjectDetails>().HasData(GetSubjectDetails());
             //modelBuilder.Entity<Building>().HasData(GetBuildings());
 
@@ -42,13 +45,7 @@ namespace TimeTableManager.Models
                 };
         }
 
-        private LecturerDetails[] GetLectureDetails()
-        {
-            return new LecturerDetails[]
-                {
-                    new LecturerDetails{ Id=1, LecName="Saman Perera",EmpId="emp1500245",Faculty="Computing",Department="Software Engineering",Center="Malabe",Building="Main Building",EmpLevel=5,Rank="5.emp1500245"}
-                };
-        }
+    
 
 
         private SubjectDetails[] GetSubjectDetails()
@@ -61,7 +58,7 @@ namespace TimeTableManager.Models
 
 
 
-    }
+    
 
         private Building[] GetBuildings()
         {

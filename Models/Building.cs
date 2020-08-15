@@ -15,5 +15,8 @@ namespace TimeTableManager.Models
         public String Name { get; set; }
         public ICollection<Room> RoomsAS { get; set; }
 
+        public ICollection<LecturerDetails> LecturesDSA { get; set;  }
+
+
     }
 }
