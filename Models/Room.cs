@@ -1,19 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Text;
 
 namespace TimeTableManager.Models
 {
-    public class Building
+    public class Room
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
-        public String Bid { get; set; }
-        public String Name { get; set; }
-        public ICollection<Room> RoomsAS { get; set; }
-
+        public String Rid { get; set; }
+        public Building BuildingAS { get; set; }
+        public String Type { get; set; }
+        public int Capacity { get; set; }
     }
 }
