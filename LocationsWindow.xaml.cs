@@ -18,8 +18,8 @@ namespace TimeTableManager
     /// </summary>
     public partial class LocationsWindow : Window
     {
-        MyDbContext dbContext1;
-        public LocationsWindow(MyDbContext dbContext)
+        myDbContext dbContext1;
+        public LocationsWindow(myDbContext dbContext)
         {
             InitializeComponent();
             this.dbContext1 = dbContext;
