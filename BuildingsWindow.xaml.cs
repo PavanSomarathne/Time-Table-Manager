@@ -21,10 +21,10 @@ namespace TimeTableManager
     /// </summary>
     public partial class BuildingsWindow : Window
     {
-        myDbContext dbContext1;
+        MyDbContext dbContext1;
         Building SeletedBuilding = new Building();
 
-        public BuildingsWindow(myDbContext dbContext)
+        public BuildingsWindow(MyDbContext dbContext)
         {
             this.dbContext1 = dbContext;
             InitializeComponent();

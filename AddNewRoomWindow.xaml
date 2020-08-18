@@ -33,7 +33,7 @@
         <Label Content="Sprint 2 Functions Goes Here" FontSize="24" Grid.Row="1" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center" />
         <StackPanel  Grid.Column="2" Grid.Row="2" Orientation="Horizontal" Margin="0,234,0,0" Grid.RowSpan="2" >
             <Button x:Name="BtnSave" Click="AddRoom" Content="Add Room" HorizontalAlignment="Center" VerticalAlignment="Bottom" Height="40" Width="200" FontSize="20" Margin="20,0,0,20"/>
-            <Button Click="CloseWindow" Content="Close"  HorizontalAlignment="Center"  VerticalAlignment="Bottom" Height="40" Width="200" FontSize="20" Margin="10,0,0,20" Background="#FFFF1744" BorderBrush="{x:Null}"/>
+            <Button Content="Close"  HorizontalAlignment="Center"  VerticalAlignment="Bottom" Height="40" Width="200" FontSize="20" Margin="10,0,0,20" Background="#FFFF1744" BorderBrush="{x:Null}"/>
 
         </StackPanel>
         <materialDesign:Card Grid.Row="0" Grid.Column="0" Background="{DynamicResource MaterialDesignDarkBackground}" Grid.ColumnSpan="3"/>

@@ -3,9 +3,9 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:TimeTableManager"
+        xmlns:local="clr-namespace:TimeTableManager" xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         mc:Ignorable="d"
-        Title="MainWindow" Height="600" Width="1080">
+        Title="MainWindow" Height="768" Width="1366">
 
     <Border Padding="20">
         <StackPanel>
@@ -23,7 +23,9 @@
                         <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="8*"/>
                     </Grid.ColumnDefinitions>
-                    <Button Grid.Column="0" Content="Back" Padding="4" Margin="1"></Button>
+                    <Button Grid.Column="0" Content="Back" Padding="4" Margin="1">
+                        
+                    </Button>
                     <Button Grid.Column="1" Content="Home" Padding="4" Margin="1"></Button>
                     <Label Grid.Column="2" Content="Time Table Manager" HorizontalAlignment="Center" FontSize="20" FontWeight="Bold"></Label>
                 </Grid>
@@ -42,7 +44,7 @@
                             <RowDefinition Height="*"/>
                         </Grid.RowDefinitions>
 
-                        <StackPanel Grid.Row="0" Background="Aqua">
+                        <StackPanel Grid.Row="0" Background="OldLace" Margin="3">
                             <Label Content="Time Manage" HorizontalAlignment="Center" FontSize="20"></Label>
 
                             <DataGrid AutoGenerateColumns="False" Margin="5" Name="ScheduleDG" IsReadOnly="True" >
@@ -65,7 +67,7 @@
                             </DataGrid>
                         </StackPanel>
                         <StackPanel Grid.Row="1" Background="Beige">
-                            <Button Content="Select" Click="UpdateScheduleForEdit"/>
+                           
                         </StackPanel>
                     </Grid>
                 </StackPanel>
@@ -81,8 +83,21 @@
                             <Label Content="Add a Schedule" HorizontalAlignment="Center" VerticalAlignment="Center"   FontWeight="Bold" FontSize="20"/>
                             <!-- Working days-->
                             <TextBlock Text="Working days per week" FontWeight="SemiBold" Margin="0 0 0 0"/>
-                            <TextBox x:Name="test" Padding="2" Text="{Binding Working_days_count}"></TextBox>
-
+                            <Grid>
+                                <TextBox x:Name="Working_days_count" Padding="2" Text="{Binding Working_days_count}" ></TextBox>
+                            <TextBlock IsHitTestVisible="False" Text="1 - 7" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10,0,0,0" Foreground="DarkGray">
+                                <TextBlock.Style>
+                                    <Style TargetType="{x:Type TextBlock}">
+                                        <Setter Property="Visibility" Value="Collapsed"/>
+                                        <Style.Triggers>
+                                                <DataTrigger Binding="{Binding Text, ElementName=Working_days_count}" Value="">
+                                                <Setter Property="Visibility" Value="Visible"/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </TextBlock.Style>
+                            </TextBlock>
+                            </Grid>
                             <!-- Working days in a week-->
                             <TextBlock Text="Working days per week" FontWeight="SemiBold" Margin="0 10 0 0"/>
                             <StackPanel x:Name="checkboxes" Width="100">
@@ -106,17 +121,59 @@
                                     <ColumnDefinition Width="*"/>
 
                                 </Grid.ColumnDefinitions>
-                                <TextBox Padding="2" Grid.Column="1" Text="{Binding working_time_hrs}"></TextBox>
+                                <Grid Grid.Column="1" >
+                                    <TextBox Padding="2" Name="working_hrs" Text="{Binding working_time_hrs}"></TextBox>
+                                    <TextBlock IsHitTestVisible="False" Text="1 - 14" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10,0,0,0" Foreground="DarkGray">
+                                        <TextBlock.Style>
+                                            <Style TargetType="{x:Type TextBlock}">
+                                                <Setter Property="Visibility" Value="Collapsed"/>
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding Text, ElementName=working_hrs}" Value="">
+                                                        <Setter Property="Visibility" Value="Visible"/>
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </TextBlock.Style>
+                                    </TextBlock>
+                                </Grid>
                                 <Label Content="Hrs" Grid.Column="2" HorizontalAlignment="Left" />
-                                <TextBox Padding="2" Grid.Column="3" Text="{Binding Working_time_mins}"></TextBox>
+                                <Grid Grid.Column="3" >
+                                    <TextBox Padding="2" Name="working_mins" Grid.Column="3" Text="{Binding Working_time_mins}"></TextBox>
+                                    <TextBlock IsHitTestVisible="False" Text="0 - 60" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10,0,0,0" Foreground="DarkGray">
+                                        <TextBlock.Style>
+                                            <Style TargetType="{x:Type TextBlock}">
+                                                <Setter Property="Visibility" Value="Collapsed"/>
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding Text, ElementName=working_mins}" Value="">
+                                                        <Setter Property="Visibility" Value="Visible"/>
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </TextBlock.Style>
+                                    </TextBlock>
+                                </Grid>
                                 <Label Content="Mins" Grid.Column="4" HorizontalAlignment="Left" />
                             </Grid>
                             <!--Time slot duration-->
                             <TextBlock Text="Time slot duration" FontWeight="SemiBold" Margin="0 10 0 0"/>
-                            <ComboBox Name="duration" SelectedIndex="1" Padding="2" Text="{Binding Working_duration}" >
+                            <Grid>
+                                <ComboBox Name="duration" SelectedIndex="0" Padding="2" Text="{Binding Working_duration}" >
                                 <ComboBoxItem >One Hour</ComboBoxItem>
                                 <ComboBoxItem>Thirty Minutes</ComboBoxItem>
                             </ComboBox>
+                                <TextBlock IsHitTestVisible="False" Text="Select one" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10,0,0,0" Foreground="DarkGray">
+                                    <TextBlock.Style>
+                                        <Style TargetType="{x:Type TextBlock}">
+                                            <Setter Property="Visibility" Value="Collapsed"/>
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding Text, ElementName=duration}" Value="">
+                                                    <Setter Property="Visibility" Value="Visible"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </TextBlock.Style>
+                                </TextBlock>
+                            </Grid>
                         </StackPanel>
                         <StackPanel Grid.Row="1">
                             <StackPanel Margin="5">
