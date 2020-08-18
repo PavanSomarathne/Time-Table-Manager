@@ -5,9 +5,9 @@ using System.Text;
 
 namespace TimeTableManager.Models
 {
-    public class MyDbContext : DbContext
+    public class myDbContext : DbContext
     {
-        public MyDbContext(DbContextOptions<MyDbContext> options) : base(options)
+        public myDbContext(DbContextOptions<myDbContext> options) : base(options)
         {
             Database.EnsureCreated();
 

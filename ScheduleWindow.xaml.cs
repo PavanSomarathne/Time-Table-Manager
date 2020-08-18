@@ -22,13 +22,13 @@ namespace TimeTableManager
     /// </summary>
     public partial class ScheduleWindow : Window
     {
-        MyDbContext dbContext1;
+        myDbContext dbContext1;
         Schedule NewSchedule = new Schedule();
         Schedule SelectedSchedule = new Schedule();
         List<string> allChecked = new List<string>();
 
 
-        public ScheduleWindow(MyDbContext dbContext)
+        public ScheduleWindow(myDbContext dbContext)
         {
             this.dbContext1 = dbContext;
             InitializeComponent();
