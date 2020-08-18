@@ -31,7 +31,7 @@ namespace TimeTableManager.Models
                 .WithOne(k => k.BuildinDSA);
 
             modelBuilder.Entity<Schedule>().HasData(GetSchedules());
-            modelBuilder.Entity<SubjectDetails>().HasData(GetSubjectDetails());
+            modelBuilder.Entity<SubjectDetails>();
             //modelBuilder.Entity<Building>().HasData(GetBuildings());
 
             base.OnModelCreating(modelBuilder);

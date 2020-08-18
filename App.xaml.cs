@@ -23,7 +23,7 @@ namespace TimeTableManager
             ServiceCollection services = new ServiceCollection();
             services.AddDbContext<MyDbContext>(option => {
                 option.UseSqlite("Data Source = TimeTableManager.db");
-            
+
             });
 
             services.AddSingleton<LocationsWindow>();
@@ -34,7 +34,7 @@ namespace TimeTableManager
         {
             var mainWindow = serviceProvider.GetService<LocationsWindow>();
             mainWindow.Show();
-        
+
         }
 
         private void Application_Startup(object sender, StartupEventArgs e)

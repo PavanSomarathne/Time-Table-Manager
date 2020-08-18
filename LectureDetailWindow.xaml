@@ -21,43 +21,63 @@
             <StackPanel Grid.Row="1" Margin="5 12 5 0">
                 <Grid>
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="2*"/>
+                        <ColumnDefinition Width="2.5*"/>
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
 
 
+                    <StackPanel>
 
+                        <Border  Grid.Column="0" BorderBrush="Black" BorderThickness="1" Margin="0 15 0 0" MaxHeight="720" MinHeight="600">
 
-                    <Border  Grid.Column="0" BorderBrush="Black" BorderThickness="1" Margin="0 15 0 0">
-                      
-                          
+                       
                             <DataGrid  AutoGenerateColumns="False" Margin="5" Name="LectureDG" IsReadOnly="True">
 
                                 <DataGrid.Columns>
 
+                                    <DataGridTemplateColumn Header="Update">
+                                        <DataGridTemplateColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <Button Content="Update" Click="UpdateLectureDetailsIn"></Button>
+                                            </DataTemplate>
+                                        </DataGridTemplateColumn.CellTemplate>
+                                    </DataGridTemplateColumn>
+
+
+                                    <DataGridTemplateColumn Header="Delete">
+                                        <DataGridTemplateColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <Button Content="Delete" Click="DeleteLectureDetailsIn"></Button>
+                                            </DataTemplate>
+                                        </DataGridTemplateColumn.CellTemplate>
+                                    </DataGridTemplateColumn>
+                                    
                                     <DataGridTextColumn Header="Name" Binding="{Binding LecName}"/>
                                     <DataGridTextColumn Header="LecId" Binding="{Binding EmpId}"/>
                                     <DataGridTextColumn Header="Faculty" Binding="{Binding Faculty}"/>
                                     <DataGridTextColumn Header="Department" Binding="{Binding Department}"/>
                                     <DataGridTextColumn Header="Center" Binding="{Binding Center}"/>
-                                    <DataGridTextColumn Header="Building" Binding="{Binding Building}"/>
+                                    <DataGridTextColumn Header="Building Name" Binding="{Binding BuildinDSA.Name}" />
                                     <DataGridTextColumn Header="Level" Binding="{Binding EmpLevel}"/>
                                     <DataGridTextColumn Header="Ranking" Binding="{Binding Rank}"/>
+
+                                   
                                 </DataGrid.Columns>
 
                             </DataGrid>
-
-              
+ 
                     </Border>
+
+                    </StackPanel>
                     <StackPanel Grid.Column="1" Margin="4" x:Name="AddNewLecturedetails">
 
                         <Label HorizontalAlignment="Center" FontSize="20" Content="Lecture Details Management"></Label>
                         <Label Content="Lecture Name" Margin="8 10 0 0"></Label>
-                        <TextBox Padding="2" Margin="8 0 0 0" Text="{Binding LecName}" />
+                        <TextBox x:Name="LecturerName" Padding="2" Margin="8 0 0 0" Text="{Binding LecName}" />
                         <Label Content="Lecture ID" Margin="8 10 0 0"></Label>
-                        <TextBox Padding="2" Margin="8 0 0 0" Text="{Binding EmpId}" x:Name="LecIdName" TextChanged="LecIdSelectChnged" />
+                        <TextBox  Padding="2" Margin="8 0 0 0" Text="{Binding EmpId}" x:Name="LecIdName" TextChanged="LecIdSelectChnged" />
                         <Label Content="Faculty" Margin="8 10 0 0"></Label>
-                        <ComboBox Padding="2" Margin="8 0 0 0" Text="{Binding Faculty}">
+                        <ComboBox  x:Name="LecturerFaculty" Padding="2" Margin="8 0 0 0" Text="{Binding Faculty}">
                             <ComboBoxItem>Computing</ComboBoxItem>
                             <ComboBoxItem>Engineering</ComboBoxItem>
                             <ComboBoxItem>Business</ComboBoxItem>
@@ -65,7 +85,7 @@
                         </ComboBox>
 
                         <Label Content="Department" Margin="8 10 0 0"></Label>
-                        <ComboBox Padding="2" Margin="8 0 0 0" Text="{Binding Department}">
+                        <ComboBox  x:Name="LecturerDepartment" Padding="2" Margin="8 0 0 0" Text="{Binding Department}">
                             <ComboBoxItem>Software Engineering</ComboBoxItem>
                             <ComboBoxItem>Networking</ComboBoxItem>
                             <ComboBoxItem>Electrical</ComboBoxItem>
@@ -73,7 +93,7 @@
                         </ComboBox>
                         
                         <Label Content="Center" Margin="8 10 0 0"></Label>
-                        <ComboBox Padding="2" Margin="8 0 0 0" Text="{Binding Center}">
+                        <ComboBox  x:Name="LecturerCenter" Padding="2" Margin="8 0 0 0" Text="{Binding Center}">
                             <ComboBoxItem>Malabe</ComboBoxItem>
                             <ComboBoxItem>Metro</ComboBoxItem>
                             <ComboBoxItem>Matara</ComboBoxItem>
@@ -84,12 +104,10 @@
                         </ComboBox>
 
                         <Label Content="Building" Margin="8 10 0 0"></Label>
-                        <ComboBox Padding="2" Margin="8 0 0 0" Text="{Binding Building}">
-                            <ComboBoxItem></ComboBoxItem>
-                            <ComboBoxItem>Main Building</ComboBoxItem>
-                            <ComboBoxItem>Engineering</ComboBoxItem>
-                            <ComboBoxItem>health building</ComboBoxItem>
-                        </ComboBox>
+
+                        <ComboBox  Padding="2" Margin="8 0 0 0" x:Name="CBBuilding" ItemsSource="{Binding Path=Buildings}"  DisplayMemberPath="Name"/>
+
+
 
                         <Label Content="Level" Margin="8 10 0 0"></Label>
                         <ComboBox Padding="2" Margin="8 0 0 0" Text="{Binding EmpLevel}" x:Name="LecLevel" SelectionChanged="LecLevel_SelectionChanged">
@@ -105,7 +123,7 @@
                         <Label Content="Rankingl" Margin="8 10 0 0"></Label>
                         <TextBox IsReadOnly="True" Background="#eee" Padding="2"  Margin="8 0 0 0" x:Name="rankDetail" Text="{Binding Rank}"></TextBox>
 
-                        <Button Content="Add Lecture" FontWeight="Bold" Margin="8 25 0 0" Padding="8" Click="AddLecturerDt"></Button>
+                        <Button  x:Name="Addlecbtn" Content="Add Lecture" FontWeight="Bold" Margin="8 35 0 0" Padding="8" MinHeight="50" MaxHeight="60"  Click="AddLecturerDt"></Button>
                     </StackPanel>
                 </Grid>
             </StackPanel>

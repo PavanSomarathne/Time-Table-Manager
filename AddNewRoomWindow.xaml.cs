@@ -33,6 +33,7 @@ namespace TimeTableManager
 
             if (RoomToEdit != null)
             {
+
                 EnableUpdateMode();
             }
         }
@@ -99,7 +100,7 @@ namespace TimeTableManager
         }
 
 
-        private void Close(Object s, RoutedEventArgs e)
+        private void CloseWindow(Object s, RoutedEventArgs e)
         {
             this.Close();
         }
