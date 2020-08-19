@@ -17,8 +17,10 @@ namespace TimeTableManager.Models
         public DbSet<Building> Buildings { get; set; }
         public DbSet<LecturerDetails> LectureInformation { get; set; }
         public DbSet<SubjectDetails> SubjectInformation { get; set; }
-
         public DbSet<Room> Rooms { get; set; }
+        public DbSet<Student> Students { get; set; }
+        public DbSet<Tag> Tags { get; set; }
+
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -34,6 +36,7 @@ namespace TimeTableManager.Models
             modelBuilder.Entity<SubjectDetails>();
             //modelBuilder.Entity<Building>().HasData(GetBuildings());
 
+        
             base.OnModelCreating(modelBuilder);
 
         }
@@ -74,6 +77,24 @@ namespace TimeTableManager.Models
                 {
                     new Room{Id = -1,Rid="B02", Type="Lab",BuildingAS = new Building{ Id = -1,Bid="NB", Name="New Building"}}
                 };
+        }
+
+        private Student[] GetStudents()
+        {
+            return new Student[]
+            {
+                new Student { Id=-1 , accYrSem = "Y3.S1" , programme ="CSSE" , groupNo = 03 , groupId="Y3.S1.CSSE.03" , subGroupNo = 1},
+
+            };
+        }
+
+        private Tag[] GetTags()
+        {
+            return new Tag[]
+            {
+                new Tag { Id=-1 , tags = "Lecture"},
+
+            };
         }
     }
 
