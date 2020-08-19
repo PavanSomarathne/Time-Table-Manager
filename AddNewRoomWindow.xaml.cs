@@ -33,6 +33,7 @@ namespace TimeTableManager
 
             if (RoomToEdit != null)
             {
+
                 EnableUpdateMode();
             }
         }
