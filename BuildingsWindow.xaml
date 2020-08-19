@@ -14,7 +14,7 @@
         FontFamily="{DynamicResource MaterialDesignFont}"
         mc:Ignorable="d"
         Title="BuildingsWindow" Height="768" Width="1366">
-    
+
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="3*"/>
@@ -23,21 +23,24 @@
 
         <Grid.RowDefinitions>
             <RowDefinition Height="50"/>
+            <RowDefinition Height="100"/>
             <RowDefinition Height="*"/>
+
         </Grid.RowDefinitions>
 
-        <StackPanel Width="300" Background="White" Grid.Column="1" Grid.RowSpan="2">
+
+        <StackPanel Width="300" Background="White" Grid.Column="1" Grid.RowSpan="3">
             <Label Content="Building Management" FontWeight="Normal" FontSize="20" HorizontalAlignment="Center" Margin="0,20,0,0"/>
-            <Label Content="Building Id&#xA;" FontWeight="Bold" Margin="20,50,0,0" HorizontalAlignment="Left"/>
-            <TextBox x:Name="txtId" Text="TextBox" TextWrapping="Wrap" Width="260" Height="32" FontWeight="Bold" FontSize="16" IsEnabled="True"/>
-            <Label Content="Building Name&#xA;" FontWeight="Bold" Margin="20,20,0,0"/>
-            <TextBox x:Name="txtName" Text="TextBox" TextWrapping="Wrap" Width="260" Height="32" FontWeight="Bold" FontSize="16" IsEnabled="True"/>
-            <Button Content="Add Building" Height="31" Width="256" Background="White" FontWeight="Bold" Margin="0,100,0,0" Click="AddBuilding"/>
-            <Button Content="Update Building" Height="31" Width="255" Background="White" FontWeight="Bold" Margin="0,20,0,0" Click="UpdateBuilding"/>
-            <Button Content="Delete Building" Height="31" Width="255" Background="White" FontWeight="Bold" Margin="0,20,0,0" Click="DeleteBuilding"/>
+            <Label Content="Building Id&#xA;" FontWeight="Bold" Margin="10,50,0,0" HorizontalAlignment="Left"/>
+            <TextBox x:Name="txtId" TextWrapping="Wrap" Width="260" Height="32" FontWeight="Bold" FontSize="16" IsEnabled="True"  materialDesign:HintAssist.Hint="Enter Id here Ex: NB1"/>
+            <Label Content="Building Name&#xA;" FontWeight="Bold" Margin="10,20,0,0"/>
+            <TextBox x:Name="txtName" TextWrapping="Wrap" Width="260" Height="32" FontWeight="Bold" FontSize="16" IsEnabled="True" materialDesign:HintAssist.Hint="Enter Name here"/>
+            <Button Content="Add Building" Height="40" Width="256" Background="#FF673AB7" FontWeight="Bold" Margin="0,100,0,0" Click="AddBuilding"/>
+            <Button Content="Update Building" Height="40" Width="255" Background="#FFFFB300" FontWeight="Bold" Margin="0,20,0,0" Click="UpdateBuilding" BorderBrush="#FFF57F17"/>
+            <Button Content="Delete Building" Height="40" Width="255" Background="#FFF44336" FontWeight="Bold" Margin="0,20,0,0" Click="DeleteBuilding" BorderBrush="#FFF44336"/>
         </StackPanel>
 
-        <DataGrid Grid.Column="0" Grid.Row="1" DockPanel.Dock="Left" Width="Auto" Name="BuildingDG" Height="Auto" AutoGenerateColumns="False" SelectionChanged="UpdateSelection" HorizontalAlignment="Left" Margin="5,5,5,2" >
+        <DataGrid Grid.Column="0" Grid.Row="2" DockPanel.Dock="Left" Width="Auto" Name="BuildingDG" Height="Auto" AutoGenerateColumns="False" SelectionChanged="UpdateSelection" HorizontalAlignment="Left" Margin="5,5,5,2" >
 
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Building ID" Binding="{Binding Bid}" Width="*"/>
@@ -55,10 +58,14 @@
                 </LinearGradientBrush>
             </Rectangle.Fill>
         </Rectangle>
-        <StackPanel Orientation="Horizontal" >
-            <TextBox  HorizontalAlignment="Left"  Grid.Row="1" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
-            <TextBox  HorizontalAlignment="Left"  Grid.Row="1" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+        <StackPanel Grid.Column="0" Grid.Row="1">
+            <Label Content="Filter By " FontWeight="Bold" FontSize="16" Margin="10,10,0,0" />
+            <StackPanel Orientation="Horizontal" >
+                <TextBox x:Name="txtSearchId" TextChanged="SerachById"  HorizontalAlignment="Left"  Grid.Row="1" TextWrapping="Wrap" VerticalAlignment="Top" Width="200" Margin="20,0,0,0"  materialDesign:HintAssist.Hint="ID" Style="{StaticResource MaterialDesignFloatingHintTextBox}" FontSize="18"/>
+                <TextBox  x:Name="txtSearchName" TextChanged="SerachByName" HorizontalAlignment="Left"  Grid.Row="1" TextWrapping="Wrap" VerticalAlignment="Top" Width="200" Margin="50,0,0,0"  materialDesign:HintAssist.Hint="Name" Style="{StaticResource MaterialDesignFloatingHintTextBox}" FontSize="18"/>
+            </StackPanel>
         </StackPanel>
+
 
 
     </Grid>
