@@ -125,5 +125,15 @@ namespace TimeTableManager
         {
 
         }
+
+        private void GoBack(Object s, RoutedEventArgs e)
+        {
+            MainWindow mainWindow = new MainWindow(dbContext1);
+            mainWindow.Show();
+            this.Close();
+
+        }
+
+
     }
 }

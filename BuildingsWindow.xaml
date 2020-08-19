@@ -13,7 +13,7 @@
         Background="{DynamicResource MaterialDesignPaper}"
         FontFamily="{DynamicResource MaterialDesignFont}"
         mc:Ignorable="d"
-        Title="BuildingsWindow" Height="768" Width="1366">
+        Title="BuildingsWindow" Height="768" Width="1366" WindowStartupLocation="CenterScreen">
 
     <Grid>
         <Grid.ColumnDefinitions>
@@ -23,13 +23,28 @@
 
         <Grid.RowDefinitions>
             <RowDefinition Height="50"/>
-            <RowDefinition Height="100"/>
+            <RowDefinition Height="110"/>
             <RowDefinition Height="*"/>
 
         </Grid.RowDefinitions>
 
+        <materialDesign:Card Grid.Row="0" Grid.Column="0" Background="{DynamicResource MaterialDesignDarkBackground}" Grid.ColumnSpan="3">
+            <StackPanel Orientation="Horizontal" Background="#FF673AB7">
 
-        <StackPanel Width="300" Background="White" Grid.Column="1" Grid.RowSpan="3">
+                <Button Style="{StaticResource MaterialDesignFloatingActionMiniAccentButton}"
+                            ToolTip="MaterialDesignFloatingActionMiniAccentButton" Margin="10,0,0,0" Click="GoBack" >
+                    <materialDesign:PackIcon Kind="ArrowLeftCircle" Height="24" Width="24" />
+                </Button>
+
+                <Button Style="{StaticResource MaterialDesignFloatingActionMiniAccentButton}"
+                            ToolTip="MaterialDesignFloatingActionMiniAccentButton" Click="GoBack" Margin="10,0,0,0">
+                    <materialDesign:PackIcon Kind="House" Height="24" Width="24" />
+                </Button>
+
+            </StackPanel>
+        </materialDesign:Card>
+
+        <StackPanel Background="White" Grid.Column="1" Grid.Row="1" Grid.RowSpan="3">
             <Label Content="Building Management" FontWeight="Normal" FontSize="20" HorizontalAlignment="Center" Margin="0,20,0,0"/>
             <Label Content="Building Id&#xA;" FontWeight="Bold" Margin="10,50,0,0" HorizontalAlignment="Left"/>
             <TextBox x:Name="txtId" TextWrapping="Wrap" Width="260" Height="32" FontWeight="Bold" FontSize="16" IsEnabled="True"  materialDesign:HintAssist.Hint="Enter Id here Ex: NB1"/>
@@ -50,16 +65,10 @@
 
 
         </DataGrid>
-        <Rectangle Grid.Column="0" Grid.Row="0" Stroke="Black" >
-            <Rectangle.Fill>
-                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0" MappingMode="Absolute">
-                    <GradientStop Color="#FF7B4AFD"/>
-                    <GradientStop Color="#FF6328FF" Offset="1"/>
-                </LinearGradientBrush>
-            </Rectangle.Fill>
-        </Rectangle>
+       
+        
         <StackPanel Grid.Column="0" Grid.Row="1">
-            <Label Content="Filter By " FontWeight="Bold" FontSize="16" Margin="10,10,0,0" />
+            <Label Content="Filter By " FontWeight="Bold" FontSize="16" Margin="10,20,0,0" />
             <StackPanel Orientation="Horizontal" >
                 <TextBox x:Name="txtSearchId" TextChanged="SerachById"  HorizontalAlignment="Left"  Grid.Row="1" TextWrapping="Wrap" VerticalAlignment="Top" Width="200" Margin="20,0,0,0"  materialDesign:HintAssist.Hint="ID" Style="{StaticResource MaterialDesignFloatingHintTextBox}" FontSize="18"/>
                 <TextBox  x:Name="txtSearchName" TextChanged="SerachByName" HorizontalAlignment="Left"  Grid.Row="1" TextWrapping="Wrap" VerticalAlignment="Top" Width="200" Margin="50,0,0,0"  materialDesign:HintAssist.Hint="Name" Style="{StaticResource MaterialDesignFloatingHintTextBox}" FontSize="18"/>
