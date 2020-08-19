@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Data.Entity.Core;
 using System.Linq;
 using System.Text;
@@ -23,6 +24,7 @@ namespace TimeTableManager
     {
         MyDbContext dbContext1;
         Building SeletedBuilding = new Building();
+        ICollection<Building> buildings;
 
         public BuildingsWindow(MyDbContext dbContext)
         {
@@ -33,7 +35,13 @@ namespace TimeTableManager
 
         private void GetBuildings()
         {
-            BuildingDG.ItemsSource = dbContext1.Buildings.ToList();
+            if(buildings != null)
+            {
+                buildings.Clear();
+            }
+         
+            buildings = dbContext1.Buildings.ToList();
+            BuildingDG.ItemsSource = buildings;
   
 
         }
@@ -151,10 +159,10 @@ namespace TimeTableManager
             //insert that object to database
             if (SeletedBuilding == null)
             {
-                MessageBox.Show("This ID Already In the System Use a Different ID",
-                                     "Duplicate Building ID",
-                                     MessageBoxButton.OK,
-                                     MessageBoxImage.Error);
+                MessageBox.Show("Please Select a Builidng to Delete",
+                                    "No Selection",
+                                    MessageBoxButton.OK,
+                                    MessageBoxImage.Error);
             }
             else
             {
@@ -182,6 +190,42 @@ namespace TimeTableManager
             }
 
             return true;
+        }
+
+        private void SerachById(Object s, RoutedEventArgs e)
+        {
+            // Collection which will take your ObservableCollection
+            var _itemSourceList = new CollectionViewSource() { Source = buildings };
+
+            // ICollectionView the View/UI part 
+            ICollectionView Itemlist = _itemSourceList.View;
+
+            // your Filter
+            var yourCostumFilter = new Predicate<object>(item => ((Building)item).Bid.ToLower().Contains(txtSearchId.Text.ToLower()));
+
+            //now we add our Filter
+            Itemlist.Filter = yourCostumFilter;
+
+            BuildingDG.ItemsSource = Itemlist;
+
+        }
+
+        private void SerachByName(Object s, RoutedEventArgs e)
+        {
+            // Collection which will take your ObservableCollection
+            var _itemSourceList = new CollectionViewSource() { Source = buildings };
+
+            // ICollectionView the View/UI part 
+            ICollectionView Itemlist = _itemSourceList.View;
+
+            // your Filter
+            var yourCostumFilter = new Predicate<object>(item => ((Building)item).Name.ToLower().Contains(txtSearchName.Text.ToLower()));
+
+            //now we add our Filter
+            Itemlist.Filter = yourCostumFilter;
+
+            BuildingDG.ItemsSource = Itemlist;
+
         }
 
     }

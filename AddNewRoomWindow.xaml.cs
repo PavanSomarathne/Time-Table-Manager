@@ -46,10 +46,16 @@ namespace TimeTableManager
 
         private void EnableUpdateMode()
         {
+            TxtTitle.Content = "Change Room Details";
             TxtRid.Text = RoomToEdit.Rid;
             TxtCapacity.Text = RoomToEdit.Capacity.ToString();
             CBBuilding.SelectedItem = RoomToEdit.BuildingAS;
-            CBType.SelectedValue = RoomToEdit.Type;
+            CBType.Text = RoomToEdit.Type;
+
+            BtnSave.Content = "Update";
+            BtnSave.Click -= AddRoom;
+            BtnSave.Click += UpdateRoom;
+
 
         }
 
@@ -99,6 +105,46 @@ namespace TimeTableManager
 
         }
 
+        private void UpdateRoom(Object s, RoutedEventArgs e)
+        {
+            if (ValidateInput())
+            {
+
+
+                //insert that object to database
+                if (!(RoomToEdit.Rid.Equals(TxtRid.Text.Trim())) && dbContext1.Rooms.Any(r => r.Rid == TxtRid.Text))
+                {
+                    MessageBox.Show("This ID Already In the System Use a Different ID",
+                                         "Duplicate Room ID",
+                                         MessageBoxButton.OK,
+                                         MessageBoxImage.Error);
+                }
+                else
+                {
+                    RoomToEdit.Rid = TxtRid.Text;
+                    RoomToEdit.Type = CBType.Text;
+                    RoomToEdit.BuildingAS = (Building)CBBuilding.SelectedItem;
+                    RoomToEdit.Capacity = int.Parse(TxtCapacity.Text);
+                    //  var query = $"UPDATE Buildings SET Id = '{txtId.Text}', Name = '{txtName.Text}' WHERE Id='{SeletedBuilding.Id}'";
+                    //  BuildingDG.SelectedItem = NewBuilding;
+
+                    // dbContext1.Database.ExecuteSqlRaw(query);
+                    dbContext1.Rooms.Update(RoomToEdit);
+                    dbContext1.SaveChanges();
+                    this.Close();
+
+                }
+
+
+            }
+            else
+            {
+                MessageBox.Show("Please Complete Room Details to Continue !",
+                                    "Incomplete Details",
+                                   MessageBoxButton.OK,
+                                 MessageBoxImage.Warning);
+            }
+        }
 
         private void CloseWindow(Object s, RoutedEventArgs e)
         {

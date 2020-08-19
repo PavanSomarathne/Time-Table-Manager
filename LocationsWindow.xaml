@@ -13,7 +13,8 @@
         TextOptions.TextRenderingMode="Auto"
         Background="{DynamicResource MaterialDesignPaper}"
         FontFamily="{DynamicResource MaterialDesignFont}"
-        Title="LocationsWindow" Height="768" Width="1366" WindowStartupLocation="CenterScreen">
+        Title="LocationsWindow" Height="768" Width="1366" WindowStartupLocation="CenterScreen"
+        DataContext="{Binding RelativeSource={RelativeSource Self}}" >
     <Grid>
 
         <Grid.ColumnDefinitions>
@@ -24,14 +25,37 @@
 
         <Grid.RowDefinitions>
             <RowDefinition Height="50"/>
+            <RowDefinition Height="100"/>
             <RowDefinition Height="3*"/>
             <RowDefinition Height="*"/>
+            <RowDefinition Height="25"/>
         </Grid.RowDefinitions>
-        
+
+        <StackPanel Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2">
+            <Label Content="Search By " FontWeight="Bold" FontSize="16" Margin="10,10,0,0" />
+            <StackPanel Orientation="Horizontal" >
+                <TextBox x:Name="txtSearchId" TextChanged="SerachById"  HorizontalAlignment="Left"  Grid.Row="1" TextWrapping="Wrap" VerticalAlignment="Top" Width="200" Margin="20,0,0,0"  materialDesign:HintAssist.Hint="Room ID" Style="{StaticResource MaterialDesignFloatingHintTextBox}" FontSize="16"/>
+            
+                <ComboBox Width="150" x:Name="CBSearchBuilding"  DisplayMemberPath="Name" materialDesign:HintAssist.Hint="Select Building" materialDesign:HintAssist.HintOpacity=".26" IsEditable="True" SelectionChanged="SearchByBuilding" FontSize="16" Margin="20,10,0,0"/>
+                <ComboBox Width="150" x:Name="CBSearchType" Margin="20,10,0,0"  materialDesign:HintAssist.Hint="Select Type" materialDesign:HintAssist.HintOpacity=".26" IsEditable="True" SelectionChanged="SearchByType" FontSize="16" >
+                   
+                    <ComboBoxItem Content="LectureRoom" />
+                    <ComboBoxItem Content="Lab" />
+                </ComboBox>
+            </StackPanel>
+        </StackPanel>
+
+        <materialDesign:Card Grid.Row="4" Grid.ColumnSpan="4" Background="{DynamicResource MaterialDesignCardBackground}">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,0,20,5">
+                <Label Content="Status : " FontWeight="Bold" />
+                <Label x:Name="txtSts" Content="Status"  Margin="20,0,0,0" />
+            </StackPanel>
+
+        </materialDesign:Card>
         
         <Rectangle Margin="0,492,0,10" Stroke="Black" HorizontalAlignment="Center" Width="1364"/>
         <Rectangle Grid.Row="0" Grid.ColumnSpan="2" Grid.Column="0" Height="50" Stroke="Black" VerticalAlignment="Top" Fill="#FF6839FF" Panel.ZIndex="-1"/>
-        <DataGrid Grid.Row="1" Grid.Column="0" x:Name="RoomsDG" AutoGenerateColumns="False" SelectionChanged="UpdateSelection">
+        <DataGrid Grid.Row="2" Grid.Column="0" x:Name="RoomsDG" AutoGenerateColumns="False" SelectionChanged="UpdateSelection" ItemsSource="{Binding Items}">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Room ID" Binding="{Binding Rid}" />
                 <DataGridTextColumn Header="Building Name" Binding="{Binding BuildingAS.Name}" />
@@ -44,17 +68,17 @@
         <StackPanel Width="300" Grid.Column="2" Grid.Row="0" Grid.RowSpan="3" materialDesign:ShadowAssist.ShadowDepth="Depth4" >
             <Label Content="Location Management"  FontWeight="Normal" FontSize="20" HorizontalAlignment="Center"/>
             <Label Content="Selected Room Id&#xD;&#xA;" FontWeight="Bold" Margin="5,20,0,4" Height="30"/>
-            <TextBox x:Name="TxtRid" Text="TextBox" TextWrapping="Wrap"  Width="261" Height="30" FontWeight="Bold" FontSize="14"/>
+            <TextBox x:Name="TxtRid" TextWrapping="Wrap"  Width="261" Height="30" FontWeight="Bold" FontSize="14" Text="Selected Room ID" IsEnabled="False"/>
             <Label Content="Building&#xA;" FontWeight="Bold" Width="300" Height="30" Margin="5,5,0,0"/>
-            <TextBox x:Name="TxtBuilding" Text="TextBox" TextWrapping="Wrap" Width="261" Height="30" FontWeight="Bold" FontSize="14" IsEnabled="False"/>
+            <TextBox x:Name="TxtBuilding" Text="Selected Building Name" TextWrapping="Wrap" Width="261" Height="30" FontWeight="Bold" FontSize="14" IsEnabled="False"/>
             <StackPanel Orientation="Horizontal" Margin="0,5,0,0" >
                 <StackPanel >
                     <Label Content="Capacity&#xA;" HorizontalAlignment="Left"  VerticalAlignment="Top" FontWeight="Bold" Height="30" Margin="5,0,0,0"/>
-                    <TextBox x:Name="TxtCapacity" Text="TextBox" TextWrapping="Wrap"  Width="120" Height="30" FontWeight="Bold" FontSize="14" IsEnabled="False" Margin="20,0,0,0"/>
+                    <TextBox x:Name="TxtCapacity" Text="Capacity" TextWrapping="Wrap"  Width="120" Height="30" FontWeight="Bold" FontSize="14" IsEnabled="False" Margin="20,0,0,0"/>
                 </StackPanel>
                 <StackPanel Margin="11,0,0,0" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" >
                     <Label Content="Type&#xA;" HorizontalAlignment="Left"  VerticalAlignment="Top" FontWeight="Bold" Height="30"/>
-                    <TextBox x:Name="TxtType" Text="TextBox" TextWrapping="Wrap" Width="120" Height="30" FontWeight="Bold" FontSize="14" IsEnabled="False" Margin="10,0,0,0"/>
+                    <TextBox x:Name="TxtType" Text="Type" TextWrapping="Wrap" Width="120" Height="30" FontWeight="Bold" FontSize="14" IsEnabled="False" Margin="10,0,0,0"/>
                 </StackPanel>
             </StackPanel>
             <Button Content="Add New Room" Height="31" Width="270"  FontWeight="Bold" Margin="0,20,0,0" Click="AddNewRoom"/>
