@@ -71,6 +71,15 @@ namespace TimeTableManager
             this.Close();
 
         }
+
+        private void LaunchLectureManagement(Object s, RoutedEventArgs e)
+        {
+            // Collection which will take your ObservableCollection
+            LectureDetailWindow locationsWindow = new LectureDetailWindow(dbContext1);
+            locationsWindow.Show();
+            this.Close();
+
+        }
     }
 
 }

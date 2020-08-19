@@ -50,13 +50,13 @@ namespace TimeTableManager
         private void getLectureDetai()
         {
             LectureDG.ItemsSource = dbContext1.LectureInformation.Include(r => r.BuildinDSA);
-        
-    
+
+
         }
 
         private void AddLecturerDt(object s, RoutedEventArgs e)
         {
-           
+
 
 
 
@@ -107,7 +107,7 @@ namespace TimeTableManager
 
                 }
                 else
-                  {
+                {
 
                     MessageBox.Show("Please Complete Lecture  Details correctly !",
                              "Input Values not Valid to update",
@@ -170,7 +170,7 @@ namespace TimeTableManager
                             MessageBoxImage.Warning);
                 }
 
-               
+
 
             }
 
@@ -178,7 +178,7 @@ namespace TimeTableManager
 
 
 
-         
+
         }
 
 
@@ -199,7 +199,7 @@ namespace TimeTableManager
         {
             lecLevelSelected = true;
 
-            if(lecidSelected && lecLevelSelected)
+            if (lecidSelected && lecLevelSelected)
             {
                 int lLvl = LecLevel.SelectedIndex + 1;
 
@@ -209,7 +209,7 @@ namespace TimeTableManager
             }
         }
 
-     
+
         private void UpdateLectureDetailsIn(object s, RoutedEventArgs e)
         {
             selectedLecturedtls = (s as FrameworkElement).DataContext as LecturerDetails;
@@ -219,14 +219,14 @@ namespace TimeTableManager
             LecturerName.Text = selectedLecturedtls.LecName;
             LecIdName.Text = selectedLecturedtls.EmpId;
             LecturerFaculty.Text = selectedLecturedtls.Faculty;
-            LecturerDepartment.Text =selectedLecturedtls.Department;
+            LecturerDepartment.Text = selectedLecturedtls.Department;
             LecturerCenter.Text = selectedLecturedtls.Center;
             Building buildinDSA = selectedLecturedtls.BuildinDSA;
             CBBuilding.Text = buildinDSA.Name;
             LecLevel.Text = selectedLecturedtls.EmpLevel.ToString();
             rankDetail.Text = selectedLecturedtls.Rank;
 
-            
+
 
         }
 
@@ -254,14 +254,14 @@ namespace TimeTableManager
                 LecIdName.Focus();
                 return false;
             }
-            
+
 
             if (string.IsNullOrEmpty(LecturerFaculty.Text))
             {
                 LecturerFaculty.Focus();
                 return false;
             }
-            
+
 
             if (string.IsNullOrEmpty(LecturerDepartment.Text))
             {
@@ -280,7 +280,7 @@ namespace TimeTableManager
                 CBBuilding.Focus();
                 return false;
             }
-            
+
 
             if (string.IsNullOrEmpty(LecLevel.Text))
             {
@@ -291,6 +291,15 @@ namespace TimeTableManager
             return true;
         }
 
+        private void GoBack(Object s, RoutedEventArgs e)
+        {
+            MainWindow mainWindow = new MainWindow(dbContext1);
+            mainWindow.Show();
+            this.Close();
+
+        }
+
     }
+
 
 }

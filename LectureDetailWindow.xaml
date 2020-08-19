@@ -3,6 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         xmlns:local="clr-namespace:TimeTableManager"
         mc:Ignorable="d"
         Title="LectureDetailWindow" Height="768" Width="1366">
@@ -10,13 +11,25 @@
     <Border Padding="20">
         <Grid>
             <Grid.RowDefinitions >
-                <RowDefinition Height="20"/>
+
+                <RowDefinition Height="50"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
 
-            
-            <Label Grid.Row="0" FontWeight="Bold" FontSize="8" HorizontalAlignment="Left" VerticalAlignment="Center" Content="Home"></Label>
-         
+
+            <StackPanel Orientation="Horizontal">
+
+                <Button Style="{StaticResource MaterialDesignFloatingActionMiniAccentButton}"
+                            ToolTip="MaterialDesignFloatingActionMiniAccentButton" Margin="10,0,0,0" Click="GoBack" >
+                    <materialDesign:PackIcon Kind="ArrowLeftCircle" Height="24" Width="24" />
+                </Button>
+
+                <Button Style="{StaticResource MaterialDesignFloatingActionMiniAccentButton}"
+                            ToolTip="MaterialDesignFloatingActionMiniAccentButton" Click="GoBack" Margin="10,0,0,0">
+                    <materialDesign:PackIcon Kind="House" Height="24" Width="24" />
+                </Button>
+
+            </StackPanel>
 
             <StackPanel Grid.Row="1" Margin="5 12 5 0">
                 <Grid>
