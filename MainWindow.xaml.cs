@@ -21,13 +21,64 @@ namespace TimeTableManager
     /// </summary>
     public partial class MainWindow : Window
     {
-        public MainWindow()
+        MyDbContext dbContext1;
+        public MainWindow(MyDbContext dbContext)
         {
             InitializeComponent();
+            dbContext1 = dbContext;
         }
+
         public void buttonclick1(object sender, RoutedEventArgs e)
         {
-            
+
+        }
+
+        private void LaunchStudents(Object s, RoutedEventArgs e)
+        {
+            // Collection which will take your ObservableCollection
+
+
+        }
+
+        private void LaunchLecturers(Object s, RoutedEventArgs e)
+        {
+            // Collection which will take your ObservableCollection
+
+
+        }
+
+        private void LaunchSubjects(Object s, RoutedEventArgs e)
+        {
+            // Collection which will take your ObservableCollection
+
+
+        }
+
+        private void LaunchLocations(Object s, RoutedEventArgs e)
+        {
+            // Collection which will take your ObservableCollection
+            LocationsWindow locationsWindow = new LocationsWindow(dbContext1);
+            locationsWindow.Show();
+            this.Close();
+
+        }
+
+        private void LaunchStats(Object s, RoutedEventArgs e)
+        {
+            // Collection which will take your ObservableCollection
+            StatisticsWindow locationsWindow = new StatisticsWindow(dbContext1);
+            locationsWindow.Show();
+            this.Close();
+
+        }
+
+        private void LaunchLectureManagement(Object s, RoutedEventArgs e)
+        {
+            // Collection which will take your ObservableCollection
+            LectureDetailWindow locationsWindow = new LectureDetailWindow(dbContext1);
+            locationsWindow.Show();
+            this.Close();
+
         }
     }
 

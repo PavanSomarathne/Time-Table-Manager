@@ -11,9 +11,9 @@ namespace TimeTableManager.Models
         public String SubjectCode { get; set; }
         public String OfferedYear { get; set; }
         public String OfferedSemester{ get; set; }
-        public float LecHours { get; set; }
-        public float TutorialHours { get; set; }
-        public float LabHours{ get; set; }
-        public float EvalHours { get; set; }
+        public int LecHours { get; set; }
+        public int TutorialHours { get; set; }
+        public int LabHours{ get; set; }
+        public int EvalHours { get; set; }
     }
 }

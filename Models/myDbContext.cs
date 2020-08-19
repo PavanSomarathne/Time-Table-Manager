@@ -14,11 +14,13 @@ namespace TimeTableManager.Models
         }
       
         public DbSet<Schedule> Schedules { get; set; }
+        public DbSet<Building> Buildings { get; set; }
         public DbSet<LecturerDetails> LectureInformation { get; set; }
         public DbSet<SubjectDetails> SubjectInformation { get; set; }
-        public DbSet<Building> Buildings { get; set; }
-
         public DbSet<Room> Rooms { get; set; }
+        public DbSet<Student> Students { get; set; }
+        public DbSet<Tag> Tags { get; set; }
+
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -26,11 +28,15 @@ namespace TimeTableManager.Models
             .HasMany(c => c.RoomsAS)
             .WithOne(e => e.BuildingAS);
 
+            modelBuilder.Entity<Building>()
+                .HasMany(q => q.LecturesDSA)
+                .WithOne(k => k.BuildinDSA);
+
             modelBuilder.Entity<Schedule>().HasData(GetSchedules());
-            modelBuilder.Entity<LecturerDetails>().HasData(GetLectureDetails());
-            modelBuilder.Entity<SubjectDetails>().HasData(GetSubjectDetails());
+            modelBuilder.Entity<SubjectDetails>();
             //modelBuilder.Entity<Building>().HasData(GetBuildings());
 
+        
             base.OnModelCreating(modelBuilder);
 
         }
@@ -42,13 +48,7 @@ namespace TimeTableManager.Models
                 };
         }
 
-        private LecturerDetails[] GetLectureDetails()
-        {
-            return new LecturerDetails[]
-                {
-                    new LecturerDetails{ Id=1, LecName="Saman Perera",EmpId="emp1500245",Faculty="Computing",Department="Software Engineering",Center="Malabe",Building="Main Building",EmpLevel=5,Rank="5.emp1500245"}
-                };
-        }
+    
 
 
         private SubjectDetails[] GetSubjectDetails()
@@ -58,6 +58,10 @@ namespace TimeTableManager.Models
                     new SubjectDetails{ Id=1, OfferedYear="4thYear",OfferedSemester="2nd Semester",SubjectName="OOP",SubjectCode="SE1258",LecHours=14,TutorialHours=10,LabHours=8,EvalHours=2}
                 };
         }
+
+
+
+    
 
         private Building[] GetBuildings()
         {
@@ -73,6 +77,24 @@ namespace TimeTableManager.Models
                 {
                     new Room{Id = -1,Rid="B02", Type="Lab",BuildingAS = new Building{ Id = -1,Bid="NB", Name="New Building"}}
                 };
+        }
+
+        private Student[] GetStudents()
+        {
+            return new Student[]
+            {
+                new Student { Id=-1 , accYrSem = "Y3.S1" , programme ="CSSE" , groupNo = 03 , groupId="Y3.S1.CSSE.03" , subGroupNo = 1},
+
+            };
+        }
+
+        private Tag[] GetTags()
+        {
+            return new Tag[]
+            {
+                new Tag { Id=-1 , tags = "Lecture"},
+
+            };
         }
     }
 

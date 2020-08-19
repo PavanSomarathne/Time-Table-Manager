@@ -46,8 +46,8 @@
                         <Label Content="Building" Margin="0,15,0,0"/>
                     </StackPanel>
                     <StackPanel Margin="20,0,0,0" >
-                        <TextBox Text="B1028" x:Name="TxtRid" Width="150" FontSize="22" FontWeight="Bold" />
-                        <ComboBox Width="150" x:Name="CBBuilding" ItemsSource="{Binding Path=Buildings}"  DisplayMemberPath="Name"/>
+                        <TextBox materialDesign:HintAssist.Hint="Enter ID " x:Name="TxtRid" Width="150" FontSize="22" FontWeight="Bold" />
+                        <ComboBox Width="150" x:Name="CBBuilding" ItemsSource="{Binding Path=Buildings}"  DisplayMemberPath="Name" materialDesign:HintAssist.Hint="Select Building" materialDesign:HintAssist.HintOpacity=".26" IsEditable="True"/>
                     </StackPanel>
 
                     <StackPanel Margin="40,0,0,0" >
@@ -56,9 +56,9 @@
                     </StackPanel>
                     <StackPanel Margin="20,0,0,0" >
 
-                        <TextBox x:Name="TxtCapacity" Text="1234" Width="150" PreviewTextInput="NumberValidationTextBox"/>
-                        <ComboBox Width="150" x:Name="CBType" Margin="0,10,0,0" >
-                            <ComboBoxItem Content="Lecture Room" />
+                        <TextBox x:Name="TxtCapacity" materialDesign:HintAssist.Hint="Enter Capacity" Width="150" PreviewTextInput="NumberValidationTextBox"/>
+                        <ComboBox Width="150" x:Name="CBType" Margin="0,10,0,0"  materialDesign:HintAssist.Hint="Select Type" materialDesign:HintAssist.HintOpacity=".26" IsEditable="True" >
+                            <ComboBoxItem Content="LectureRoom" />
                             <ComboBoxItem Content="Lab" />
                         </ComboBox>
                     </StackPanel>

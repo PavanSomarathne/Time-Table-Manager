@@ -20,7 +20,7 @@
             <StackPanel Grid.Row="1" Margin="5 12 5 0">
                 <Grid>
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="1.5*"/>
+                        <ColumnDefinition Width="2.5*"/>
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
 
@@ -30,7 +30,7 @@
                     <Border  Grid.Column="0" BorderBrush="Black" BorderThickness="1" Margin="0 15 0 0">
 
 
-                        <DataGrid  AutoGenerateColumns="False" Margin="5" Name="SubjectDG" IsReadOnly="True">
+                        <DataGrid  AutoGenerateColumns="False" Margin="5" Name="SubjectDG" IsReadOnly="True"  MaxHeight="720" MinHeight="600">
 
                             <DataGrid.Columns>
 
@@ -72,11 +72,11 @@
 
                         <Label HorizontalAlignment="Center" FontSize="20" Content="Subject Details Management"></Label>
                         <Label Content="Subject Name" Margin="8 10 0 0"></Label>
-                        <TextBox Padding="2" Margin="8 0 0 0" Text="{Binding SubjectName}" />
+                        <TextBox x:Name="SubName" Padding="2" Margin="8 0 0 0" Text="{Binding SubjectName}" />
                         <Label Content="Subject Code" Margin="8 10 0 0"></Label>
-                        <TextBox Padding="2" Margin="8 0 0 0" Text="{Binding SubjectCode}" />
+                        <TextBox  x:Name="SubCoDe" Padding="2" Margin="8 0 0 0" Text="{Binding SubjectCode}" />
                         <Label Content="OfferedYear" Margin="8 10 0 0"></Label>
-                        <ComboBox Padding="2" Margin="8 0 0 0" Text="{Binding OfferedYear}">
+                        <ComboBox x:Name="SubOfferYrr" Padding="2" Margin="8 0 0 0" Text="{Binding OfferedYear}">
                             <ComboBoxItem>1st Year</ComboBoxItem>
                             <ComboBoxItem>2st Year</ComboBoxItem>
                             <ComboBoxItem>3st Year</ComboBoxItem>
@@ -84,24 +84,24 @@
                         </ComboBox>
 
                         <Label Content="Offered Semester" Margin="8 10 0 0"></Label>
-                        <ComboBox Padding="2" Margin="8 0 0 0" Text="{Binding OfferedSemester}">
+                        <ComboBox x:Name="SubOfferSemmm" Padding="2" Margin="8 0 0 0" Text="{Binding OfferedSemester}">
                             <ComboBoxItem>1st Semster</ComboBoxItem>
                             <ComboBoxItem>2nd Semester</ComboBoxItem>
                         </ComboBox>
 
                         <Label Content="Lecture Hours" Margin="8 10 0 0"></Label>
-                        <TextBox Padding="2" Margin="8 0 0 0" Text="{Binding LecHours}" />
+                        <TextBox x:Name="LecHrForSub"  PreviewTextInput="NumberValidationForLecHours" Padding="2" Margin="8 0 0 0" Text="{Binding LecHours}" />
 
                         <Label Content="Tutorial Hours" Margin="8 10 0 0"></Label>
-                        <TextBox Padding="2" Margin="8 0 0 0" Text="{Binding TutorialHours}" />
+                        <TextBox x:Name="TuteHrForSub" PreviewTextInput="NumberValidationForTuteHours"  Padding="2" Margin="8 0 0 0" Text="{Binding TutorialHours}" />
 
                         <Label Content="Lab Hours" Margin="8 10 0 0"></Label>
-                        <TextBox Padding="2" Margin="8 0 0 0" Text="{Binding LabHours}" />
+                        <TextBox x:Name="LabHrForSub" Padding="2" PreviewTextInput="NumberValidationForLabHours"  Margin="8 0 0 0" Text="{Binding LabHours}" />
 
                         <Label Content="Evaluation Hours" Margin="8 10 0 0"></Label>
-                        <TextBox Padding="2" Margin="8 0 0 0" Text="{Binding EvalHours}" />
+                        <TextBox x:Name="EvalHrForSub" PreviewTextInput="NumberValidationForEvaluHours" Padding="2" Margin="8 0 0 0" Text="{Binding EvalHours}" />
 
-                        <Button Content="Add Subject" FontWeight="Bold" Name="ADbuttn" Margin="8 55 0 0" Padding="8" Click="AddSubjectDetails" ></Button>
+                        <Button Content="Add Subject" FontWeight="Bold" Name="ADbuttn" Margin="8 35 0 0" Padding="8" MinHeight="50" Click="AddSubjectDetails" ></Button>
                     </StackPanel>
                 </Grid>
             </StackPanel>

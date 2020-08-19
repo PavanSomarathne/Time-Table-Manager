@@ -23,18 +23,18 @@ namespace TimeTableManager
             ServiceCollection services = new ServiceCollection();
             services.AddDbContext<MyDbContext>(option => {
                 option.UseSqlite("Data Source = TimeTableManager.db");
-            
+
             });
 
-            services.AddSingleton<ScheduleWindow>();
+            services.AddSingleton<MainWindow>();
             serviceProvider = services.BuildServiceProvider();
         }
 
         private void OnStarup(object s, StartupEventArgs e)
         {
-            var mainWindow = serviceProvider.GetService<ScheduleWindow>();
+            var mainWindow = serviceProvider.GetService<MainWindow>();
             mainWindow.Show();
-        
+
         }
 
         private void Application_Startup(object sender, StartupEventArgs e)
