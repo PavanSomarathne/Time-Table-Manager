@@ -42,6 +42,15 @@ namespace TimeTableManager
 
         }
 
+        private void LaunchTags(Object s, RoutedEventArgs e)
+        {
+            TagWindow tagWindow = new TagWindow(dbContext1);
+            tagWindow.Show();
+            this.Close();
+
+
+        }
+
         private void LaunchLecturers(Object s, RoutedEventArgs e)
         {
             // Collection which will take your ObservableCollection
