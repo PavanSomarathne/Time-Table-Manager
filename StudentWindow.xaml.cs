@@ -20,7 +20,10 @@ namespace TimeTableManager
     public partial class StudentWindow : Window
     {
         MyDbContext dbContext1;
+
         Student NewStudent = new Student();
+        Student selectedStudent = new Student();
+
         public StudentWindow(MyDbContext dbContext)
         {
             this.dbContext1 = dbContext;
@@ -35,77 +38,57 @@ namespace TimeTableManager
             showDetailsGrid.ItemsSource = dbContext1.Students.ToList();
         }
 
-        Student NewStudent1 = new Student();
+        
 
 
         private void clear()
         {
-            //cmb1.Text = "";
-            //cmb2.Text = "";
-            txtGroupNo.Clear();
-            txtGroupID.Clear();
-            txtSubGroupNo.Clear();
-            txtSubGroupID.Clear();
+            //cmb1.Text = null;
+            //cmb2.Text = null;
+            //txtGroupNo.Text=null;
+            //txtGroupID.Text = null;
+            //txtSubGroupNo.Text = null;
+            //txtSubGroupID.Text = null;
+            addUpdateStudentDetailsGrid.DataContext = null;
         }
 
 
-        private Student GetStudentBeforeAdd(Student student)
-        {
-            NewStudent.Id = student.Id;
-            NewStudent.accYrSem = student.accYrSem;
-            NewStudent.programme = student.programme;
-            NewStudent.groupNo = student.groupNo;
-            NewStudent.groupId = student.accYrSem + "." + student.programme + "." + student.groupNo;
-            NewStudent.subGroupNo = student.subGroupNo;
-            NewStudent.subGroupId = student.accYrSem + "." + student.programme + "." + student.groupNo + "." + student.subGroupNo;
-
-            return NewStudent;
-        }
-
-
+      
 
         private void AddStudent(object s, RoutedEventArgs e)
         {
-            NewStudent1 = GetStudentBeforeAdd(NewStudent);
-            dbContext1.Students.Add(NewStudent1);
+            //NewStudent1 = GetStudentBeforeAdd(NewStudent);
+            NewStudent.groupId = NewStudent.accYrSem + "." + NewStudent.programme + "." + NewStudent.groupNo;
+            NewStudent.subGroupId = NewStudent.accYrSem + "." + NewStudent.programme + "." + NewStudent.groupNo + "." + NewStudent.subGroupNo;
+            dbContext1.Students.Add(NewStudent);
             dbContext1.SaveChanges();
-            GetStudents();
+           
             NewStudent = new Student();
             addUpdateStudentDetailsGrid.DataContext = NewStudent;
             //dbContext.Update(selectedStudent);
             clear();
+            GetStudents();
         }
 
-        Student selectedStudent = new Student();
+        
         private void updateSdudentForEdit(object s, RoutedEventArgs e)
         {
             selectedStudent = (s as FrameworkElement).DataContext as Student;
             addUpdateStudentDetailsGrid.DataContext = selectedStudent;
         }
 
-        Student NewStd = new Student();
-        Student NewStudent2 = new Student();
-
-        private Student GetStudentBeforeUpdate(Student std)
-        {
-            NewStd.Id = std.Id;
-            NewStd.accYrSem = std.accYrSem;
-            NewStd.programme = std.programme;
-            NewStd.groupNo = std.groupNo;
-            NewStd.groupId = std.accYrSem + "." + std.programme + "." + std.groupNo;
-            NewStd.subGroupNo = std.subGroupNo;
-            NewStd.subGroupId = std.accYrSem + "." + std.programme + "." + std.groupNo + "." + std.subGroupNo;
-
-            return NewStd;
-        }
+       
 
         private void UpdateStudent(object s, RoutedEventArgs e)
         {
-            NewStudent2 = GetStudentBeforeUpdate(NewStd);
-            dbContext1.Update(NewStudent2);
+           
+            selectedStudent.groupId = selectedStudent.accYrSem + "." + selectedStudent.programme + "." + selectedStudent.groupNo;
+            selectedStudent.subGroupId = selectedStudent.accYrSem + "." + selectedStudent.programme + "." + selectedStudent.groupNo + "." + selectedStudent.subGroupNo;
+            dbContext1.Update(selectedStudent);
             dbContext1.SaveChanges();
-            GetStudents();
             clear();
+            GetStudents();
+            
         }
 
         private void deleteSdudent(object s, RoutedEventArgs e)
@@ -119,13 +102,12 @@ namespace TimeTableManager
         private void resetStudent(object s, RoutedEventArgs e)
         {
             clear();
+            Student NewStudent = new Student();
+            addUpdateStudentDetailsGrid.DataContext = NewStudent;
+            GetStudents();
         }
 
-        private void showDetailsGrid_Scroll(object sender, System.Windows.Controls.Primitives.ScrollEventArgs e)
-        {
-
-        }
-
+    
         private void GoBack(Object s, RoutedEventArgs e)
         {
             MainWindow mainWindow = new MainWindow(dbContext1);

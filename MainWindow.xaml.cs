@@ -84,6 +84,14 @@ namespace TimeTableManager
             this.Close();
 
         }
+
+        private void OpenSchedule(object sender, RoutedEventArgs e)
+        {
+          
+            ScheduleWindow sw = new ScheduleWindow(dbContext1);
+            sw.Show();
+            this.Close();
+        }
     }
 
 }

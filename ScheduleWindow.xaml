@@ -21,13 +21,18 @@
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="8*"/>
+                        <ColumnDefinition Width="20*"/>
                     </Grid.ColumnDefinitions>
-                    <Button Grid.Column="0" Content="Back" Padding="4" Margin="1">
-                        
+                    <Button Grid.Column="0"  Style="{StaticResource MaterialDesignFloatingActionMiniAccentButton}"
+                            ToolTip="MaterialDesignFloatingActionMiniAccentButton" Margin="10,0,0,0" Click="GoBack" >
+                        <materialDesign:PackIcon Kind="ArrowLeftCircle" Height="24" Width="24" />
                     </Button>
-                    <Button Grid.Column="1" Content="Home" Padding="4" Margin="1"></Button>
-                    <Label Grid.Column="2" Content="Time Table Manager" HorizontalAlignment="Center" FontSize="20" FontWeight="Bold"></Label>
+
+                    <Button Grid.Column="1"  Style="{StaticResource MaterialDesignFloatingActionMiniAccentButton}"
+                            ToolTip="MaterialDesignFloatingActionMiniAccentButton" Click="GoBack" Margin="10,0,0,0">
+                        <materialDesign:PackIcon Kind="House" Height="24" Width="24" />
+                    </Button>
+                    
                 </Grid>
             </StackPanel>
             <Grid Grid.Row="1">
@@ -36,41 +41,42 @@
                     <ColumnDefinition Width="*"/>
 
                 </Grid.ColumnDefinitions>
+                <Border  Grid.Column="0" BorderBrush="Black" BorderThickness="1" Margin="0 15 0 0" MaxHeight="720" MinHeight="600">
+                    <StackPanel Grid.Column="0"  MaxHeight="720" MinHeight="600" >
+                        <Grid >
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="400" />
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
 
-                <StackPanel Grid.Column="0">
-                    <Grid>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="400" />
-                            <RowDefinition Height="*"/>
-                        </Grid.RowDefinitions>
+                            <StackPanel  Grid.Row="0"  Margin="3">
+                               
 
-                        <StackPanel Grid.Row="0" Background="OldLace" Margin="3">
-                            <Label Content="Time Manage" HorizontalAlignment="Center" FontSize="20"></Label>
+                                <DataGrid AutoGenerateColumns="False" Margin="5" Name="ScheduleDG" IsReadOnly="True" >
+                                    <DataGrid.Columns>
+                                        <DataGridTextColumn Header="Id" Binding="{Binding Id}"/>
+                                        <DataGridTextColumn Header="Working Days" Binding="{Binding Working_days_count}"/>
+                                        <DataGridTextColumn Header="Days" Binding="{Binding Working_days}"/>
+                                        <DataGridTextColumn Header="Working Time" Binding="{Binding working_time_hrs}"/>
+                                        <DataGridTextColumn Header="Working Time" Binding="{Binding Working_time_mins}"/>
+                                        <DataGridTextColumn Header="Time Slot Duration" Binding="{Binding Working_duration}"/>
 
-                            <DataGrid AutoGenerateColumns="False" Margin="5" Name="ScheduleDG" IsReadOnly="True" >
-                                <DataGrid.Columns>
-                                    <DataGridTextColumn Header="Id" Binding="{Binding Id}"/>
-                                    <DataGridTextColumn Header="Working Days" Binding="{Binding Working_days_count}"/>
-                                    <DataGridTextColumn Header="Days" Binding="{Binding Working_days}"/>
-                                    <DataGridTextColumn Header="Working Time" Binding="{Binding working_time_hrs}"/>
-                                    <DataGridTextColumn Header="Working Time" Binding="{Binding Working_time_mins}"/>
-                                    <DataGridTextColumn Header="Time Slot Duration" Binding="{Binding Working_duration}"/>
+                                        <DataGridTemplateColumn Header="Update" >
+                                            <DataGridTemplateColumn.CellTemplate>
+                                                <DataTemplate>
+                                                    <Button Content="Select" Click="UpdateScheduleForEdit"/>
+                                                </DataTemplate>
+                                            </DataGridTemplateColumn.CellTemplate>
+                                        </DataGridTemplateColumn>
+                                    </DataGrid.Columns>
+                                </DataGrid>
+                            </StackPanel>
+                            <StackPanel Grid.Row="1" Background="Beige">
 
-                                    <DataGridTemplateColumn Header="Update" >
-                                        <DataGridTemplateColumn.CellTemplate>
-                                            <DataTemplate>
-                                                <Button Content="Select" Click="UpdateScheduleForEdit"/>
-                                            </DataTemplate>
-                                        </DataGridTemplateColumn.CellTemplate>
-                                    </DataGridTemplateColumn>
-                                </DataGrid.Columns>
-                            </DataGrid>
-                        </StackPanel>
-                        <StackPanel Grid.Row="1" Background="Beige">
-                           
-                        </StackPanel>
-                    </Grid>
-                </StackPanel>
+                            </StackPanel>
+                        </Grid>
+                    </StackPanel>
+                </Border>
 
                 <StackPanel Grid.Column="1" Margin="3" Background="SeaShell">
                     <Grid x:Name="AddNewScheduleGrid">
@@ -80,7 +86,7 @@
                         </Grid.RowDefinitions>
 
                         <StackPanel Grid.Row="0"  Margin="5">
-                            <Label Content="Add a Schedule" HorizontalAlignment="Center" VerticalAlignment="Center"   FontWeight="Bold" FontSize="20"/>
+                            <Label Content="Schedule Management" HorizontalAlignment="Center" VerticalAlignment="Center"   FontWeight="Bold" FontSize="20"/>
                             <!-- Working days-->
                             <TextBlock Text="Working days per week" FontWeight="SemiBold" Margin="0 0 0 0"/>
                             <Grid>
