@@ -20,7 +20,7 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="50"/>
             <RowDefinition Height="0.8*"/>
-            <RowDefinition Height="1.3*"/>
+            <RowDefinition Height="1.4*"/>
             <RowDefinition Height="30"/>
             <RowDefinition Height="2.4*"/>
 
@@ -31,19 +31,19 @@
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
 
-        <StackPanel Grid.Row="2" Grid.ColumnSpan="2" Orientation="Horizontal" >
+        <StackPanel Grid.Row="2" Grid.ColumnSpan="2" Orientation="Horizontal" Margin="0,13,0,0" >
             <StackPanel Grid.Row="2" Margin="20,0,0,0">
-                <Button Content="Student Stats" Background="#FFEB3573" Width="197" FontSize="16" Height="40" Margin="0,10,0,0" HorizontalAlignment="Left"/>
-                <Button Content="Student Stats" Background="#FF2598F3" Width="197" FontSize="16" Height="40" Margin="0,10,0,0" HorizontalAlignment="Left"/>
-                <Button Content="Student Stats" Background="#FFFB8E03" Width="197" FontSize="16" Height="40" Margin="0,10,0,0" HorizontalAlignment="Left"/>
+                <Button Content="Students Stats" Background="#FFEB3573" Width="197" FontSize="16" Height="40" Margin="0,10,0,0" HorizontalAlignment="Left" Click="LoadStudentStats"/>
+                <Button Content="Lecturers Stats" Background="#FF2598F3" Width="197" FontSize="16" Height="40" Margin="0,10,0,0" HorizontalAlignment="Left" Click="LoadLecturerStats"/>
+                <Button Content="Subjects Stats" Background="#FFFB8E03" Width="197" FontSize="16" Height="40" Margin="0,10,0,0" HorizontalAlignment="Left" Click="LoadSubjectsStats"/>
 
             </StackPanel>
-            <TextBlock TextWrapping="WrapWithOverflow" Width="100" TextAlignment="Center" FontSize="18" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="100,0,0,0">
+            <TextBlock x:Name="txtP1" TextWrapping="WrapWithOverflow" Width="100" TextAlignment="Center" FontSize="18" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="100,0,0,0">
                     Students According to Subjects
             </TextBlock>
             <lvc:PieChart LegendLocation="Left"  Hoverable="False" x:Name="pieChart1"  Width="200" Height="180" Margin="20,0,0,0" />
 
-            <TextBlock TextWrapping="WrapWithOverflow" Width="150" TextAlignment="Center" FontSize="18" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="100,0,0,0">
+            <TextBlock x:Name="txtP2" TextWrapping="WrapWithOverflow" Width="150" TextAlignment="Center" FontSize="18" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="100,0,0,0">
                     Students According to Subjects
             </TextBlock>
             <lvc:PieChart LegendLocation="Left"  Hoverable="False" x:Name="pieChart2"  Width="200" Height="180" Margin="20,0,0,0"/>
@@ -70,7 +70,7 @@
         <StackPanel Grid.Row="1" Grid.ColumnSpan="2" Orientation="Horizontal" VerticalAlignment="Center" Margin="0,10,0,0" >
             <StackPanel  Margin="20,3,0,0" VerticalAlignment="Center" HorizontalAlignment="Center" >
                 <Label Content="Statistics" FontSize="36" FontWeight="Bold" Foreground="Black" />
-                <Label Content="2020/08/23 12.00AM" FontSize="24"  Foreground="#DD000000" />
+                <Label x:Name="txtDateTime" Content="2020/08/23 12.00AM" FontSize="24"  Foreground="#DD000000" />
             </StackPanel>
             <materialDesign:Card Height="110" Panel.ZIndex="200" Margin="100,0,0,0" >
                 <materialDesign:Card.Background>
@@ -80,7 +80,7 @@
                     </LinearGradientBrush>
                 </materialDesign:Card.Background>
                 <StackPanel Width="200" HorizontalAlignment="Center" VerticalAlignment="Center">
-                    <Label Content="N/A" FontSize="36" FontWeight="Bold" Foreground="Black" HorizontalAlignment="Center" />
+                    <Label  x:Name="txtNoStudents" Content="N/A" FontSize="36" FontWeight="Bold" Foreground="Black" HorizontalAlignment="Center" />
                     <Label Content="No Of Students" FontSize="20"  Foreground="#DD000000" HorizontalAlignment="Center" />
                 </StackPanel>
             </materialDesign:Card>
@@ -92,7 +92,7 @@
                     </LinearGradientBrush>
                 </materialDesign:Card.Background>
                 <StackPanel Width="200" HorizontalAlignment="Center" VerticalAlignment="Center">
-                    <Label Content="N/A" FontSize="36" FontWeight="Bold" Foreground="Black" HorizontalAlignment="Center" />
+                    <Label x:Name="txtNoLecturers" Content="N/A" FontSize="36" FontWeight="Bold" Foreground="Black" HorizontalAlignment="Center" />
                     <Label Content="No Of Lecturers" FontSize="20"  Foreground="#DD000000" HorizontalAlignment="Center" />
                 </StackPanel>
             </materialDesign:Card>
@@ -104,7 +104,7 @@
                     </LinearGradientBrush>
                 </materialDesign:Card.Background>
                 <StackPanel Width="200" HorizontalAlignment="Center" VerticalAlignment="Center">
-                    <Label Content="N/A" FontSize="36" FontWeight="Bold" Foreground="Black" HorizontalAlignment="Center" />
+                    <Label  x:Name="txtNoSubjects" Content="N/A" FontSize="36" FontWeight="Bold" Foreground="Black" HorizontalAlignment="Center" />
                     <Label Content="No Of Subjects" FontSize="20"  Foreground="#DD000000" HorizontalAlignment="Center" />
                 </StackPanel>
             </materialDesign:Card>
@@ -114,25 +114,25 @@
         <Label Grid.Row="3" Grid.Column="1" Content="Student According to Course" x:Name="txtChart2" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="16" FontWeight="Bold"/>
 
         <materialDesign:Card Grid.Row="4" Grid.Column="0" Margin="5,5,5,5">
-            <lvc:CartesianChart  Series="{Binding SeriesCollection}">
+            <lvc:CartesianChart x:Name="CH1">
                 <lvc:CartesianChart.AxisX>
-                    <lvc:Axis Title="Salesman" Labels="{Binding Labels}"></lvc:Axis>
+                    <lvc:Axis FontSize="14" Foreground="Black"  x:Name="txtC1X"></lvc:Axis>
                 </lvc:CartesianChart.AxisX>
                 <lvc:CartesianChart.AxisY>
-                    <lvc:Axis Title="Sold Apps" LabelFormatter="{Binding Formatter}"></lvc:Axis>
+                    <lvc:Axis FontSize="14" Foreground="Black" x:Name="txtC1Y" LabelFormatter="{Binding Formatter}"></lvc:Axis>
                 </lvc:CartesianChart.AxisY>
             </lvc:CartesianChart>
 
         </materialDesign:Card>
 
         <materialDesign:Card Grid.Row="4" Grid.Column="1" Margin="5,5,5,5">
-            <lvc:CartesianChart   Series="{Binding SeriesCollection2}"  >
-                <lvc:CartesianChart.AxisX>
-                    <lvc:Axis Title="Salesman" Labels="{Binding Labels2}"></lvc:Axis>
+            <lvc:CartesianChart x:Name="CH2"  >
+                <lvc:CartesianChart.AxisX >
+                    <lvc:Axis x:Name="txtC2X" FontSize="14" Foreground="Black"></lvc:Axis>
                 </lvc:CartesianChart.AxisX>
-                <lvc:CartesianChart.AxisY>
-                    <lvc:Axis Title="Sold Apps" LabelFormatter="{Binding Formatter}"></lvc:Axis>
-                </lvc:CartesianChart.AxisY>
+                <lvc:CartesianChart.AxisY >
+                    <lvc:Axis x:Name="txtC2Y" LabelFormatter="{Binding Formatter}" FontSize="14" Foreground="Black"></lvc:Axis>
+                </lvc:CartesianChart.AxisY >
             </lvc:CartesianChart>
         </materialDesign:Card>
     </Grid>

@@ -35,14 +35,14 @@ namespace TimeTableManager
 
         private void GetBuildings()
         {
-            if(buildings != null)
+            if (buildings != null)
             {
                 buildings.Clear();
             }
-         
+
             buildings = dbContext1.Buildings.ToList();
             BuildingDG.ItemsSource = buildings;
-  
+
 
         }
 
@@ -57,10 +57,8 @@ namespace TimeTableManager
                 //insert that object to database
                 if (dbContext1.Buildings.Any(b => b.Bid == txtId.Text))
                 {
-                    MessageBox.Show("This ID Already In the System Use a Different ID",
-                                         "Duplicate Building ID",
-                                         MessageBoxButton.OK,
-                                         MessageBoxImage.Error);
+
+                    new MessageBoxCustom("This ID Already In the System Use a Different ID", MessageType.Error, MessageButtons.Ok).ShowDialog();
                 }
                 else
                 {
@@ -72,10 +70,9 @@ namespace TimeTableManager
             }
             else
             {
-                MessageBox.Show("Please Complete Building Details to Continue !",
-                              "Incomplete Details",
-                              MessageBoxButton.OK,
-                              MessageBoxImage.Warning);
+
+                new MessageBoxCustom("Please Complete Building Details to Continue !", MessageType.Warning, MessageButtons.Ok).ShowDialog();
+
             }
 
         }
@@ -86,19 +83,18 @@ namespace TimeTableManager
             {
                 if (SeletedBuilding == null)
                 {
-                    MessageBox.Show("Select a Building to update!", "No Selection",
-                                        MessageBoxButton.OK,
-                                        MessageBoxImage.Error);
+                    new MessageBoxCustom("Select a Building to update !", MessageType.Warning, MessageButtons.Ok).ShowDialog();
+
                 }
                 else
                 {
                     //insert that object to database
                     if (SeletedBuilding.Bid != txtId.Text && dbContext1.Buildings.Any(b => b.Bid == txtId.Text))
                     {
-                        MessageBox.Show("This ID Already In the System Use a Different ID",
-                                             "Duplicate Building ID",
-                                             MessageBoxButton.OK,
-                                             MessageBoxImage.Error);
+
+
+                        new MessageBoxCustom("This ID Already In the System Use a Different ID !", MessageType.Error, MessageButtons.Ok).ShowDialog();
+
                     }
                     else
                     {
@@ -118,10 +114,8 @@ namespace TimeTableManager
             }
             else
             {
-                MessageBox.Show("Please Complete Building Details to Continue !",
-                              "Incomplete Details",
-                              MessageBoxButton.OK,
-                              MessageBoxImage.Warning);
+                new MessageBoxCustom("Please Complete Building Details to Continue !", MessageType.Warning, MessageButtons.Ok).ShowDialog();
+
             }
         }
 
@@ -159,17 +153,20 @@ namespace TimeTableManager
             //insert that object to database
             if (SeletedBuilding == null)
             {
-                MessageBox.Show("Please Select a Builidng to Delete",
-                                    "No Selection",
-                                    MessageBoxButton.OK,
-                                    MessageBoxImage.Error);
+                new MessageBoxCustom("Please Select a Builidng to Delete", MessageType.Error, MessageButtons.Ok).ShowDialog();
+
             }
             else
             {
+                bool? Result = new MessageBoxCustom("Are you sure, You want to Delete This Building ? ",
+                   MessageType.Confirmation, MessageButtons.YesNo).ShowDialog();
 
-                dbContext1.Buildings.Remove(SeletedBuilding);
-                dbContext1.SaveChanges();
-                GetBuildings();
+                if (Result.Value)
+                {
+                    dbContext1.Buildings.Remove(SeletedBuilding);
+                    dbContext1.SaveChanges();
+                    GetBuildings();
+                }
             }
 
 
@@ -225,6 +222,14 @@ namespace TimeTableManager
             Itemlist.Filter = yourCostumFilter;
 
             BuildingDG.ItemsSource = Itemlist;
+
+        }
+
+        private void GoBack(Object s, RoutedEventArgs e)
+        {
+            MainWindow mainWindow = new MainWindow(dbContext1);
+            mainWindow.Show();
+            this.Close();
 
         }
 

@@ -5,16 +5,28 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TimeTableManager"
         mc:Ignorable="d"
+         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
                Title="LectureDetailWindow" Height="768" Width="1366">
     <Border Padding="20">
         <Grid>
             <Grid.RowDefinitions >
-                <RowDefinition Height="20"/>
+                <RowDefinition Height="50"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
 
+            <StackPanel Orientation="Horizontal">
 
-            <Label Grid.Row="0" FontWeight="Bold" FontSize="8" HorizontalAlignment="Left" VerticalAlignment="Center" Content="Home"></Label>
+                <Button Style="{StaticResource MaterialDesignFloatingActionMiniAccentButton}"
+                            ToolTip="MaterialDesignFloatingActionMiniAccentButton" Margin="10,0,0,0" Click="GoBack" >
+                    <materialDesign:PackIcon Kind="ArrowLeftCircle" Height="24" Width="24" />
+                </Button>
+
+                <Button Style="{StaticResource MaterialDesignFloatingActionMiniAccentButton}"
+                            ToolTip="MaterialDesignFloatingActionMiniAccentButton" Click="GoBack" Margin="10,0,0,0">
+                    <materialDesign:PackIcon Kind="House" Height="24" Width="24" />
+                </Button>
+
+            </StackPanel>
 
 
             <StackPanel Grid.Row="1" Margin="5 12 5 0">

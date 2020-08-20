@@ -35,7 +35,9 @@ namespace TimeTableManager
 
         private void LaunchStudents(Object s, RoutedEventArgs e)
         {
-            // Collection which will take your ObservableCollection
+            StudentWindow studentWindow = new StudentWindow(dbContext1);
+            studentWindow.Show();
+            this.Close();
 
 
         }
@@ -49,8 +51,10 @@ namespace TimeTableManager
 
         private void LaunchSubjects(Object s, RoutedEventArgs e)
         {
-            // Collection which will take your ObservableCollection
-
+          
+            SubjectDetailsWindow locationsWindow = new SubjectDetailsWindow(dbContext1);
+            locationsWindow.Show();
+            this.Close();
 
         }
 

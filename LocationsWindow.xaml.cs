@@ -67,10 +67,9 @@ namespace TimeTableManager
         {
             if (SelectedRoom == null)
             {
-                MessageBox.Show("Please Select A Room from the table before Updating!",
-                               "No Selection",
-                               MessageBoxButton.OK,
-                               MessageBoxImage.Error);
+
+                 new MessageBoxCustom("Please Select A Room from the table before Updating!",
+                    MessageType.Error, MessageButtons.Ok).ShowDialog();
             }
             else
             {
@@ -85,22 +84,40 @@ namespace TimeTableManager
             //insert that object to database
             if (SelectedRoom == null)
             {
-                MessageBox.Show("Please Select a Room to Delete",
-                                     "No Selection",
-                                     MessageBoxButton.OK,
-                                     MessageBoxImage.Error);
+                new MessageBoxCustom("Please Select a Room to Delete", MessageType.Error, MessageButtons.Ok).ShowDialog();
             }
             else
             {
+                //MessageBoxResult messageBoxResult = System.Windows.MessageBox.Show("Are you sure?", "Delete Confirmation", System.Windows.MessageBoxButton.YesNo);
+                //if (messageBoxResult == MessageBoxResult.Yes)
+                //{
+                //    dbContext1.Rooms.Remove(SelectedRoom);
+                //    dbContext1.SaveChanges();
+                //    GetRooms();
+                //}
 
-                dbContext1.Rooms.Remove(SelectedRoom);
-                dbContext1.SaveChanges();
-                GetRooms();
+                bool? Result = new MessageBoxCustom("Are you sure, You want to Delete This Room ? ",
+                    MessageType.Confirmation, MessageButtons.YesNo).ShowDialog();
+
+                if (Result.Value)
+                {
+                    dbContext1.Rooms.Remove(SelectedRoom);
+                    dbContext1.SaveChanges();
+                    GetRooms();
+                }
+
+
             }
 
 
         }
+        private void GoBack(Object s, RoutedEventArgs e)
+        {
+            MainWindow mainWindow = new MainWindow(dbContext1);
+            mainWindow.Show();
+            this.Close();
 
+        }
 
 
         public void ManageBuilding(Object s, RoutedEventArgs e)

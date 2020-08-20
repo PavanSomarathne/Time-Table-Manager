@@ -73,20 +73,16 @@ namespace TimeTableManager
                 //insert that object to database
                 if (dbContext1.Rooms.Any(r => r.Rid == TxtRid.Text))
                 {
-                    MessageBox.Show("This ID Already In the System Use a Different ID",
-                                "Duplicate Room ID",
-                                MessageBoxButton.OK,
-                                MessageBoxImage.Error);
+                    new MessageBoxCustom("This ID Already In the System Use a Different ID", MessageType.Error, MessageButtons.Ok).ShowDialog();
+
                 }
                 else
                 {
 
                     dbContext1.Rooms.Add(NewRoom);
                     dbContext1.SaveChanges();
-                    MessageBox.Show("Successfully Added to the System",
-                        "Room Added!!",
-                                MessageBoxButton.OK,
-                                MessageBoxImage.Information);
+                    new MessageBoxCustom("Successfully Added to the System !", MessageType.Success, MessageButtons.Ok).ShowDialog();
+
                     TxtCapacity.Text = "";
                     TxtRid.Text = "";
                     CBBuilding.SelectedIndex = -1;
@@ -97,10 +93,8 @@ namespace TimeTableManager
             }
             else
             {
-                MessageBox.Show("Please Complete Room Details to Continue !",
-                                    "Incomplete Details",
-                                   MessageBoxButton.OK,
-                                 MessageBoxImage.Warning);
+                new MessageBoxCustom("Please Complete Room Details to Continue !", MessageType.Warning, MessageButtons.Ok).ShowDialog();
+
             }
 
         }
@@ -114,10 +108,8 @@ namespace TimeTableManager
                 //insert that object to database
                 if (!(RoomToEdit.Rid.Equals(TxtRid.Text.Trim())) && dbContext1.Rooms.Any(r => r.Rid == TxtRid.Text))
                 {
-                    MessageBox.Show("This ID Already In the System Use a Different ID",
-                                         "Duplicate Room ID",
-                                         MessageBoxButton.OK,
-                                         MessageBoxImage.Error);
+                    new MessageBoxCustom("This ID Already In the System Use a Different ID", MessageType.Error, MessageButtons.Ok).ShowDialog();
+
                 }
                 else
                 {
@@ -139,10 +131,8 @@ namespace TimeTableManager
             }
             else
             {
-                MessageBox.Show("Please Complete Room Details to Continue !",
-                                    "Incomplete Details",
-                                   MessageBoxButton.OK,
-                                 MessageBoxImage.Warning);
+                new MessageBoxCustom("Please Complete Room Details to Continue !", MessageType.Warning, MessageButtons.Ok).ShowDialog();
+
             }
         }
 
@@ -186,5 +176,12 @@ namespace TimeTableManager
             e.Handled = regex.IsMatch(e.Text);
         }
 
+        private void GoBack(Object s, RoutedEventArgs e)
+        {
+            MainWindow mainWindow = new MainWindow(dbContext1);
+            mainWindow.Show();
+            this.Close();
+
+        }
     }
 }
