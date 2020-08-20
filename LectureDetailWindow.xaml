@@ -63,7 +63,7 @@
                                     <DataGridTemplateColumn Header="Update">
                                         <DataGridTemplateColumn.CellTemplate>
                                             <DataTemplate>
-                                                <Button Content="Update" Click="UpdateLectureDetailsIn" Background="Blue"></Button>
+                                                <Button Content="Update" Click="UpdateLectureDetailsIn"  Background="#FFFFA000"></Button>
                                             </DataTemplate>
                                         </DataGridTemplateColumn.CellTemplate>
                                     </DataGridTemplateColumn>
@@ -103,18 +103,27 @@
                         <TextBox  Padding="2" Margin="8 0 0 0" Text="{Binding EmpId}" x:Name="LecIdName" TextChanged="LecIdSelectChnged" />
                         <Label Content="Faculty" Margin="8 10 0 0"></Label>
                         <ComboBox  x:Name="LecturerFaculty"  Padding="2" Margin="8 0 0 0" Text="{Binding Faculty}">
-                            <ComboBoxItem>Computing</ComboBoxItem>
-                            <ComboBoxItem>Engineering</ComboBoxItem>
-                            <ComboBoxItem>Business</ComboBoxItem>
-                            <ComboBoxItem>Humanities and Sciences</ComboBoxItem>
+                            <ComboBoxItem>Faculty of Computing</ComboBoxItem>
+                            <ComboBoxItem>Faculty of Engineering</ComboBoxItem>
+                            <ComboBoxItem>Faculty of Business</ComboBoxItem>
+                            <ComboBoxItem>Faculty of Humanities and Sciences</ComboBoxItem>
+                           
                         </ComboBox>
 
                         <Label Content="Department" Margin="8 10 0 0"></Label>
-                        <ComboBox  x:Name="LecturerDepartment" Padding="2" Margin="8 0 0 0" Text="{Binding Department}"> 
+                        <ComboBox  x:Name="LecturerDepartment" Padding="2" Margin="8 0 0 0" Text="{Binding Department}">
+                            <ComboBoxItem>Information Technology</ComboBoxItem>
                             <ComboBoxItem>Software Engineering</ComboBoxItem>
                             <ComboBoxItem>Networking</ComboBoxItem>
                             <ComboBoxItem>Electrical</ComboBoxItem>
+                            <ComboBoxItem>Mechatronics</ComboBoxItem>
                             <ComboBoxItem>Cyber security</ComboBoxItem>
+                            <ComboBoxItem>Interactive Media</ComboBoxItem>
+                            <ComboBoxItem>Data Science</ComboBoxItem>
+                            <ComboBoxItem>Accounting</ComboBoxItem>
+                            <ComboBoxItem>Business Management</ComboBoxItem>
+                            <ComboBoxItem>Marketing Management</ComboBoxItem>
+                          
                         </ComboBox>
                         
                         <Label Content="Center" Margin="8 10 0 0"></Label>
