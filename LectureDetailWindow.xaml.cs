@@ -85,11 +85,7 @@ namespace TimeTableManager
                     dbContext1.SaveChanges();
 
                     getLectureDetai();
-
-                    MessageBox.Show("Updating the System",
-                    "Update Lecture Details!!",
-                            MessageBoxButton.OK,
-                            MessageBoxImage.Information);
+                    new MessageBoxCustom("Successfully Updated Lecturer details !", MessageType.Success, MessageButtons.Ok).ShowDialog();
 
                     Addlecbtn.Content = "Add Lecture";
                     lecidSelected = false;
@@ -108,11 +104,7 @@ namespace TimeTableManager
                 }
                 else
                 {
-
-                    MessageBox.Show("Please Complete Lecture  Details correctly !",
-                             "Input Values not Valid to update",
-                             MessageBoxButton.OK,
-                             MessageBoxImage.Warning);
+                    new MessageBoxCustom("Please Complete  Lecturer  Details correctly !", MessageType.Warning, MessageButtons.Ok).ShowDialog();
                 }
 
             }
@@ -142,10 +134,7 @@ namespace TimeTableManager
 
                     getLectureDetai();
 
-                    MessageBox.Show("Adding Lecture details Successfully",
-                      "Lecture detail added!!",
-                              MessageBoxButton.OK,
-                              MessageBoxImage.Information);
+                    new MessageBoxCustom("Successfully Added Lecturer details !", MessageType.Success, MessageButtons.Ok).ShowDialog();
 
 
                     lecidSelected = false;
@@ -164,10 +153,7 @@ namespace TimeTableManager
                 else
                 {
 
-                    MessageBox.Show("Please Complete Lecture  Details correctly !",
-                            "Input Values not Valid to Add",
-                            MessageBoxButton.OK,
-                            MessageBoxImage.Warning);
+                    new MessageBoxCustom("Please Complete  Lecturer  Details correctly !", MessageType.Warning, MessageButtons.Ok).ShowDialog();
                 }
 
 
@@ -233,10 +219,19 @@ namespace TimeTableManager
         private void DeleteLectureDetailsIn(object s, RoutedEventArgs e)
         {
 
-            var lectureTobeDeleted = (s as FrameworkElement).DataContext as LecturerDetails;
-            dbContext1.LectureInformation.Remove(lectureTobeDeleted);
-            dbContext1.SaveChanges();
-            getLectureDetai();
+
+            bool? Result = new MessageBoxCustom("Are you sure, You want to Delete This Lecture Detail ? ",
+              MessageType.Confirmation, MessageButtons.YesNo).ShowDialog();
+
+            if (Result.Value)
+            {
+                var lectureTobeDeleted = (s as FrameworkElement).DataContext as LecturerDetails;
+                dbContext1.LectureInformation.Remove(lectureTobeDeleted);
+                dbContext1.SaveChanges();
+                getLectureDetai();
+            }
+
+           
         }
 
 
@@ -265,7 +260,7 @@ namespace TimeTableManager
 
             if (string.IsNullOrEmpty(LecturerDepartment.Text))
             {
-                LecturerFaculty.Focus();
+                LecturerDepartment.Focus();
                 return false;
             }
 

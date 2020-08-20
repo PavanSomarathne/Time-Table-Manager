@@ -71,10 +71,7 @@ namespace TimeTableManager
                     GetSubjectdetail();
                     ADbuttn.Content = "Add Subject";
 
-                    MessageBox.Show("Updating the System",
-               "Update subject Details!!",
-                       MessageBoxButton.OK,
-                       MessageBoxImage.Information);
+                    new MessageBoxCustom("Successfully Updated Subject details !", MessageType.Success, MessageButtons.Ok).ShowDialog();
 
                     update = false;
                     SubName.Text = "";
@@ -92,10 +89,7 @@ namespace TimeTableManager
                 else
                 {
 
-                    MessageBox.Show("Please Complete Subject  Details correctly !",
-                             "Input Values not Valid to update",
-                             MessageBoxButton.OK,
-                             MessageBoxImage.Warning);
+                    new MessageBoxCustom("Please Complete  subject  Details correctly !", MessageType.Warning, MessageButtons.Ok).ShowDialog();
                 }
 
             }
@@ -126,10 +120,9 @@ namespace TimeTableManager
 
                     GetSubjectdetail();
 
-                    MessageBox.Show("Adding subject details Successfully",
-                      "subject detail added!!",
-                              MessageBoxButton.OK,
-                              MessageBoxImage.Information);
+              
+
+                    new MessageBoxCustom("Successfully Added Subject details !", MessageType.Success, MessageButtons.Ok).ShowDialog();
 
 
                     update = false;
@@ -146,10 +139,11 @@ namespace TimeTableManager
                 else
                 {
 
-                    MessageBox.Show("Please Complete subject  Details correctly !",
-                            "Input Values not Valid to Add",
-                            MessageBoxButton.OK,
-                            MessageBoxImage.Warning);
+                 
+
+                    new MessageBoxCustom("Please Complete  subject  Details correctly !", MessageType.Warning, MessageButtons.Ok).ShowDialog();
+
+
                 }
 
 
@@ -187,10 +181,21 @@ namespace TimeTableManager
 
         private void DeleteSubjectForEdit(object s, RoutedEventArgs e)
         {
-            var subjectToBeDeleted = (s as FrameworkElement).DataContext as SubjectDetails;
-            dbContext1.SubjectInformation.Remove(subjectToBeDeleted);
-            dbContext1.SaveChanges();
-            GetSubjectdetail();
+
+            bool? Result = new MessageBoxCustom("Are you sure, You want to Delete this Subject Detail ? ",
+                    MessageType.Confirmation, MessageButtons.YesNo).ShowDialog();
+
+            if (Result.Value)
+            {
+
+                var subjectToBeDeleted = (s as FrameworkElement).DataContext as SubjectDetails;
+                dbContext1.SubjectInformation.Remove(subjectToBeDeleted);
+                dbContext1.SaveChanges();
+                GetSubjectdetail();
+            }
+
+
+
         }
 
         private void NumberValidationForLecHours(object sender, TextCompositionEventArgs e)
@@ -275,7 +280,7 @@ namespace TimeTableManager
 
             if (EvalHrForSub.Text.Trim() == "")
             {
-                LabHrForSub.Focus();
+                EvalHrForSub.Focus();
                 return false;
             }
 
