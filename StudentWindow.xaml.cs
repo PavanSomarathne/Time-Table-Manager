@@ -86,11 +86,13 @@ namespace TimeTableManager
         private void updateSdudentForEdit(object s, RoutedEventArgs e)
         {
             selectedStudent = (s as FrameworkElement).DataContext as Student;
-            addUpdateStudentDetailsGrid.DataContext = selectedStudent;
-            //cmb1.Text = selectedStudent.accYrSem;
-            //cmb2.Text = selectedStudent.programme;
-            //txtGroupNo.Text = selectedStudent.groupNo.ToString();
-            //txtSubGroupID.Text = selectedStudent.subGroupNo.ToString();
+           
+            cmb1.Text = selectedStudent.accYrSem;
+            cmb2.Text = selectedStudent.programme;
+            txtGroupNo.Text = selectedStudent.groupNo.ToString();
+            txtGroupID.Text = selectedStudent.subGroupId;
+            txtSubGroupNo.Text = selectedStudent.subGroupNo.ToString();
+            txtSubGroupID.Text = selectedStudent.subGroupId;
         }
 
        
