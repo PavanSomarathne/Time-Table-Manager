@@ -71,7 +71,7 @@ namespace TimeTableManager
         private void updateTagsForEdit(object s, RoutedEventArgs e)
         {
             selectedTags = (s as FrameworkElement).DataContext as Tag;
-            addUpdateTagsDetailsGrid.DataContext = selectedTags;
+            cmb1.Text = selectedTags.tags;
         }
 
         private void UpdateTags(object s, RoutedEventArgs e)

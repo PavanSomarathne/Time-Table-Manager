@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -86,6 +87,10 @@ namespace TimeTableManager
         {
             selectedStudent = (s as FrameworkElement).DataContext as Student;
             addUpdateStudentDetailsGrid.DataContext = selectedStudent;
+            //cmb1.Text = selectedStudent.accYrSem;
+            //cmb2.Text = selectedStudent.programme;
+            //txtGroupNo.Text = selectedStudent.groupNo.ToString();
+            //txtSubGroupID.Text = selectedStudent.subGroupNo.ToString();
         }
 
        
@@ -170,6 +175,17 @@ namespace TimeTableManager
             return true;
         }
 
+        private void NumberValidationForGroupNO(object sender, TextCompositionEventArgs e)
+        {
+            Regex regex = new Regex("[^0-9]+");
+            e.Handled = regex.IsMatch(e.Text);
+        }
+
+        private void NumberValidationForSubGroupNO(object sender, TextCompositionEventArgs e)
+        {
+            Regex regex = new Regex("[^0-9]+");
+            e.Handled = regex.IsMatch(e.Text);
+        }
 
         private void GoBack(Object s, RoutedEventArgs e)
         {
