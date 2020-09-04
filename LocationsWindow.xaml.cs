@@ -162,6 +162,7 @@ namespace TimeTableManager
         {
             //This gets fired off
             GetRooms();
+            GetBuildings();
 
         }
 
@@ -195,7 +196,7 @@ namespace TimeTableManager
                 ICollectionView Itemlist = _itemSourceList.View;
 
                 // your Filter
-                var yourCostumFilter = new Predicate<object>(item => ((Room)item).Type.Contains(CBSearchType.Text.ToString()));
+                var yourCostumFilter = new Predicate<object>(item => !((Room)item).Type.Contains(CBSearchType.Text.ToString()));
 
                 //now we add our Filter
                 Itemlist.Filter = yourCostumFilter;

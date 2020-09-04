@@ -67,6 +67,11 @@
                     <materialDesign:PackIcon Kind="House" Height="24" Width="24" />
                 </Button>
 
+                <Button Style="{StaticResource MaterialDesignFloatingActionMiniAccentButton}"
+                            ToolTip="MaterialDesignFloatingActionMiniAccentButton" Click="ManageBuilding" Margin="10,0,0,0">
+                    <materialDesign:PackIcon Kind="Domain" Height="24" Width="24" />
+                </Button>
+
             </StackPanel>
         </materialDesign:Card>
         <DataGrid Grid.Row="2" Grid.Column="0" x:Name="RoomsDG" AutoGenerateColumns="False" SelectionChanged="UpdateSelection" ItemsSource="{Binding Items}">

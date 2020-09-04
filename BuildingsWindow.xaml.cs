@@ -66,6 +66,8 @@ namespace TimeTableManager
                     dbContext1.Buildings.Add(NewBuilding);
                     dbContext1.SaveChanges();
                     GetBuildings();
+                    txtId.Text = "";
+                    txtName.Text = "";
                 }
             }
             else
@@ -107,7 +109,8 @@ namespace TimeTableManager
                         dbContext1.Buildings.Update(SeletedBuilding);
                         dbContext1.SaveChanges();
                         GetBuildings();
-
+                        txtId.Text = "";
+                        txtName.Text = "";
                     }
 
                 }
@@ -227,8 +230,6 @@ namespace TimeTableManager
 
         private void GoBack(Object s, RoutedEventArgs e)
         {
-            MainWindow mainWindow = new MainWindow(dbContext1);
-            mainWindow.Show();
             this.Close();
 
         }
