@@ -13,13 +13,27 @@
         TextOptions.TextRenderingMode="Auto"
         Background="{DynamicResource MaterialDesignPaper}"
         FontFamily="{DynamicResource MaterialDesignFont}"
-        Title="TagWindow" Height="661" Width="950">
+        Title="TagWindow" Height="661" Width="1366">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="60"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
 
+        <StackPanel Orientation="Horizontal">
+
+            <Button Style="{StaticResource MaterialDesignFloatingActionMiniAccentButton}"
+                            ToolTip="MaterialDesignFloatingActionMiniAccentButton" Margin="10,0,0,0" Click="GoBack" >
+                <materialDesign:PackIcon Kind="ArrowLeftCircle" Height="24" Width="24" />
+            </Button>
+
+            <Button Style="{StaticResource MaterialDesignFloatingActionMiniAccentButton}"
+                            ToolTip="MaterialDesignFloatingActionMiniAccentButton" Click="GoBack" Margin="10,0,0,0">
+                <materialDesign:PackIcon Kind="House" Height="24" Width="24" />
+            </Button>
+
+        </StackPanel>
+        
         <Label Grid.Row="0" FontSize="20" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center" Content="Tags"/>
 
         <Grid Grid.Row="1">
@@ -43,8 +57,8 @@
                         </Grid.RowDefinitions>
 
                         <Label Grid.Row="0" Grid.Column="0" Content="Tags" Margin="5"/>
-                        <ComboBox Grid.Row="0" Grid.Column="1" Margin="5" Text="{Binding tags}">
-                            <ComboBoxItem>Lacture</ComboBoxItem>
+                        <ComboBox Name="cmb1" Grid.Row="0" Grid.Column="1" Margin="5" Text="{Binding tags}">
+                            <ComboBoxItem>Lecture</ComboBoxItem>
                             <ComboBoxItem>Practical</ComboBoxItem>
                             <ComboBoxItem>Tutorial</ComboBoxItem>
                         </ComboBox>
@@ -62,7 +76,7 @@
             <Border Grid.Column="1" BorderBrush="Black" BorderThickness="1" Margin="5">
                 <DataGrid AutoGenerateColumns="False" Margin="5" Name="showTagsDetailsGrid" IsReadOnly="True">
                     <DataGrid.Columns>
-                        <DataGridTextColumn Header="Id" Binding="{Binding Id}" />
+                      
                         <DataGridTextColumn Header="Tags" Binding="{Binding tags}" />
 
 

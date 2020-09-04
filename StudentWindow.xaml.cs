@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -20,7 +21,10 @@ namespace TimeTableManager
     public partial class StudentWindow : Window
     {
         MyDbContext dbContext1;
+
         Student NewStudent = new Student();
+        Student selectedStudent = new Student();
+  
         public StudentWindow(MyDbContext dbContext)
         {
             this.dbContext1 = dbContext;
@@ -35,95 +39,154 @@ namespace TimeTableManager
             showDetailsGrid.ItemsSource = dbContext1.Students.ToList();
         }
 
-        Student NewStudent1 = new Student();
+        
 
 
         private void clear()
         {
-            //cmb1.Text = "";
-            //cmb2.Text = "";
-            txtGroupNo.Clear();
-            txtGroupID.Clear();
-            txtSubGroupNo.Clear();
-            txtSubGroupID.Clear();
+           
+            addUpdateStudentDetailsGrid.DataContext = null;
         }
 
 
-        private Student GetStudentBeforeAdd(Student student)
-        {
-            NewStudent.Id = student.Id;
-            NewStudent.accYrSem = student.accYrSem;
-            NewStudent.programme = student.programme;
-            NewStudent.groupNo = student.groupNo;
-            NewStudent.groupId = student.accYrSem + "." + student.programme + "." + student.groupNo;
-            NewStudent.subGroupNo = student.subGroupNo;
-            NewStudent.subGroupId = student.accYrSem + "." + student.programme + "." + student.groupNo + "." + student.subGroupNo;
-
-            return NewStudent;
-        }
-
-
+      
 
         private void AddStudent(object s, RoutedEventArgs e)
         {
-            NewStudent1 = GetStudentBeforeAdd(NewStudent);
-            dbContext1.Students.Add(NewStudent1);
-            dbContext1.SaveChanges();
-            GetStudents();
-            NewStudent = new Student();
-            addUpdateStudentDetailsGrid.DataContext = NewStudent;
-            //dbContext.Update(selectedStudent);
-            clear();
-        }
+            if (ValidateInput())
+            {
+                NewStudent.accYrSem = cmb1.Text;
+                NewStudent.programme = cmb2.Text;
+                NewStudent.groupNo = int.Parse(txtGroupNo.Text);
+                NewStudent.groupId = NewStudent.accYrSem + "." + NewStudent.programme + "." + NewStudent.groupNo;
+                NewStudent.subGroupNo = int.Parse(txtSubGroupNo.Text);
+                NewStudent.subGroupId = NewStudent.accYrSem + "." + NewStudent.programme + "." + NewStudent.groupNo + "." + NewStudent.subGroupNo;
+                dbContext1.Students.Add(NewStudent);
+                dbContext1.SaveChanges();
 
-        Student selectedStudent = new Student();
+                NewStudent = new Student();
+                addUpdateStudentDetailsGrid.DataContext = NewStudent;
+                
+                new MessageBoxCustom("Successfully added student details !", MessageType.Success, MessageButtons.Ok).ShowDialog();
+               
+                clear();
+                GetStudents();
+
+            }
+            else
+            {
+
+                new MessageBoxCustom("Please complete  student  details correctly !", MessageType.Warning, MessageButtons.Ok).ShowDialog();
+            }
+            
+
+            }
+
+        
         private void updateSdudentForEdit(object s, RoutedEventArgs e)
         {
             selectedStudent = (s as FrameworkElement).DataContext as Student;
-            addUpdateStudentDetailsGrid.DataContext = selectedStudent;
+           
+            cmb1.Text = selectedStudent.accYrSem;
+            cmb2.Text = selectedStudent.programme;
+            txtGroupNo.Text = selectedStudent.groupNo.ToString();
+            txtGroupID.Text = selectedStudent.subGroupId;
+            txtSubGroupNo.Text = selectedStudent.subGroupNo.ToString();
+            txtSubGroupID.Text = selectedStudent.subGroupId;
         }
 
-        Student NewStd = new Student();
-        Student NewStudent2 = new Student();
-
-        private Student GetStudentBeforeUpdate(Student std)
-        {
-            NewStd.Id = std.Id;
-            NewStd.accYrSem = std.accYrSem;
-            NewStd.programme = std.programme;
-            NewStd.groupNo = std.groupNo;
-            NewStd.groupId = std.accYrSem + "." + std.programme + "." + std.groupNo;
-            NewStd.subGroupNo = std.subGroupNo;
-            NewStd.subGroupId = std.accYrSem + "." + std.programme + "." + std.groupNo + "." + std.subGroupNo;
-
-            return NewStd;
-        }
+       
 
         private void UpdateStudent(object s, RoutedEventArgs e)
         {
-            NewStudent2 = GetStudentBeforeUpdate(NewStd);
-            dbContext1.Update(NewStudent2);
-            dbContext1.SaveChanges();
-            GetStudents();
-            clear();
+            if (ValidateInput())
+            {
+                selectedStudent.accYrSem = cmb1.Text;
+                selectedStudent.programme = cmb2.Text;
+                selectedStudent.groupNo = int.Parse(txtGroupNo.Text);
+                selectedStudent.groupId = selectedStudent.accYrSem + "." + selectedStudent.programme + "." + selectedStudent.groupNo;
+                selectedStudent.subGroupNo = int.Parse(txtSubGroupNo.Text);
+                selectedStudent.subGroupId = selectedStudent.accYrSem + "." + selectedStudent.programme + "." + selectedStudent.groupNo + "." + selectedStudent.subGroupNo;
+                dbContext1.Update(selectedStudent);
+                dbContext1.SaveChanges();
+
+                new MessageBoxCustom("Successfully updated student details !", MessageType.Success, MessageButtons.Ok).ShowDialog();
+                clear();
+                GetStudents();
+            }
+            else
+            {
+
+                new MessageBoxCustom("Please complete  student  details correctly  !", MessageType.Warning, MessageButtons.Ok).ShowDialog();
+            }
+
         }
 
         private void deleteSdudent(object s, RoutedEventArgs e)
         {
-            var studentToBeDeleted = (s as FrameworkElement).DataContext as Student;
-            dbContext1.Students.Remove(studentToBeDeleted);
-            dbContext1.SaveChanges();
-            GetStudents();
+            bool? Result = new MessageBoxCustom("Are you sure, you want to delete this student detail ? ",
+             MessageType.Confirmation, MessageButtons.YesNo).ShowDialog();
+
+            if (Result.Value)
+            {
+
+                var studentToBeDeleted = (s as FrameworkElement).DataContext as Student;
+                dbContext1.Students.Remove(studentToBeDeleted);
+                dbContext1.SaveChanges();
+                GetStudents();
+            }
+
         }
 
         private void resetStudent(object s, RoutedEventArgs e)
         {
             clear();
+            Student NewStudent = new Student();
+            addUpdateStudentDetailsGrid.DataContext = NewStudent;
+            GetStudents();
         }
 
-        private void showDetailsGrid_Scroll(object sender, System.Windows.Controls.Primitives.ScrollEventArgs e)
+        private bool ValidateInput()
         {
+            if (string.IsNullOrEmpty(cmb1.Text))
+            {
+                cmb1.Focus();
+                return false;
+            }
 
+            if (string.IsNullOrEmpty(cmb2.Text))
+            {
+                cmb2.Focus();
+                return false;
+            }
+
+
+            if (txtGroupNo.Text.Trim() == "")
+            {
+                txtGroupNo.Focus();
+                return false;
+            }
+
+            if (txtSubGroupNo.Text.Trim() == "")
+            {
+                txtSubGroupNo.Focus();
+                return false;
+            }
+
+
+            return true;
+        }
+
+        private void NumberValidationForGroupNO(object sender, TextCompositionEventArgs e)
+        {
+            Regex regex = new Regex("[^0-9]+");
+            e.Handled = regex.IsMatch(e.Text);
+        }
+
+        private void NumberValidationForSubGroupNO(object sender, TextCompositionEventArgs e)
+        {
+            Regex regex = new Regex("[^0-9]+");
+            e.Handled = regex.IsMatch(e.Text);
         }
 
         private void GoBack(Object s, RoutedEventArgs e)

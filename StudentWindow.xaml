@@ -13,7 +13,7 @@
         TextOptions.TextRenderingMode="Auto"
         Background="{DynamicResource MaterialDesignPaper}"
         FontFamily="{DynamicResource MaterialDesignFont}"
-        Title="StudentWindow" Height="661" Width="950">
+        Title="StudentWindow" Height="661" Width="1366">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="50"/>
@@ -43,14 +43,14 @@
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
 
-            <Border Grid.Column="0" BorderBrush="Black" BorderThickness="1" Margin="5">
-                <StackPanel Margin="5">
+            <Border Grid.Column="0" BorderBrush="Black" BorderThickness="1" Margin="5,5,274,5">
+                <StackPanel Margin="5,5,9,5">
 
-                    <Grid Margin="5" Name="addUpdateStudentDetailsGrid">
+                    <Grid Margin="5" Name="addUpdateStudentDetailsGrid" Width="376" Height="321">
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition/>
-                            <ColumnDefinition/>
-                            <ColumnDefinition/>
+                            <ColumnDefinition Width="191*"/>
+                            <ColumnDefinition Width="172*"/>
+                            <ColumnDefinition Width="13*"/>
                         </Grid.ColumnDefinitions>
 
                         <Grid.RowDefinitions>
@@ -63,8 +63,8 @@
                             <RowDefinition/>
                         </Grid.RowDefinitions>
 
-                        <Label Grid.Row="0" Grid.Column="0" Content="Academic year and semester" Margin="5"/>
-                        <ComboBox Name="cmb1" Grid.Row="0" Grid.Column="1" Margin="5" Text="{Binding accYrSem}">
+                        <Label Grid.Row="0" Grid.Column="0" Content="Academic year and semester" Margin="5,5,5,5"/>
+                        <ComboBox Name="cmb1" Grid.Column="1" Margin="5,0,5,0" Text="{Binding accYrSem}" Height="27">
                             <ComboBoxItem>Y1.S1</ComboBoxItem>
                             <ComboBoxItem>Y1.S2</ComboBoxItem>
                             <ComboBoxItem>Y2.S1</ComboBoxItem>
@@ -75,33 +75,33 @@
                             <ComboBoxItem>Y4.S2</ComboBoxItem>
                         </ComboBox>
 
-                        <Label Grid.Row="1" Grid.Column="0" Content="Programme" Margin="5"/>
-                        <ComboBox Name="cmb2" Grid.Row="1" Grid.Column="1" Margin="5" Text="{Binding programme}">
+                        <Label Grid.Row="1" Grid.Column="0" Content="Programme" Margin="5,5,5,5"/>
+                        <ComboBox Name="cmb2" Grid.Row="1" Grid.Column="1" Margin="5,0,5,0" Text="{Binding programme}" Height="26">
                             <ComboBoxItem>IT</ComboBoxItem>
                             <ComboBoxItem>CSSE</ComboBoxItem>
                             <ComboBoxItem>CSE</ComboBoxItem>
                             <ComboBoxItem>IM</ComboBoxItem>
                         </ComboBox>
 
-                        <Label Grid.Row="2" Grid.Column="0" Content="Group No" Margin="5"/>
-                        <TextBox Name="txtGroupNo" Grid.Row="2" Grid.Column="1" Margin="5" Text="{Binding groupNo}"/>
+                        <Label Grid.Row="2" Grid.Column="0" Content="Group No" Margin="5,5,5,5"/>
+                        <TextBox Name="txtGroupNo" PreviewTextInput="NumberValidationForGroupNO" Grid.Row="2" Grid.Column="1" Margin="5,5,5,5" Text="{Binding groupNo}"/>
 
 
 
-                        <Label Grid.Row="3" Grid.Column="0" Content="Group ID" Margin="5"/>
-                        <TextBox x:Name="txtGroupID" Grid.Row="3" Grid.Column="1" Margin="5" Text="{Binding groupId}" IsReadOnly="True" Foreground="White" Background="DarkCyan"/>
+                        <Label Grid.Row="3" Content="Group ID" Margin="0,5,0,5" HorizontalAlignment="Center" Width="182"/>
+                        <TextBox x:Name="txtGroupID" Grid.Row="3" Grid.Column="1" Margin="5,5,5,5" Text="{Binding groupId}" IsReadOnly="True" Foreground="White" Background="DarkCyan"/>
 
 
 
-                        <Label Grid.Row="4" Grid.Column="0" Content="Sub group No" Margin="5"/>
-                        <TextBox Name="txtSubGroupNo" Grid.Row="4" Grid.Column="1" Margin="5" Text="{Binding subGroupNo}"/>
+                        <Label Grid.Row="4" Grid.Column="0" Content="Sub group No" Margin="5,5,5,5"/>
+                        <TextBox Name="txtSubGroupNo" PreviewTextInput="NumberValidationForSubGroupNO" Grid.Row="4" Grid.Column="1" Margin="5,5,5,5" Text="{Binding subGroupNo}"/>
 
-                        <Label Grid.Row="5" Grid.Column="0" Content="Sub group ID" Margin="5"/>
-                        <TextBox x:Name="txtSubGroupID" Grid.Row="5" Grid.Column="1" Margin="5" Text="{Binding subGroupId}" IsReadOnly="True" Foreground="White" Background="DarkCyan"/>
+                        <Label Grid.Row="5" Grid.Column="0" Content="Sub group ID" Margin="5,5,5,5"/>
+                        <TextBox x:Name="txtSubGroupID" Grid.Row="5" Grid.Column="1" Margin="5,5,5,5" Text="{Binding subGroupId}" IsReadOnly="True" Foreground="White" Background="DarkCyan"/>
 
-                        <Button Foreground="White" Background="#FF6839FF" Grid.Row="6" Grid.Column="0" Content="Add" Margin="70,15,70,-5" Click="AddStudent"/>
-                        <Button Foreground="White" Background="#FF6839FF" Grid.Row="6" Grid.Column="1" Content="Update" Margin="70,15,70,-5" Click="UpdateStudent"/>
-                        <Button Foreground="White" Background="#FF6839FF" Grid.Row="6" Grid.Column="2" Content="Reset" Margin="70,15,70,-5" Click="resetStudent"/>
+                        <Button Foreground="White" Background="#FF6839FF" Grid.Row="6" Grid.Column="0" Content="Add" Margin="34,20,69,-6" Click="AddStudent"/>
+                        <Button Foreground="White" Background="#FF6839FF" Grid.Row="6" Content="Update" Margin="142,20,133,-6" Click="UpdateStudent" Grid.ColumnSpan="2"/>
+                        <Button Foreground="White" Background="#FF6839FF" Grid.Row="6" Grid.Column="1" Content="Reset" Margin="58,20,23,-6" Click="resetStudent"/>
 
                     </Grid>
 
@@ -109,10 +109,10 @@
             </Border>
 
 
-            <Border Grid.Column="1" BorderBrush="Black" BorderThickness="1" Margin="5">
-                <DataGrid AutoGenerateColumns="False" Margin="5" Name="showDetailsGrid" IsReadOnly="True">
+            <Border BorderBrush="Black" BorderThickness="1" Margin="414,5,10,5" Grid.ColumnSpan="2">
+                <DataGrid AutoGenerateColumns="False" Margin="9,9,9,11" Name="showDetailsGrid" IsReadOnly="True">
                     <DataGrid.Columns>
-                        <DataGridTextColumn Header="Id" Binding="{Binding Id}" />
+
                         <DataGridTextColumn Header="Academic year and semester" Binding="{Binding accYrSem}" />
                         <DataGridTextColumn Header="Programme" Binding="{Binding programme}" />
                         <DataGridTextColumn Header="Group No" Binding="{Binding groupNo}" />

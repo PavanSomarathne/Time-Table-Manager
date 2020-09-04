@@ -71,7 +71,7 @@
             </StackPanel>
         </Button>
 
-        <Button  Grid.Row="1" Grid.Column="4" FontSize="24" Height="120" Width="200">
+        <Button  Grid.Row="1" Grid.Column="4" FontSize="24" Height="120" Width="200" Click="LaunchTags">
             <StackPanel>
                 <materialDesign:PackIcon Kind="LocalOffer" Width="50" Height="50" HorizontalAlignment="Center" VerticalAlignment="Center" />
                 <Label Content="        Tags&#xa;Management" Foreground="#DDFFFFFF" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20"/>
@@ -85,7 +85,7 @@
             </StackPanel>
         </Button>
 
-        <Button  Grid.Row="2" Grid.Column="2" FontSize="24" Height="120" Width="200">
+        <Button  Grid.Row="2" Grid.Column="2" FontSize="24" Height="120" Width="200" Click="OpenSchedule">
             <StackPanel>
                 <materialDesign:PackIcon Kind="ClockCheck" Width="50" Height="50" HorizontalAlignment="Center" VerticalAlignment="Center" />
                 <Label Content="    Schedule&#xa;Management" Foreground="#DDFFFFFF" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20"/>
