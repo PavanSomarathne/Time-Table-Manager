@@ -23,7 +23,7 @@ namespace TimeTableManager
     public partial class BuildingsWindow : Window
     {
         MyDbContext dbContext1;
-        Building SeletedBuilding = new Building();
+        Building SeletedBuilding = null;
         ICollection<Building> buildings;
 
         public BuildingsWindow(MyDbContext dbContext)

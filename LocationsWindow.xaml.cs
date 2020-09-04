@@ -104,6 +104,7 @@ namespace TimeTableManager
                     dbContext1.Rooms.Remove(SelectedRoom);
                     dbContext1.SaveChanges();
                     GetRooms();
+                    SelectedRoom = null;
                 }
 
 

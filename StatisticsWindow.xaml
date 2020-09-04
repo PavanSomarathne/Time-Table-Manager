@@ -116,7 +116,11 @@
         <materialDesign:Card Grid.Row="4" Grid.Column="0" Margin="5,5,5,5">
             <lvc:CartesianChart x:Name="CH1">
                 <lvc:CartesianChart.AxisX>
-                    <lvc:Axis FontSize="14" Foreground="Black"  x:Name="txtC1X"></lvc:Axis>
+                    <lvc:Axis FontSize="14" Foreground="Black"  x:Name="txtC1X">
+                        <lvc:Axis.Separator >
+                            <lvc:Separator IsEnabled="False" Step="1"></lvc:Separator>
+                        </lvc:Axis.Separator>
+                    </lvc:Axis>
                 </lvc:CartesianChart.AxisX>
                 <lvc:CartesianChart.AxisY>
                     <lvc:Axis FontSize="14" Foreground="Black" x:Name="txtC1Y" LabelFormatter="{Binding Formatter}"></lvc:Axis>
@@ -128,7 +132,11 @@
         <materialDesign:Card Grid.Row="4" Grid.Column="1" Margin="5,5,5,5">
             <lvc:CartesianChart x:Name="CH2"  >
                 <lvc:CartesianChart.AxisX >
-                    <lvc:Axis x:Name="txtC2X" FontSize="14" Foreground="Black"></lvc:Axis>
+                    <lvc:Axis x:Name="txtC2X" FontSize="14" Foreground="Black">
+                        <lvc:Axis.Separator >
+                            <lvc:Separator IsEnabled="False" Step="1"></lvc:Separator>
+                        </lvc:Axis.Separator>
+                    </lvc:Axis>
                 </lvc:CartesianChart.AxisX>
                 <lvc:CartesianChart.AxisY >
                     <lvc:Axis x:Name="txtC2Y" LabelFormatter="{Binding Formatter}" FontSize="14" Foreground="Black"></lvc:Axis>
