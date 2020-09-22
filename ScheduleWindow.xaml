@@ -3,6 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+       
         xmlns:local="clr-namespace:TimeTableManager" xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         mc:Ignorable="d"
         Title="MainWindow" Height="768" Width="1366">
@@ -52,13 +53,14 @@
                             <StackPanel  Grid.Row="0"  Margin="3">
                                
 
-                                <DataGrid AutoGenerateColumns="False" Margin="5" Name="ScheduleDG" IsReadOnly="True" >
+                                <DataGrid AutoGenerateColumns="False" Margin="5" Name="ScheduleDG" IsReadOnly="True"  >
                                     <DataGrid.Columns>
                                         <DataGridTextColumn Header="Id" Binding="{Binding Id}"/>
                                         <DataGridTextColumn Header="Working Days" Binding="{Binding Working_days_count}"/>
                                         <DataGridTextColumn Header="Days" Binding="{Binding Working_days}"/>
-                                        <DataGridTextColumn Header="Working Time" Binding="{Binding working_time_hrs}"/>
-                                        <DataGridTextColumn Header="Working Time" Binding="{Binding Working_time_mins}"/>
+                                        <DataGridTextColumn Header="Starting Time" Binding="{Binding start_time}"/>
+                                        <DataGridTextColumn Header="Working Hrs" Binding="{Binding working_time_hrs}"/>
+                                        <DataGridTextColumn Header="Working Mins" Binding="{Binding Working_time_mins}"/>
                                         <DataGridTextColumn Header="Time Slot Duration" Binding="{Binding Working_duration}"/>
 
                                         <DataGridTemplateColumn Header="Update" >
@@ -81,7 +83,7 @@
                 <StackPanel Grid.Column="1" Margin="3" Background="SeaShell">
                     <Grid x:Name="AddNewScheduleGrid">
                         <Grid.RowDefinitions>
-                            <RowDefinition Height="350" />
+                            <RowDefinition Height="500" />
                             <RowDefinition Height="*"/>
                         </Grid.RowDefinitions>
 
@@ -115,8 +117,14 @@
                                 <CheckBox Checked="myCheckBox_Checked" Unchecked="myCheckBox_Unchecked" x:Name="SaturdayCheckBox" Content="Saturday"></CheckBox>
                                 <CheckBox Checked="myCheckBox_Checked" Unchecked="myCheckBox_Unchecked" x:Name="SundayCheckBox" Content="Sunday"></CheckBox>
                             </StackPanel>
+                            <TextBlock Text="Starting time" FontWeight="SemiBold" Margin="0 10 0 0"/>
+                            <StackPanel >
+
+                                <materialDesign:TimePicker Is24Hours="False" x:Name="PresetTimePicker"/>
+                            </StackPanel>
+
                             <!-- Working Time per day-->
-                            <TextBlock Text="Working time per day(Including lunch)" FontWeight="SemiBold" Margin="0 10 0 0"/>
+                            <TextBlock Text="Working time per day(including lunch time)" FontWeight="SemiBold" Margin="0 10 0 0"/>
 
                             <Grid>
                                 <Grid.ColumnDefinitions>
@@ -195,6 +203,9 @@
 
                 </StackPanel>
             </Grid>
+           
+                
         </StackPanel>
+        
     </Border>
 </Window>
