@@ -101,14 +101,14 @@ namespace TimeTableManager
             C2Values = new ChartValues<double>();
             Labels2 = new List<string>();
 
-            dbContext1.Students.GroupBy(s => s.groupId).Select(o => new
+            dbContext1.Students.GroupBy(s => s.groupNo).Select(o => new
             {
                 name = o.Key,
                 sum = o.Count()
             }).ToList().ForEach(r =>
             {
                 C2Values.Add(r.sum);
-                Labels2.Add(r.name);
+                Labels2.Add(r.name.ToString());
             });
 
             SeriesCollection2 = new SeriesCollection
@@ -188,7 +188,7 @@ namespace TimeTableManager
             C1Values = new ChartValues<double>();
             Labels = new List<string>();
             Labels.Clear();
-            dbContext1.SubjectInformation.OrderByDescending(x => x.LabHours).Take(20)
+            dbContext1.SubjectInformation.OrderByDescending(x => x.LabHours).Take(7)
             .ToList().ForEach(r =>
             {
                 C1Values.Add(r.LabHours);
@@ -222,7 +222,7 @@ namespace TimeTableManager
 
             SeriesCollection2.Clear();
 
-            dbContext1.SubjectInformation.OrderByDescending(x => x.LecHours).Take(20)
+            dbContext1.SubjectInformation.OrderByDescending(x => x.LecHours).Take(7)
              .ToList().ForEach(r =>
              {
                  C2Values.Add(r.LecHours);
