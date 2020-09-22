@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations.Operations;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Globalization;
 using System.Linq;
 using System.Text;
@@ -41,15 +42,20 @@ namespace TimeTableManager
             studenSP.Visibility = Visibility.Collapsed;
             lecturerSP.Visibility = Visibility.Collapsed;
             roomSP.Visibility = Visibility.Collapsed;
-  
 
+
+
+          
+
+           // Program.DisplayMember = "Name";
+            //comboBox1.ValueMember = "Name";
 
 
 
             // AddNewScheduleGrid.DataContext = NewSchedule;
         }
-
-
+       
+  
         private void GetSchedule()
         {
             ScheduleDG.ItemsSource = dbContext1.Schedules.ToList();
@@ -361,6 +367,44 @@ namespace TimeTableManager
                 roomSP.Visibility = Visibility.Visible;
             }
 
+        }
+
+        private void program_load(object sender, RoutedEventArgs e)
+        {
+            List<String> programs = dbContext1.Students.Select(n=>n.programme).ToList();
+            Program.ItemsSource = programs;
+        }
+
+        private void lecturer_load(object sender, RoutedEventArgs e)
+        {
+            List<String> lecString = new List<String>();
+            List<LecturerDetails> lecturers = dbContext1.LectureInformation.ToList();
+
+            foreach (var item in lecturers)
+            {
+                lecString.Add(item.Id + "-" + item.LecName);
+            }
+            Lecturer.ItemsSource = lecString;
+        }
+
+        private void building_load(object sender, RoutedEventArgs e)
+        {
+            List<String> buildings = dbContext1.Buildings.Select(n => n.Name).ToList();
+            Building.ItemsSource = buildings;
+        }
+
+
+        private void room_load(object sender, EventArgs e)
+        {
+            String build = Building.Text;
+            List<String> roomString = new List<String>();
+            List<Room> rooms = dbContext1.Rooms.Include("BuildingAS").Where(b => b.BuildingAS.Name == build).ToList();
+
+            foreach (var item in rooms)
+            {
+                roomString.Add(item.Id + "-" + item.Rid);
+            }
+            Room.ItemsSource = roomString;
         }
     }
 }

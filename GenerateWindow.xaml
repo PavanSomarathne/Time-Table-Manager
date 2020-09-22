@@ -94,23 +94,27 @@
                             <!-- Type-->
                             <TextBlock Text="Type" FontWeight="SemiBold" Margin="0 10 0 0"/>
                             <Grid>
-                                <ComboBox Padding="2" Name="sType"  DropDownClosed="TypeChange">
+                                <ComboBox Padding="2" Name="sType" Text="-- Select Team --"   DropDownClosed="TypeChange">
                                     <ComboBoxItem >Student</ComboBoxItem>
                                     <ComboBoxItem>Lecturer</ComboBoxItem>
                                     <ComboBoxItem>Room</ComboBoxItem>
                                 </ComboBox>
-                                <TextBlock IsHitTestVisible="False" Text="Select one" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10,0,0,0" Foreground="DarkGray">
-                                   
-                                </TextBlock>
+                                
 
                             </Grid>
                             <!-- Student Part-->
                             <StackPanel  Margin="3" Name="studenSP">
-                                <TextBlock Text="Year" FontWeight="SemiBold" Margin="0 20 0 0"/>
+                                <TextBlock Text="Academic year and semester" FontWeight="SemiBold" Margin="0 20 0 0"/>
                                 <Grid>
-                                    <ComboBox Name="Year" SelectedIndex="0" Padding="2" Text="{Binding Working_duration}" >
-                                        <ComboBoxItem >One Hour</ComboBoxItem>
-                                        <ComboBoxItem>Thirty Minutes</ComboBoxItem>
+                                    <ComboBox Name="Year" Padding="2" Text="-- Select One--"  >
+                                        <ComboBoxItem >Y1.S1</ComboBoxItem>
+                                        <ComboBoxItem >Y1.S2</ComboBoxItem>
+                                        <ComboBoxItem >Y2.S1</ComboBoxItem>
+                                        <ComboBoxItem >Y2.S2</ComboBoxItem>
+                                        <ComboBoxItem >Y3.S1</ComboBoxItem>
+                                        <ComboBoxItem >Y3.S2</ComboBoxItem>
+                                        <ComboBoxItem >Y4.S1</ComboBoxItem>
+                                        <ComboBoxItem >Y4.S2</ComboBoxItem>
                                     </ComboBox>
                                     <TextBlock IsHitTestVisible="False" Text="Select one" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10,0,0,0" Foreground="DarkGray">
                                         <TextBlock.Style>
@@ -125,31 +129,13 @@
                                         </TextBlock.Style>
                                     </TextBlock>
                                 </Grid>
-                                <TextBlock Text="Semester" FontWeight="SemiBold" Margin="0 20 0 0"/>
-                                <Grid>
-                                    <ComboBox Name="Semester" SelectedIndex="0" Padding="2" Text="{Binding Working_duration}" >
-                                        <ComboBoxItem >One Hour</ComboBoxItem>
-                                        <ComboBoxItem>Thirty Minutes</ComboBoxItem>
-                                    </ComboBox>
-                                    <TextBlock IsHitTestVisible="False" Text="Select one" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10,0,0,0" Foreground="DarkGray">
-                                        <TextBlock.Style>
-                                            <Style TargetType="{x:Type TextBlock}">
-                                                <Setter Property="Visibility" Value="Collapsed"/>
-                                                <Style.Triggers>
-                                                    <DataTrigger Binding="{Binding Text, ElementName=duration}" Value="">
-                                                        <Setter Property="Visibility" Value="Visible"/>
-                                                    </DataTrigger>
-                                                </Style.Triggers>
-                                            </Style>
-                                        </TextBlock.Style>
-                                    </TextBlock>
-                                </Grid>
+                                
+                                
 
                                 <TextBlock Text="Program" FontWeight="SemiBold" Margin="0 20 0 0"/>
                                 <Grid>
-                                    <ComboBox Name="Program" SelectedIndex="0" Padding="2" Text="{Binding Working_duration}" >
-                                        <ComboBoxItem >One Hour</ComboBoxItem>
-                                        <ComboBoxItem>Thirty Minutes</ComboBoxItem>
+                                    <ComboBox Name="Program" Loaded="program_load" SelectedIndex="0" Padding="2" IsEditable="True" >
+                                        
                                     </ComboBox>
                                     <TextBlock IsHitTestVisible="False" Text="Select one" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10,0,0,0" Foreground="DarkGray">
                                         <TextBlock.Style>
@@ -167,12 +153,11 @@
                             </StackPanel>
 
                             <!-- Lecturer Part-->
-                            <StackPanel  Margin="3" Name="lecturerSP" >
+                            <StackPanel  Margin="3" Name="lecturerSP" Visibility="Collapsed" >
                                 <TextBlock Text="Lecturer" FontWeight="SemiBold" Margin="0 20 0 0"/>
                                 <Grid>
-                                    <ComboBox Name="Lecturer" SelectedIndex="0" Padding="2" Text="{Binding Working_duration}" >
-                                        <ComboBoxItem >One Hour</ComboBoxItem>
-                                        <ComboBoxItem>Thirty Minutes</ComboBoxItem>
+                                    <ComboBox Name="Lecturer" Loaded="lecturer_load" Text="Select one" Padding="2" IsEditable="True" >
+                                       
                                     </ComboBox>
                                     <TextBlock IsHitTestVisible="False" Text="Select one" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10,0,0,0" Foreground="DarkGray">
                                         <TextBlock.Style>
@@ -195,9 +180,8 @@
                             <StackPanel  Margin="3" Name="roomSP" >
                                 <TextBlock Text="Building" FontWeight="SemiBold" Margin="0 20 0 0"/>
                                 <Grid>
-                                    <ComboBox Name="Building" SelectedIndex="0" Padding="2" Text="{Binding Working_duration}" >
-                                        <ComboBoxItem >One Hour</ComboBoxItem>
-                                        <ComboBoxItem>Thirty Minutes</ComboBoxItem>
+                                    <ComboBox Name="Building" Loaded="building_load" DropDownClosed="room_load" Padding="2" IsEditable="True" >
+                                        
                                     </ComboBox>
                                     <TextBlock IsHitTestVisible="False" Text="Select one" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10,0,0,0" Foreground="DarkGray">
                                         <TextBlock.Style>
@@ -214,9 +198,8 @@
                                 </Grid>
                                 <TextBlock Text="Room" FontWeight="SemiBold" Margin="0 20 0 0"/>
                                 <Grid>
-                                    <ComboBox Name="Room" SelectedIndex="0" Padding="2" Text="{Binding Working_duration}" >
-                                        <ComboBoxItem >One Hour</ComboBoxItem>
-                                        <ComboBoxItem>Thirty Minutes</ComboBoxItem>
+                                    <ComboBox Name="Room"  Padding="2"  IsEditable="True">
+                                       
                                     </ComboBox>
                                     <TextBlock IsHitTestVisible="False" Text="Select one" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10,0,0,0" Foreground="DarkGray">
                                         <TextBlock.Style>
