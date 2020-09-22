@@ -101,6 +101,44 @@ namespace TimeTableManager
             sw.Show();
             this.Close();
         }
+
+        private void LaunchNotAvailableTime(Object s, RoutedEventArgs e)
+        {
+
+            NotAvailableDetailsWindow NotAvailableDetailsWindow = new NotAvailableDetailsWindow(dbContext1);
+            NotAvailableDetailsWindow.Show();
+            this.Close();
+
+
+        }
+
+        private void LaunchConsecutiveSessions(Object s, RoutedEventArgs e)
+        {
+
+            ConsecutiveSessionsWindow consecutiveSessions = new ConsecutiveSessionsWindow(dbContext1);
+            consecutiveSessions.Show();
+            this.Close();
+
+
+        }
+
+        private void LaunchParallelSessions(Object s, RoutedEventArgs e)
+        {
+
+            ParallelSessionsWindow parallelSessions = new ParallelSessionsWindow(dbContext1);
+            parallelSessions.Show();
+            this.Close();
+
+
+        }
+
+        private void OpenGenerate(object sender, RoutedEventArgs e)
+        {
+
+            GenerateWindow sw = new GenerateWindow(dbContext1);
+            sw.Show();
+            this.Close();
+        }
     }
 
 }
