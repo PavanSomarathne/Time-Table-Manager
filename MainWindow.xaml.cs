@@ -101,6 +101,13 @@ namespace TimeTableManager
             sw.Show();
             this.Close();
         }
+        private void OpenGenerate(object sender, RoutedEventArgs e)
+        {
+
+            GenerateWindow sw = new GenerateWindow(dbContext1);
+            sw.Show();
+            this.Close();
+        }
     }
 
 }

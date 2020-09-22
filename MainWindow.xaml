@@ -92,7 +92,7 @@
             </StackPanel>
         </Button>
 
-        <Button  Grid.Row="2" Grid.Column="3" FontSize="24" Height="120" Width="200">
+        <Button  Grid.Row="2" Grid.Column="3" FontSize="24" Height="120" Width="200" Click="OpenGenerate">
             <StackPanel>
                 <materialDesign:PackIcon Kind="CalendarText" Width="50" Height="50" HorizontalAlignment="Center" VerticalAlignment="Center" />
                 <Label Content="  Generate&#xa;Timetables" Foreground="#DDFFFFFF" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20"/>

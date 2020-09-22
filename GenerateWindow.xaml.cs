@@ -23,7 +23,7 @@ namespace TimeTableManager
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
-    public partial class ScheduleWindow : Window
+    public partial class GenerateWindow : Window
     {
         MyDbContext dbContext1;
         Schedule NewSchedule = new Schedule();
@@ -32,15 +32,16 @@ namespace TimeTableManager
         List<string> allChecked = new List<string>();
 
 
-        public ScheduleWindow(MyDbContext dbContext)
+        public GenerateWindow(MyDbContext dbContext)
         {
             this.dbContext1 = dbContext;
             InitializeComponent();
-            this.duration.SelectedIndex = 0;
 
             GetSchedule();
-
-            UpdateButton.IsEnabled = false;
+            studenSP.Visibility = Visibility.Collapsed;
+            lecturerSP.Visibility = Visibility.Collapsed;
+            roomSP.Visibility = Visibility.Collapsed;
+  
 
 
 
@@ -68,8 +69,7 @@ namespace TimeTableManager
             Boolean validator4 = true;
             Boolean validator5 = true;
 
-            if (int.TryParse(Working_days_count.Text, out val) && int.TryParse(working_hrs.Text, out val1) && int.TryParse(working_mins.Text, out val2) && duration.Text.ToString() != "" && PresetTimePicker.Text.ToString() != "")
-            {
+         
 
 
                 //NewSchedule.Working_days_count = int.Parse(Working_days_count.Text);
@@ -78,10 +78,9 @@ namespace TimeTableManager
                 //NewSchedule.Working_duration = duration.Text.ToString();
 
                 AddSchedule.Working_days_count = val;
-                AddSchedule.start_time = PresetTimePicker.Text.ToString();
+               
                 AddSchedule.working_time_hrs = val1;
                 AddSchedule.Working_time_mins = val2;
-                AddSchedule.Working_duration = duration.Text.ToString();
 
 
 
@@ -151,7 +150,6 @@ namespace TimeTableManager
                     //insert new values
                     //insert checkbox values to object
                     AddSchedule.Working_days = checkString;
-                    AddSchedule.Working_duration = duration.Text;
 
                     //insert that object to database
                     dbContext1.Schedules.Add(AddSchedule);
@@ -165,13 +163,7 @@ namespace TimeTableManager
 
 
                 }
-            }
-            else
-            {
-
-                MessageBox.Show("Some fields are empty or no in correct fromat! ",
-                 "", MessageBoxButton.OK, MessageBoxImage.Warning);
-            }
+           
 
 
 
@@ -190,66 +182,7 @@ namespace TimeTableManager
             allChecked.Remove(cb.Content.ToString());
         }
 
-        private void UpdateScheduleForEdit(Object s, RoutedEventArgs e)
-        {
-            ResetButton.IsEnabled = true;
-            AddButton.IsEnabled = false;
-            UpdateButton.IsEnabled = true;
-
-            MondayCheckBox.IsChecked = false;
-            TuesdayCheckBox.IsChecked = false;
-            WednessdayCheckBox.IsChecked = false;
-            ThursdayCheckBox.IsChecked = false;
-            FridayCheckBox.IsChecked = false;
-            SaturdayCheckBox.IsChecked = false;
-            SundayCheckBox.IsChecked = false;
-
-            SelectedSchedule = (s as FrameworkElement).DataContext as Schedule;
-
-
-            var arr = SelectedSchedule.Working_days.Split(',');
-
-
-            // _ = MessageBox.Show((string)arr[0]);
-
-            foreach (var item in arr)
-            {
-                if (item == "Monday")
-                {
-                    MondayCheckBox.IsChecked = true;
-                }
-                else if (item == "Tuesday")
-                {
-                    TuesdayCheckBox.IsChecked = true;
-                }
-                else if (item == "Wednessday")
-                {
-                    WednessdayCheckBox.IsChecked = true;
-                }
-                else if (item == "Thursday")
-                {
-                    ThursdayCheckBox.IsChecked = true;
-                }
-                else if (item == "Friday")
-                {
-                    FridayCheckBox.IsChecked = true;
-                }
-                else if (item == "Saturday")
-                {
-                    SaturdayCheckBox.IsChecked = true;
-                }
-                else if (item == "Sunday")
-                {
-                    SundayCheckBox.IsChecked = true;
-                }
-            }
-
-            PresetTimePicker.Text = SelectedSchedule.start_time;
-            duration.Text = SelectedSchedule.Working_duration;
-            working_hrs.Text = SelectedSchedule.working_time_hrs.ToString();
-            working_mins.Text = SelectedSchedule.Working_time_mins.ToString();
-            Working_days_count.Text = SelectedSchedule.Working_days_count.ToString();
-        }
+       
 
         private void UpdateSchedule(Object s, RoutedEventArgs e)
         {
@@ -263,16 +196,15 @@ namespace TimeTableManager
             Boolean validator4 = true;
             Boolean validator5 = true;
 
-            if (int.TryParse(Working_days_count.Text, out val) && int.TryParse(working_hrs.Text, out val1) && int.TryParse(working_mins.Text, out val2) && duration.Text.ToString() != "" && PresetTimePicker.Text.ToString() != "")
-            {
+           
 
 
                 
                 SelectedSchedule.Working_days_count = val;
-                SelectedSchedule.start_time = PresetTimePicker.Text.ToString();
+               // SelectedSchedule.start_time = PresetTimePicker.Text.ToString();
                 SelectedSchedule.working_time_hrs = val1;
                 SelectedSchedule.Working_time_mins = val2;
-                SelectedSchedule.Working_duration = duration.Text.ToString();
+
                 //Checkbox manipulation
                 var checkString = "";
                 if (allChecked.Count == 0)
@@ -335,7 +267,7 @@ namespace TimeTableManager
                 if (validator1 && validator2 && validator3 && validator4 && validator5)
                 {
                     SelectedSchedule.Working_days = checkString;
-                    SelectedSchedule.Working_duration = duration.Text;
+                    
 
                     dbContext1.Update(SelectedSchedule);
                     dbContext1.SaveChanges();
@@ -347,17 +279,8 @@ namespace TimeTableManager
                     GetSchedule();
 
 
-                    AddButton.IsEnabled = true;
-                    UpdateButton.IsEnabled = false;
-
                 }
-            }
-            else
-            {
-
-                MessageBox.Show("Some fields are empty or no in correct fromat! ",
-                 "", MessageBoxButton.OK, MessageBoxImage.Warning);
-            }
+           
 
 
 
@@ -376,9 +299,6 @@ namespace TimeTableManager
                 ResetForm();
                 GetSchedule();
 
-
-                AddButton.IsEnabled = true;
-                ResetButton.IsEnabled = false;
             }
         }
 
@@ -389,21 +309,7 @@ namespace TimeTableManager
             {
                 NewSchedule = new Schedule();
                 AddNewScheduleGrid.DataContext = null;
-                MondayCheckBox.IsChecked = false;
-                TuesdayCheckBox.IsChecked = false;
-                WednessdayCheckBox.IsChecked = false;
-                ThursdayCheckBox.IsChecked = false;
-                FridayCheckBox.IsChecked = false;
-                SaturdayCheckBox.IsChecked = false;
-                SundayCheckBox.IsChecked = false;
-                PresetTimePicker.Text = null;
-                duration.Text = null;
-                working_hrs.Text = null;
-                working_mins.Text = null;
-                Working_days_count.Text = null;
 
-                AddButton.IsEnabled = true;
-                UpdateButton.IsEnabled = false;
             }
 
 
@@ -422,19 +328,39 @@ namespace TimeTableManager
         private void ResetForm()
         {
             AddNewScheduleGrid.DataContext = null;
-            MondayCheckBox.IsChecked = false;
-            TuesdayCheckBox.IsChecked = false;
-            WednessdayCheckBox.IsChecked = false;
-            ThursdayCheckBox.IsChecked = false;
-            FridayCheckBox.IsChecked = false;
-            SaturdayCheckBox.IsChecked = false;
-            SundayCheckBox.IsChecked = false;
-            PresetTimePicker.Text = null;
-            duration.Text = null;
-            working_hrs.Text = null;
-            working_mins.Text = null;
-            Working_days_count.Text = null;
+           
+
             AddNewScheduleGrid.DataContext = null;
+        }
+
+       
+
+        private StackPanel GetStudenSP()
+        {
+            return studenSP;
+        }
+
+        private void TypeChange(object sender, EventArgs e)
+        {
+            if (sType.Text == "Student")
+            {
+                GetStudenSP().Visibility = Visibility.Visible;
+                lecturerSP.Visibility = Visibility.Collapsed;
+                roomSP.Visibility = Visibility.Collapsed;
+            }
+            else if (sType.Text == "Lecturer")
+            {
+                studenSP.Visibility = Visibility.Collapsed;
+                lecturerSP.Visibility = Visibility.Visible;
+                roomSP.Visibility = Visibility.Collapsed;
+            }
+            else if (sType.Text == "Room")
+            {
+                studenSP.Visibility = Visibility.Collapsed;
+                lecturerSP.Visibility = Visibility.Collapsed;
+                roomSP.Visibility = Visibility.Visible;
+            }
+
         }
     }
 }
