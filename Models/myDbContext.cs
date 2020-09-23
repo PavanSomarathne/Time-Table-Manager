@@ -58,7 +58,7 @@ namespace TimeTableManager.Models
         {
             return new Schedule[]
                 {
-                    new Schedule{ Id=1, Working_days_count=3,Working_days="Monday,Tuesday,Friday",working_time_hrs=5,Working_time_mins=30,Working_duration="One Hour"}
+                    new Schedule{ Id=1, Working_days_count=3,Working_days="Monday,Tuesday,Friday",working_time_hrs=5,Working_time_mins=30,start_time="8:00 AM",Working_duration="One Hour"}
                 };
         }
 
