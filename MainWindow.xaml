@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TimeTableManager"
         mc:Ignorable="d"
+         WindowState="Maximized"
         TextElement.Foreground="{DynamicResource MaterialDesignBody}"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         TextElement.FontWeight="Regular"
@@ -96,6 +97,27 @@
             <StackPanel>
                 <materialDesign:PackIcon Kind="CalendarText" Width="50" Height="50" HorizontalAlignment="Center" VerticalAlignment="Center" />
                 <Label Content="  Generate&#xa;Timetables" Foreground="#DDFFFFFF" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20"/>
+            </StackPanel>
+        </Button>
+
+        <Button  Grid.Row="3" Grid.Column="1" FontSize="24" Height="120" Width="200" Click="LaunchNotAvailableTime">
+            <StackPanel>
+                <!--<materialDesign:PackIcon Kind="CalendarText" Width="50" Height="50" HorizontalAlignment="Center" VerticalAlignment="Center" />-->
+                <Label Content="Not Available&#xa;       Time" Foreground="#DDFFFFFF" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20"/>
+            </StackPanel>
+        </Button>
+
+        <Button  Grid.Row="3" Grid.Column="2" FontSize="24" Height="120" Width="200" Click="LaunchConsecutiveSessions">
+            <StackPanel>
+                <!--<materialDesign:PackIcon Kind="CalendarText" Width="50" Height="50" HorizontalAlignment="Center" VerticalAlignment="Center" />-->
+                <Label Content="Consecutive&#xa;   Sessions" Foreground="#DDFFFFFF" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20"/>
+            </StackPanel>
+        </Button>
+
+        <Button  Grid.Row="3" Grid.Column="3" FontSize="24" Height="120" Width="200" Click="LaunchParallelSessions">
+            <StackPanel>
+                <!--<materialDesign:PackIcon Kind="CalendarText" Width="50" Height="50" HorizontalAlignment="Center" VerticalAlignment="Center" />-->
+                <Label Content=" Parallel&#xa;Sessions" Foreground="#DDFFFFFF" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20"/>
             </StackPanel>
         </Button>
         <StackPanel Grid.Column="3" Grid.Row="4" Grid.ColumnSpan="2">

@@ -1,0 +1,80 @@
+﻿<Window x:Class="TimeTableManager.ConsecutiveSessionsWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        xmlns:local="clr-namespace:TimeTableManager"
+        mc:Ignorable="d"
+        WindowState="Maximized"
+         TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+        TextElement.FontWeight="Regular"
+        TextElement.FontSize="13"
+        TextOptions.TextFormattingMode="Ideal"
+        TextOptions.TextRenderingMode="Auto"
+        Background="{DynamicResource MaterialDesignPaper}"
+        FontFamily="{DynamicResource MaterialDesignFont}"
+        Title="ConsecutiveSessionsWindow" Height="661" Width="1366">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="60"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+
+        <StackPanel Orientation="Horizontal" Background="#FF673AB7">
+
+            <Button Style="{StaticResource MaterialDesignFloatingActionMiniAccentButton}"
+                            ToolTip="MaterialDesignFloatingActionMiniAccentButton" Margin="10,0,0,0" Click="GoBack" >
+                <materialDesign:PackIcon Kind="ArrowLeftCircle" Height="24" Width="24" />
+            </Button>
+
+            <Button Style="{StaticResource MaterialDesignFloatingActionMiniAccentButton}"
+                            ToolTip="MaterialDesignFloatingActionMiniAccentButton" Click="GoBack" Margin="10,0,0,0">
+                <materialDesign:PackIcon Kind="House" Height="24" Width="24" />
+            </Button>
+
+        </StackPanel>
+
+        <Label Grid.Row="1" FontSize="20" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center" Content="Consecutive Sessions"/>
+
+        <Grid Grid.Row="2">
+
+
+            <Border Grid.Column="0" BorderBrush="Black" BorderThickness="1" Margin="10,5,10,5">
+                <StackPanel Margin="-1,5,0,5" HorizontalAlignment="Left" Width="1351">
+
+                    <Grid Margin="5" Name="addUpdateStudentDetailsGrid" Width="1134" Height="477">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="191*"/>
+                            <ColumnDefinition Width="191*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <Grid.RowDefinitions>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                            <RowDefinition/>
+
+                        </Grid.RowDefinitions>
+
+                        <Label Grid.Row="0" Grid.Column="0" Content="Name of the session" Height="26"  Width="150" Margin="324,44,93,49"/>
+                        <Label Grid.Column="0" Content="Select 1st session" Height="26"  Width="150" Margin="324,44,93,50" Grid.Row="1"/>
+                        <Label Grid.Row="2" Grid.Column="0" Content="Select 2nd session" Height="26"  Width="150" Margin="324,44,93,49"/>
+
+                        <TextBox Name="txtSessionName" Grid.Row="0" Margin="0,44,417,49" Height="26"  Width="150" Text="{}" Grid.Column="1"/>
+
+                        <ComboBox Name="cmb1" Grid.Column="1" Margin="0,44,417,0" Text="{}" Height="26"  Width="150" VerticalAlignment="Top" Grid.Row="1"/>
+
+                        <ComboBox Name="cmb2" Grid.Row="2" Margin="0,44,417,0" Text="{}" Height="26"  Width="150" Grid.Column="1" VerticalAlignment="Top"/>
+
+
+                        <Button Foreground="White" Background="#FF6839FF" Grid.Row="3" Content="Add" Margin="492,10,492,83"  Height="26"  Width="150" Grid.ColumnSpan="2"/>
+
+                    </Grid>
+
+                </StackPanel>
+            </Border>
+        </Grid>
+    </Grid>
+</Window>
