@@ -26,13 +26,13 @@ namespace TimeTableManager
 
             });
 
-            services.AddSingleton<MainWindow>();
+            services.AddSingleton<LocationsWindow>();
             serviceProvider = services.BuildServiceProvider();
         }
 
         private void OnStarup(object s, StartupEventArgs e)
         {
-            var mainWindow = serviceProvider.GetService<MainWindow>();
+            var mainWindow = serviceProvider.GetService<LocationsWindow>();
             mainWindow.Show();
 
         }

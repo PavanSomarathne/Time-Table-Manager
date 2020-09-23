@@ -6,7 +6,7 @@ using System.Text;
 
 namespace TimeTableManager.Models
 {
-   public class LecturerDetails
+    public class LecturerDetails
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
@@ -18,9 +18,11 @@ namespace TimeTableManager.Models
         public string Center { get; set; }
         public Building BuildinDSA { get; set; }
 
-        public int  EmpLevel { get; set; }
+        public int EmpLevel { get; set; }
 
         public string Rank { get; set; }
+
+        public virtual ICollection<RoomLecturer> RoomLecturers { get; set; }
 
     }
 }

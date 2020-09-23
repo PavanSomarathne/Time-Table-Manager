@@ -25,12 +25,23 @@ namespace TimeTableManager.Models
         public DbSet<SubGroups_NotAvailable> SubGroups_NotAvailables { get; set; }
 
 
+ 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Building>()
-            .HasMany(c => c.RoomsAS)
-            .WithOne(e => e.BuildingAS);
+        
+            modelBuilder.Entity<RoomLecturer>()
+                .HasKey(rl => new { rl.RoomId, rl.LecturerId });
+
+            modelBuilder.Entity<RoomLecturer>()
+                .HasOne(rl => rl.Room)
+                .WithMany(p => p.RoomLecturers)
+                .HasForeignKey(rl => rl.RoomId);
+
+            modelBuilder.Entity<RoomLecturer>()
+                .HasOne(rl => rl.Lecturer)
+                .WithMany(c => c.RoomLecturers)
+                .HasForeignKey(rl => rl.LecturerId);
 
             modelBuilder.Entity<Building>()
                 .HasMany(q => q.LecturesDSA)
@@ -40,7 +51,10 @@ namespace TimeTableManager.Models
             modelBuilder.Entity<SubjectDetails>();
             //modelBuilder.Entity<Building>().HasData(GetBuildings());
 
-        
+            modelBuilder.Entity<Building>()
+            .HasMany(c => c.RoomsAS)
+            .WithOne(e => e.BuildingAS);
+
             base.OnModelCreating(modelBuilder);
 
         }

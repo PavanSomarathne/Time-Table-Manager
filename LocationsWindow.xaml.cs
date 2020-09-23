@@ -34,6 +34,7 @@ namespace TimeTableManager
             this.dbContext1 = dbContext;
             GetRooms();
             GetBuildings();
+
         }
 
         private void GetRooms()
