@@ -20,6 +20,10 @@ namespace TimeTableManager.Models
         public DbSet<Room> Rooms { get; set; }
         public DbSet<Student> Students { get; set; }
         public DbSet<Tag> Tags { get; set; }
+        public DbSet<Lecturers_NotAvailable> Lecturers_NotAvailables { get; set; }
+        public DbSet<Groups_NotAvailable> Groups_NotAvailables { get; set; }
+        public DbSet<SubGroups_NotAvailable> SubGroups_NotAvailables { get; set; }
+
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
