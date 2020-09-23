@@ -3,10 +3,9 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-       
         xmlns:local="clr-namespace:TimeTableManager" xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         mc:Ignorable="d"
-        Title="MainWindow" Height="768" Width="1366">
+        Title="MainWindow" Height="768" Width="1366" Loaded="Table_loaded" >
 
     <Border Padding="20">
         <StackPanel>
@@ -51,26 +50,11 @@
                             </Grid.RowDefinitions>
 
                             <StackPanel  Grid.Row="0"  Margin="3">
-                               
 
-                                <DataGrid AutoGenerateColumns="False" Margin="5" Name="ScheduleDG" IsReadOnly="True"  >
-                                    <DataGrid.Columns>
-                                        <DataGridTextColumn Header="Id" Binding="{Binding Id}"/>
-                                        <DataGridTextColumn Header="Working Days" Binding="{Binding Working_days_count}"/>
-                                        <DataGridTextColumn Header="Days" Binding="{Binding Working_days}"/>
-                                        <DataGridTextColumn Header="Starting Time" Binding="{Binding start_time}"/>
-                                        <DataGridTextColumn Header="Working Hrs" Binding="{Binding working_time_hrs}"/>
-                                        <DataGridTextColumn Header="Working Mins" Binding="{Binding Working_time_mins}"/>
-                                        <DataGridTextColumn Header="Time Slot Duration" Binding="{Binding Working_duration}"/>
 
-                                        <DataGridTemplateColumn Header="Update" >
-                                            <DataGridTemplateColumn.CellTemplate>
-                                                <DataTemplate>
-                                                    <Button Content="Select" />
-                                                </DataTemplate>
-                                            </DataGridTemplateColumn.CellTemplate>
-                                        </DataGridTemplateColumn>
-                                    </DataGrid.Columns>
+                                <DataGrid AutoGenerateColumns="True" Margin="5" Name="TimeTableDG" IsReadOnly="True"  >
+                                    
+                                        
                                 </DataGrid>
                             </StackPanel>
                             <StackPanel Grid.Row="1" Background="Beige">
@@ -94,19 +78,30 @@
                             <!-- Type-->
                             <TextBlock Text="Type" FontWeight="SemiBold" Margin="0 10 0 0"/>
                             <Grid>
-                                <ComboBox Padding="2" Name="sType" Text="-- Select Team --"   DropDownClosed="TypeChange">
+                                <ComboBox Padding="2" Name="sType"  DropDownClosed="TypeChange" >
                                     <ComboBoxItem >Student</ComboBoxItem>
                                     <ComboBoxItem>Lecturer</ComboBoxItem>
                                     <ComboBoxItem>Room</ComboBoxItem>
                                 </ComboBox>
-                                
-
+                                <TextBlock IsHitTestVisible="False" Text="Select one" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,0,0,0" Foreground="DarkGray">
+                                    <TextBlock.Style>
+                                        <Style TargetType="{x:Type TextBlock}">
+                                            <Setter Property="Visibility" Value="Collapsed"/>
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding Text, ElementName=sType}" Value="">
+                                                    <Setter Property="Visibility" Value="Visible"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </TextBlock.Style>
+                                </TextBlock>
                             </Grid>
+                            
                             <!-- Student Part-->
                             <StackPanel  Margin="3" Name="studenSP">
                                 <TextBlock Text="Academic year and semester" FontWeight="SemiBold" Margin="0 20 0 0"/>
                                 <Grid>
-                                    <ComboBox Name="Year" Padding="2" Text="-- Select One--"  >
+                                    <ComboBox Name="Year" Padding="2" DropDownClosed="program_load"  >
                                         <ComboBoxItem >Y1.S1</ComboBoxItem>
                                         <ComboBoxItem >Y1.S2</ComboBoxItem>
                                         <ComboBoxItem >Y2.S1</ComboBoxItem>
@@ -116,12 +111,32 @@
                                         <ComboBoxItem >Y4.S1</ComboBoxItem>
                                         <ComboBoxItem >Y4.S2</ComboBoxItem>
                                     </ComboBox>
-                                    <TextBlock IsHitTestVisible="False" Text="Select one" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10,0,0,0" Foreground="DarkGray">
+                                    <TextBlock IsHitTestVisible="False" Text="Select one" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,0,0,0" Foreground="DarkGray">
                                         <TextBlock.Style>
                                             <Style TargetType="{x:Type TextBlock}">
                                                 <Setter Property="Visibility" Value="Collapsed"/>
                                                 <Style.Triggers>
-                                                    <DataTrigger Binding="{Binding Text, ElementName=duration}" Value="">
+                                                    <DataTrigger Binding="{Binding Text, ElementName=Year}" Value="">
+                                                        <Setter Property="Visibility" Value="Visible"/>
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </TextBlock.Style>
+                                    </TextBlock>
+                                    
+                                </Grid>
+                                
+                                
+
+                                <TextBlock Text="Program" FontWeight="SemiBold" Margin="0 20 0 0"/>
+                                <Grid>
+                                    <ComboBox Name="Program" Padding="2" IsEditable="True"  DropDownClosed="group_load" ></ComboBox>
+                                    <TextBlock IsHitTestVisible="False" Text="Select one" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,0,0,0" Foreground="DarkGray">
+                                        <TextBlock.Style>
+                                            <Style TargetType="{x:Type TextBlock}">
+                                                <Setter Property="Visibility" Value="Collapsed"/>
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding Text, ElementName=Program}" Value="">
                                                         <Setter Property="Visibility" Value="Visible"/>
                                                     </DataTrigger>
                                                 </Style.Triggers>
@@ -129,20 +144,15 @@
                                         </TextBlock.Style>
                                     </TextBlock>
                                 </Grid>
-                                
-                                
-
-                                <TextBlock Text="Program" FontWeight="SemiBold" Margin="0 20 0 0"/>
+                                <TextBlock Text="Group" FontWeight="SemiBold" Margin="0 20 0 0"/>
                                 <Grid>
-                                    <ComboBox Name="Program" Loaded="program_load" SelectedIndex="0" Padding="2" IsEditable="True" >
-                                        
-                                    </ComboBox>
-                                    <TextBlock IsHitTestVisible="False" Text="Select one" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10,0,0,0" Foreground="DarkGray">
+                                    <ComboBox Name="Group" Padding="2" IsEditable="True" ></ComboBox>
+                                    <TextBlock IsHitTestVisible="False" Text="Select one" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,0,0,0" Foreground="DarkGray">
                                         <TextBlock.Style>
                                             <Style TargetType="{x:Type TextBlock}">
                                                 <Setter Property="Visibility" Value="Collapsed"/>
                                                 <Style.Triggers>
-                                                    <DataTrigger Binding="{Binding Text, ElementName=duration}" Value="">
+                                                    <DataTrigger Binding="{Binding Text, ElementName=Group}" Value="">
                                                         <Setter Property="Visibility" Value="Visible"/>
                                                     </DataTrigger>
                                                 </Style.Triggers>
@@ -156,15 +166,13 @@
                             <StackPanel  Margin="3" Name="lecturerSP" Visibility="Collapsed" >
                                 <TextBlock Text="Lecturer" FontWeight="SemiBold" Margin="0 20 0 0"/>
                                 <Grid>
-                                    <ComboBox Name="Lecturer" Loaded="lecturer_load" Text="Select one" Padding="2" IsEditable="True" >
-                                       
-                                    </ComboBox>
-                                    <TextBlock IsHitTestVisible="False" Text="Select one" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10,0,0,0" Foreground="DarkGray">
+                                    <ComboBox Name="Lecturer" Loaded="lecturer_load" Padding="2" IsEditable="True" ></ComboBox>
+                                    <TextBlock IsHitTestVisible="False" Text="Select one" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,0,0,0" Foreground="DarkGray">
                                         <TextBlock.Style>
                                             <Style TargetType="{x:Type TextBlock}">
                                                 <Setter Property="Visibility" Value="Collapsed"/>
                                                 <Style.Triggers>
-                                                    <DataTrigger Binding="{Binding Text, ElementName=duration}" Value="">
+                                                    <DataTrigger Binding="{Binding Text, ElementName=Lecturer}" Value="">
                                                         <Setter Property="Visibility" Value="Visible"/>
                                                     </DataTrigger>
                                                 </Style.Triggers>
@@ -172,23 +180,19 @@
                                         </TextBlock.Style>
                                     </TextBlock>
                                 </Grid>
-                                
-                               
                             </StackPanel>
 
                             <!-- Room Part-->
                             <StackPanel  Margin="3" Name="roomSP" >
                                 <TextBlock Text="Building" FontWeight="SemiBold" Margin="0 20 0 0"/>
                                 <Grid>
-                                    <ComboBox Name="Building" Loaded="building_load" DropDownClosed="room_load" Padding="2" IsEditable="True" >
-                                        
-                                    </ComboBox>
-                                    <TextBlock IsHitTestVisible="False" Text="Select one" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10,0,0,0" Foreground="DarkGray">
+                                    <ComboBox Name="Building" Loaded="building_load" DropDownClosed="room_load" Padding="2" IsEditable="True"  ></ComboBox>
+                                    <TextBlock IsHitTestVisible="False" Text="Select one" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,0,0,0" Foreground="DarkGray">
                                         <TextBlock.Style>
                                             <Style TargetType="{x:Type TextBlock}">
                                                 <Setter Property="Visibility" Value="Collapsed"/>
                                                 <Style.Triggers>
-                                                    <DataTrigger Binding="{Binding Text, ElementName=duration}" Value="">
+                                                    <DataTrigger Binding="{Binding Text, ElementName=Building}" Value="">
                                                         <Setter Property="Visibility" Value="Visible"/>
                                                     </DataTrigger>
                                                 </Style.Triggers>
@@ -197,16 +201,15 @@
                                     </TextBlock>
                                 </Grid>
                                 <TextBlock Text="Room" FontWeight="SemiBold" Margin="0 20 0 0"/>
+                                
                                 <Grid>
-                                    <ComboBox Name="Room"  Padding="2"  IsEditable="True">
-                                       
-                                    </ComboBox>
-                                    <TextBlock IsHitTestVisible="False" Text="Select one" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10,0,0,0" Foreground="DarkGray">
+                                    <ComboBox Name="Room"  Padding="2"  IsEditable="True" ></ComboBox>
+                                    <TextBlock IsHitTestVisible="False" Text="Select one" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,0,0,0" Foreground="DarkGray">
                                         <TextBlock.Style>
                                             <Style TargetType="{x:Type TextBlock}">
                                                 <Setter Property="Visibility" Value="Collapsed"/>
                                                 <Style.Triggers>
-                                                    <DataTrigger Binding="{Binding Text, ElementName=duration}" Value="">
+                                                    <DataTrigger Binding="{Binding Text, ElementName=Room}" Value="">
                                                         <Setter Property="Visibility" Value="Visible"/>
                                                     </DataTrigger>
                                                 </Style.Triggers>
@@ -214,8 +217,6 @@
                                         </TextBlock.Style>
                                     </TextBlock>
                                 </Grid>
-
-                                
                             </StackPanel>
 
                             <Grid>
@@ -225,12 +226,8 @@
                                     <ColumnDefinition Width="*"/>
                                     <ColumnDefinition Width="2*"/>
                                     <ColumnDefinition Width="*"/>
-
                                 </Grid.ColumnDefinitions>
-                                
-                               
                             </Grid>
-                            
                         </StackPanel>
                         <StackPanel Grid.Row="1">
                             <StackPanel Margin="5">
