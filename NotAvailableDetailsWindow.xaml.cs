@@ -86,7 +86,24 @@ namespace TimeTableManager
             date1.Text = null;
             st1.Text = null;
             et1.Text = null;
+
+            cmb2.Text = null;
+            date2.Text = null;
+            st2.Text = null;
+            et2.Text = null;
+
+            cmb3.Text = null;
+            date3.Text = null;
+            st3.Text = null;
+            et3.Text = null;
+
+            cmb4.Text = null;
+            date4.Text = null;
+            st4.Text = null;
+            et4.Text = null;
         }
+
+        
 
         private void AddNotAvailableLecturers(object s, RoutedEventArgs e)
         {
@@ -263,26 +280,22 @@ namespace TimeTableManager
         public void GotoNotAvailableGroupView(Object s, RoutedEventArgs e)
         {
             ViewNotAvailableGroupsWindow viewG = new ViewNotAvailableGroupsWindow(dbContext1);
-            //viewL.Closed += AddClosed;
+            this.Close();
             viewG.ShowDialog();
+            
         }
 
 
-        //public void AddClosed(object sender, System.EventArgs e)
-        //{
-        //    //This gets fired off
-        //    GetRooms();
-        //    GetBuildings();
-
-        //}
+  
 
 
-        //public void GotoNotAvailableLecturerView(Object s, RoutedEventArgs e)
-        //{
-        //    BuildingsWindow buildingsWindow = new BuildingsWindow(dbContext1);
-        //    buildingsWindow.Closed += AddClosed;
-        //    buildingsWindow.ShowDialog();
-        //}
+        public void GotoNotAvailableLecturersView(Object s, RoutedEventArgs e)
+        {
+            ViewNotAvailableLecturersWindow viewL = new ViewNotAvailableLecturersWindow(dbContext1);
+            this.Close();
+            viewL.ShowDialog();
+           
+        }
 
         //public void GotoNotAvailableLecturerView(Object s, RoutedEventArgs e)
         //{
