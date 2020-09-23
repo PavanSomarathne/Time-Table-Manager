@@ -20,30 +20,31 @@
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="300"/>
         </Grid.ColumnDefinitions>
 
         <Grid.RowDefinitions>
             <RowDefinition Height="50"/>
-            <RowDefinition Height="100"/>
-            <RowDefinition Height="3*"/>
+            <RowDefinition Height="60"/>
+            <RowDefinition Height="2*"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="25"/>
         </Grid.RowDefinitions>
 
-        <StackPanel Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2">
-            <Label Content="Search By " FontWeight="Bold" FontSize="16" Margin="10,10,0,0" />
-            <StackPanel Orientation="Horizontal" >
-                <TextBox x:Name="txtSearchId" TextChanged="SerachById"  HorizontalAlignment="Left"  Grid.Row="1" TextWrapping="Wrap" VerticalAlignment="Top" Width="200" Margin="20,0,0,0"  materialDesign:HintAssist.Hint="Room ID" Style="{StaticResource MaterialDesignFloatingHintTextBox}" FontSize="16"/>
-            
-                <ComboBox Width="150" x:Name="CBSearchBuilding"  DisplayMemberPath="Name" materialDesign:HintAssist.Hint="Select Building" materialDesign:HintAssist.HintOpacity=".26" IsEditable="True" SelectionChanged="SearchByBuilding" FontSize="16" Margin="20,10,0,0"/>
-                <ComboBox Width="150" x:Name="CBSearchType" Margin="20,10,0,0"  materialDesign:HintAssist.Hint="Select Type" materialDesign:HintAssist.HintOpacity=".26" IsEditable="True" SelectionChanged="SearchByType" FontSize="16" >
-                   
-                    <ComboBoxItem Content="LectureRoom" />
-                    <ComboBoxItem Content="Lab" />
-                </ComboBox>
-            </StackPanel>
+
+        <StackPanel Orientation="Horizontal" Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2">
+            <Label Content="Search By " FontWeight="Bold" FontSize="16" Margin="10,10,0,0" Height="33" />
+            <TextBox x:Name="txtSearchId" TextChanged="SerachById"  HorizontalAlignment="Left"  Grid.Row="1" TextWrapping="Wrap" VerticalAlignment="Top" Width="200" Margin="20,0,0,0"  materialDesign:HintAssist.Hint="Room ID" Style="{StaticResource MaterialDesignFloatingHintTextBox}" FontSize="16"/>
+
+            <ComboBox Width="150" x:Name="CBSearchBuilding"  DisplayMemberPath="Name" materialDesign:HintAssist.Hint="Select Building" materialDesign:HintAssist.HintOpacity=".26" IsEditable="True" SelectionChanged="SearchByBuilding" FontSize="16" Margin="20,10,0,0"/>
+            <ComboBox Width="150" x:Name="CBSearchType" Margin="20,10,0,0"  materialDesign:HintAssist.Hint="Select Type" materialDesign:HintAssist.HintOpacity=".26" IsEditable="True" SelectionChanged="SearchByType" FontSize="16" >
+
+                <ComboBoxItem Content="LectureRoom" />
+                <ComboBoxItem Content="Lab" />
+            </ComboBox>
         </StackPanel>
+
 
         <materialDesign:Card Grid.Row="4" Grid.ColumnSpan="4" Background="{DynamicResource MaterialDesignCardBackground}">
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,0,20,5">
@@ -52,11 +53,11 @@
             </StackPanel>
 
         </materialDesign:Card>
-        
+
         <Rectangle Margin="0,492,0,10" Stroke="Black" HorizontalAlignment="Center" Width="1364"/>
-        <materialDesign:Card Grid.Row="0" Grid.Column="0" Background="{DynamicResource MaterialDesignDarkBackground}" Grid.ColumnSpan="3">
+        <materialDesign:Card Grid.Row="0" Grid.Column="0" Background="{DynamicResource MaterialDesignDarkBackground}" Grid.ColumnSpan="4">
             <StackPanel Orientation="Horizontal" Background="#FF673AB7">
-                
+
                 <Button Style="{StaticResource MaterialDesignFloatingActionMiniAccentButton}"
                             ToolTip="MaterialDesignFloatingActionMiniAccentButton" Margin="10,0,0,0" Click="GoBack" >
                     <materialDesign:PackIcon Kind="ArrowLeftCircle" Height="24" Width="24" />
@@ -74,7 +75,7 @@
 
             </StackPanel>
         </materialDesign:Card>
-        <DataGrid Grid.Row="2" Grid.Column="0" x:Name="RoomsDG" AutoGenerateColumns="False" SelectionChanged="UpdateSelection" ItemsSource="{Binding Items}">
+        <DataGrid Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" x:Name="RoomsDG" AutoGenerateColumns="False" SelectionChanged="UpdateSelection" ItemsSource="{Binding Items}">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Room ID" Binding="{Binding Rid}" />
                 <DataGridTextColumn Header="Building Name" Binding="{Binding BuildingAS.Name}" />
@@ -83,8 +84,21 @@
             </DataGrid.Columns>
 
         </DataGrid>
+        <GroupBox Grid.Row="2" Grid.Column="2"  Header="Assigned Sessions" Style="{DynamicResource MaterialDesignCardGroupBox}"
+                materialDesign:ColorZoneAssist.Mode="Custom" materialDesign:ColorZoneAssist.Background="#FF673AB7" materialDesign:ColorZoneAssist.Foreground="White" >
+            <StackPanel  >
+             
+                <DataGrid  x:Name="SessionDG" AutoGenerateColumns="False" SelectionChanged="UpdateSelection" ItemsSource="{Binding Items}">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="Tag" Binding="{Binding Rid}" />
+                        <DataGridTextColumn Header="Subject" Binding="{Binding BuildingAS.Name}" />
+                        <DataGridTextColumn Header="Student Amount" Binding="{Binding Type}" />
+                    </DataGrid.Columns>
+                </DataGrid>
 
-        <StackPanel Width="300" Grid.Column="2" Grid.Row="1" Grid.RowSpan="3" materialDesign:ShadowAssist.ShadowDepth="Depth4" Margin="0,20,0,0" >
+            </StackPanel>
+        </GroupBox>
+        <StackPanel Width="300" Grid.Column="3" Grid.Row="1" Grid.RowSpan="3" materialDesign:ShadowAssist.ShadowDepth="Depth4" Margin="0,20,0,0" >
             <Label Content="Location Management"  FontWeight="Normal" FontSize="20" HorizontalAlignment="Center"/>
             <Label Content="Selected Room Id&#xD;&#xA;" FontWeight="Bold" Margin="5,20,0,4" Height="30"/>
             <TextBox x:Name="TxtRid" TextWrapping="Wrap"  Width="261" Height="30" FontWeight="Bold" FontSize="14" Text="Selected Room ID" IsEnabled="False"/>
@@ -105,8 +119,19 @@
             <Button Content="Delete Room" Height="31" Width="270" FontWeight="Bold" Margin="0,5,0,0" Click="DeleteRoom"/>
             <Button Content="Manage Buildings" Height="31" Width="270"  FontWeight="Bold" Margin="0,20,0,0" Background="#FFFFA000" Click="ManageBuilding"/>
         </StackPanel>
-
-
+        <GroupBox Grid.Row="3"  Header="Assigned Tags" Style="{DynamicResource MaterialDesignCardGroupBox}"
+                materialDesign:ColorZoneAssist.Mode="Custom" materialDesign:ColorZoneAssist.Background="#FF673AB7" materialDesign:ColorZoneAssist.Foreground="White" >
+           
+                <ListView >
+                    <ListViewItem>Hismkmkams sas</ListViewItem>
+                    <ListViewItem>Hismkmkams sas</ListViewItem>
+                    <ListViewItem>Hismkmkams sas</ListViewItem>
+                    <ListViewItem>Hismkmkams sas</ListViewItem>
+                    <ListViewItem>Hismkmkams sas</ListViewItem>
+                    <ListViewItem>Hismkmkams sas</ListViewItem>
+                </ListView>
+    
+        </GroupBox>
 
 
     </Grid>
