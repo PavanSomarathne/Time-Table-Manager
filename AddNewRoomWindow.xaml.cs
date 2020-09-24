@@ -56,7 +56,16 @@ namespace TimeTableManager
             BtnSave.Click -= AddRoom;
             BtnSave.Click += UpdateRoom;
 
+            LoadLecturers();
 
+        }
+
+        private void LoadLecturers()
+        {
+            LVlecturer.ItemsSource = dbContext1.Rooms
+            .Where(p => p.Id == 1)
+            .SelectMany(r => r.RoomLecturers)
+            .Select(rl => rl.Lecturer).ToList();
         }
 
         private void AddRoom(Object s, RoutedEventArgs e)
@@ -141,6 +150,43 @@ namespace TimeTableManager
             this.Close();
         }
 
+        private void AddLec(Object s, RoutedEventArgs e)
+        {
+            PopupSearch popup = new PopupSearch(dbContext1, "lec", RoomToEdit);
+            popup.Closed += RefreshLec;
+            popup.ShowDialog();
+        }
+
+        private void DelLec(Object s, RoutedEventArgs e)
+        {
+            if (LVlecturer.SelectedItem != null)
+            {
+                RoomLecturer roomLecturer = new RoomLecturer
+                {
+                    Lecturer = (LecturerDetails)LVlecturer.SelectedItem,
+                    Room = RoomToEdit
+                };
+
+                dbContext1.Remove(roomLecturer);
+                dbContext1.SaveChanges();
+
+                LVlecturer.SelectedItem = null;
+                LoadLecturers();
+            }
+        }
+
+        private void LecDelActive(Object s, RoutedEventArgs e)
+        {
+            if (LVlecturer.SelectedItem != null)
+            {
+                BTNdelLec.IsEnabled = true;
+            }
+            else
+            {
+                BTNdelLec.IsEnabled = false;
+            }
+        }
+
         private bool ValidateInput()
         {
             if (TxtRid.Text.Trim() == "")
@@ -178,9 +224,18 @@ namespace TimeTableManager
 
         private void GoBack(Object s, RoutedEventArgs e)
         {
-    
+
             this.Close();
 
+        }
+
+
+        public void RefreshLec(object sender, System.EventArgs e)
+        {
+            //This gets fired off
+            LVlecturer.ItemsSource = null;
+            LoadLecturers();
+  
         }
     }
 }

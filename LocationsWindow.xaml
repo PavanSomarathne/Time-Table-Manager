@@ -119,17 +119,11 @@
             <Button Content="Delete Room" Height="31" Width="270" FontWeight="Bold" Margin="0,5,0,0" Click="DeleteRoom"/>
             <Button Content="Manage Buildings" Height="31" Width="270"  FontWeight="Bold" Margin="0,20,0,0" Background="#FFFFA000" Click="ManageBuilding"/>
         </StackPanel>
-        <GroupBox Grid.Row="3"  Header="Assigned Tags" Style="{DynamicResource MaterialDesignCardGroupBox}"
+        <GroupBox Grid.Row="3"  Header="Prefferd Lecturers" Style="{DynamicResource MaterialDesignCardGroupBox}"
                 materialDesign:ColorZoneAssist.Mode="Custom" materialDesign:ColorZoneAssist.Background="#FF673AB7" materialDesign:ColorZoneAssist.Foreground="White" >
-           
-                <ListView >
-                    <ListViewItem>Hismkmkams sas</ListViewItem>
-                    <ListViewItem>Hismkmkams sas</ListViewItem>
-                    <ListViewItem>Hismkmkams sas</ListViewItem>
-                    <ListViewItem>Hismkmkams sas</ListViewItem>
-                    <ListViewItem>Hismkmkams sas</ListViewItem>
-                    <ListViewItem>Hismkmkams sas</ListViewItem>
-                </ListView>
+
+            <ListView x:Name="LVlecturer">
+            </ListView>
     
         </GroupBox>
 

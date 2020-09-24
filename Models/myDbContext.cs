@@ -20,13 +20,21 @@ namespace TimeTableManager.Models
         public DbSet<Room> Rooms { get; set; }
         public DbSet<Student> Students { get; set; }
         public DbSet<Tag> Tags { get; set; }
+        public DbSet<Lecturers_NotAvailable> Lecturers_NotAvailables { get; set; }
+        public DbSet<Sessions_NotAvailable> Sessions_NotAvailables { get; set; }
+        public DbSet<Groups_NotAvailable> Groups_NotAvailables { get; set; }
+        public DbSet<SubGroups_NotAvailable> SubGroups_NotAvailables { get; set; }
+
         public DbSet<Session> Sessions { get; set; }
         public DbSet<SessionLecturer> SessionLecturers { get; set; }
+
+        public DbSet<RoomLecturer> RoomLecturers { get; set; }
+
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-        
+
             modelBuilder.Entity<RoomLecturer>()
                 .HasKey(rl => new { rl.RoomId, rl.LecturerId });
 
@@ -40,17 +48,10 @@ namespace TimeTableManager.Models
                 .WithMany(c => c.RoomLecturers)
                 .HasForeignKey(rl => rl.LecturerId);
 
-            modelBuilder.Entity<Building>()
-                .HasMany(q => q.LecturesDSA)
-                .WithOne(k => k.BuildinDSA);
-
             modelBuilder.Entity<Schedule>().HasData(GetSchedules());
             modelBuilder.Entity<SubjectDetails>();
             //modelBuilder.Entity<Building>().HasData(GetBuildings());
 
-            modelBuilder.Entity<Building>()
-            .HasMany(c => c.RoomsAS)
-            .WithOne(e => e.BuildingAS);
 
 
 
