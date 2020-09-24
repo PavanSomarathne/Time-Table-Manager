@@ -6,8 +6,8 @@
         xmlns:local="clr-namespace:TimeTableManager"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         TextElement.Foreground="{DynamicResource MaterialDesignBody}"
-        TextElement.FontWeight="SemiBold"
-        TextElement.FontSize="18"
+        TextElement.FontWeight="Regular"
+        TextElement.FontSize="13"
         TextOptions.TextFormattingMode="Ideal"
         TextOptions.TextRenderingMode="Auto"
         Background="{DynamicResource MaterialDesignPaper}"
@@ -16,9 +16,12 @@
         Title="Add New Room" Height="768" Width="1366" WindowStartupLocation="CenterScreen">
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="197*"/>
-            <ColumnDefinition Width="714*"/>
-            <ColumnDefinition Width="455*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="60"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="60"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="60"/>
         </Grid.ColumnDefinitions>
 
         <Grid.RowDefinitions>
@@ -28,7 +31,7 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <materialDesign:Card Grid.Row="0" Grid.Column="0" Background="{DynamicResource MaterialDesignDarkBackground}" Grid.ColumnSpan="3">
+        <materialDesign:Card Grid.Row="0" Grid.Column="0" Background="{DynamicResource MaterialDesignDarkBackground}" Grid.ColumnSpan="6">
             <StackPanel Orientation="Horizontal" Background="#FF673AB7">
 
                 <Button Style="{StaticResource MaterialDesignFloatingActionMiniAccentButton}"
@@ -44,17 +47,17 @@
             </StackPanel>
         </materialDesign:Card>
 
-        <Label Content="Sprint 2 Functions Goes Here" FontSize="24" Grid.Row="2" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="99,0,0,0" />
-        <Label Content="Sprint 2 Functions Goes Here" FontSize="24" Grid.Row="3" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="99,0,0,0" />
-        <Label Content="Sprint 2 Functions Goes Here" FontSize="24" Grid.Row="2" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center" />
-        <Label Content="Sprint 2 Functions Goes Here" FontSize="24" Grid.Row="1" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center" />
-        <StackPanel  Grid.Column="2" Grid.Row="2" Orientation="Horizontal" Margin="0,234,0,0" Grid.RowSpan="2" >
-            <Button x:Name="BtnSave" Click="AddRoom" Content="Add Room" HorizontalAlignment="Center" VerticalAlignment="Bottom" Height="40" Width="200" FontSize="20" Margin="20,0,0,20"/>
+
+       
+
+        
+        <StackPanel  Grid.Column="4" Grid.Row="2" Grid.ColumnSpan="2" Orientation="Horizontal" Margin="0,234,0,0" Grid.RowSpan="2" >
+            <Button x:Name="BtnSave" Click="AddRoom" Content="Save Room" HorizontalAlignment="Center" VerticalAlignment="Bottom" Height="40" Width="200" FontSize="20" Margin="20,0,0,20"/>
             <Button Content="Close"  HorizontalAlignment="Center"  VerticalAlignment="Bottom" Height="40" Width="200" FontSize="20" Margin="10,0,0,20" Background="#FFFF1744" BorderBrush="{x:Null}" Click="CloseWindow"/>
 
         </StackPanel>
 
-        <StackPanel Grid.Row="1" Grid.Column="0" Margin="0,10,455,0" Grid.ColumnSpan="3" >
+        <StackPanel Grid.Row="1" Grid.Column="0"  Grid.ColumnSpan="5" Margin="0,10,455,0" >
             <Label x:Name="TxtTitle" Content="Add New Room" Margin="20,0,0,18" FontSize="24" FontWeight="Bold"/>
             <StackPanel Grid.Row="1" Grid.Column="0" Orientation="Horizontal" >
                 <StackPanel  Orientation="Horizontal" >
@@ -83,5 +86,61 @@
                 </StackPanel>
             </StackPanel>
         </StackPanel>
+
+
+        <GroupBox Grid.Row="2"  Grid.Column="2"  Header="Prefferd Lecturers" Style="{DynamicResource MaterialDesignCardGroupBox}"
+                materialDesign:ColorZoneAssist.Mode="Custom" materialDesign:ColorZoneAssist.Background="#FF673AB7" materialDesign:ColorZoneAssist.Foreground="White"  >
+            <ListView x:Name="LVlecturer" DisplayMemberPath="LecName" SelectionChanged="LecDelActive"/>
+        </GroupBox>
+        <StackPanel Grid.Row="2"  Grid.Column="3"  VerticalAlignment="Bottom" Margin="0,0,0,20">
+            <Button  Style="{StaticResource MaterialDesignFloatingActionMiniAccentButton}" Click="AddLec"
+                        ToolTip="Assign Prefered Lecturer" Margin="0,0,0,10">
+                <materialDesign:PackIcon Kind="Plus" Height="24" Width="24" />
+            </Button>
+            <Button  x:Name="BTNdelLec"  Style="{StaticResource MaterialDesignFloatingActionMiniAccentButton}"
+                        ToolTip="MaterialDesignFloatingActionMiniLightButton" Background="#FFFF1744" IsEnabled="False" Click="DelLec">
+                <materialDesign:PackIcon  Kind="Delete" Height="24" Width="24"  />
+            </Button>
+        </StackPanel>
+
+
+
+
+        <GroupBox Grid.Row="2"  Grid.Column="4"  Header="Prefferd Subjects" Style="{DynamicResource MaterialDesignCardGroupBox}"
+                materialDesign:ColorZoneAssist.Mode="Custom" materialDesign:ColorZoneAssist.Background="#FF673AB7" materialDesign:ColorZoneAssist.Foreground="White"  >
+            <ListView x:Name="LVSubjects"/>
+        </GroupBox>
+        <StackPanel Grid.Row="2"  Grid.Column="5" VerticalAlignment="Bottom" Margin="0,0,0,20">
+            <Button  Style="{StaticResource MaterialDesignFloatingActionMiniAccentButton}"
+                        ToolTip="MaterialDesignFloatingActionMiniLightButton" Margin="0,0,0,10">
+                <materialDesign:PackIcon Kind="Plus" Height="24" Width="24" />
+            </Button>
+            <Button  Style="{StaticResource MaterialDesignFloatingActionMiniAccentButton}"
+                        ToolTip="MaterialDesignFloatingActionMiniLightButton">
+                <materialDesign:PackIcon Kind="Delete" Height="24" Width="24"  />
+            </Button>
+        </StackPanel>
+
+        <GroupBox Grid.Row="2" Grid.RowSpan="2" Grid.Column="0"  Header="Allocated Sessions" Style="{DynamicResource MaterialDesignCardGroupBox}"
+                materialDesign:ColorZoneAssist.Mode="Custom" materialDesign:ColorZoneAssist.Background="#FF673AB7" materialDesign:ColorZoneAssist.Foreground="White"  Margin="10,0,0,10"  >
+            <DataGrid  x:Name="SessionDG" AutoGenerateColumns="False"  ItemsSource="{Binding Items}">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Tag" Binding="{Binding Rid}" />
+                    <DataGridTextColumn Header="Subject" Binding="{Binding BuildingAS.Name}" />
+                    <DataGridTextColumn Header="Student Amount" Binding="{Binding Type}" />
+                </DataGrid.Columns>
+            </DataGrid>
+        </GroupBox>
+        <StackPanel Grid.Row="2" Grid.RowSpan="2" Grid.Column="1"  VerticalAlignment="Bottom" Margin="0,0,0,20">
+            <Button  Style="{StaticResource MaterialDesignFloatingActionMiniAccentButton}"
+                        ToolTip="Add Session" Margin="0,0,0,10">
+                <materialDesign:PackIcon Kind="Plus" Height="24" Width="24" />
+            </Button>
+            <Button IsEnabled="false" Style="{StaticResource MaterialDesignFloatingActionMiniAccentButton}"
+                        ToolTip="Delete Session" Background="#FFFF1744">
+                <materialDesign:PackIcon Kind="Delete" Height="24" Width="24"  />
+            </Button>
+        </StackPanel>
+
     </Grid>
 </Window>

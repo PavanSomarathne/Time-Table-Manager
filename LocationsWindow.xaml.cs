@@ -34,6 +34,8 @@ namespace TimeTableManager
             this.dbContext1 = dbContext;
             GetRooms();
             GetBuildings();
+            LoadLecturers();
+           
 
         }
 
@@ -55,6 +57,15 @@ namespace TimeTableManager
 
         }
 
+
+        private void LoadLecturers()
+        {
+            LVlecturer.ItemsSource = dbContext1.Rooms
+            .Where(p => p.Id == 1)
+            .SelectMany(r => r.RoomLecturers)
+            .Select(rl => rl.Lecturer).ToList();
+        }
+
         public void AddNewRoom(Object s, RoutedEventArgs e)
         {
 
@@ -69,8 +80,8 @@ namespace TimeTableManager
             if (SelectedRoom == null)
             {
 
-                 new MessageBoxCustom("Please Select A Room from the table before Updating!",
-                    MessageType.Error, MessageButtons.Ok).ShowDialog();
+                new MessageBoxCustom("Please Select A Room from the table before Updating!",
+                   MessageType.Error, MessageButtons.Ok).ShowDialog();
             }
             else
             {
@@ -165,6 +176,7 @@ namespace TimeTableManager
             //This gets fired off
             GetRooms();
             GetBuildings();
+            LoadLecturers();
 
         }
 
