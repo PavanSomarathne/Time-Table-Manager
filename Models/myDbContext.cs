@@ -21,6 +21,7 @@ namespace TimeTableManager.Models
         public DbSet<Student> Students { get; set; }
         public DbSet<Tag> Tags { get; set; }
         public DbSet<Lecturers_NotAvailable> Lecturers_NotAvailables { get; set; }
+        public DbSet<Sessions_NotAvailable> Sessions_NotAvailables { get; set; }
         public DbSet<Groups_NotAvailable> Groups_NotAvailables { get; set; }
         public DbSet<SubGroups_NotAvailable> SubGroups_NotAvailables { get; set; }
 

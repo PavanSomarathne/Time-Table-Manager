@@ -21,6 +21,7 @@ namespace TimeTableManager
     {
         private MyDbContext dbContext1;
         Lecturers_NotAvailable NewNotAvailable = new Lecturers_NotAvailable();
+        Sessions_NotAvailable sessions_NotAvailable = new Sessions_NotAvailable();
         Groups_NotAvailable groups_NotAvailable = new Groups_NotAvailable();
         SubGroups_NotAvailable subGroups_NotAvailable = new SubGroups_NotAvailable();
         public NotAvailableDetailsWindow()
@@ -133,6 +134,37 @@ namespace TimeTableManager
 
 
         }
+
+        private void AddNotAvailableSessions(object s, RoutedEventArgs e)
+        {
+            if (ValidateInputForLecturers())
+            {
+                sessions_NotAvailable.notAvailableSession = cmb1.Text;
+                sessions_NotAvailable.notAvailableSessionDate = date1.Text.ToString();
+                sessions_NotAvailable.notAvailableSessionStAt = st1.Text.ToString();
+                sessions_NotAvailable.notAvailableSessionEndAt = et1.Text.ToString();
+                dbContext1.Sessions_NotAvailables.Add(sessions_NotAvailable);
+                dbContext1.SaveChanges();
+
+                sessions_NotAvailable = new Sessions_NotAvailable();
+                addNotAvailableDetailsGrid.DataContext = sessions_NotAvailable;
+
+                new MessageBoxCustom("Successfully added not available details for sessions!", MessageType.Success, MessageButtons.Ok).ShowDialog();
+
+                clear();
+                
+
+            }
+            else
+            {
+
+                new MessageBoxCustom("Please complete not available details for sessions correctly !", MessageType.Warning, MessageButtons.Ok).ShowDialog();
+            }
+
+
+        }
+
+        
 
         private void AddNotAvailableGroups(object s, RoutedEventArgs e)
         {
@@ -297,18 +329,18 @@ namespace TimeTableManager
            
         }
 
-        //public void GotoNotAvailableLecturerView(Object s, RoutedEventArgs e)
-        //{
-        //    BuildingsWindow buildingsWindow = new BuildingsWindow(dbContext1);
-        //    buildingsWindow.Closed += AddClosed;
-        //    buildingsWindow.ShowDialog();
-        //}
-
-        //public void GotoNotAvailableLecturerView(Object s, RoutedEventArgs e)
-        //{
-        //    BuildingsWindow buildingsWindow = new BuildingsWindow(dbContext1);
-        //    buildingsWindow.Closed += AddClosed;
-        //    buildingsWindow.ShowDialog();
-        //}
+        public void GotoNotAvailableSubGroupView(Object s, RoutedEventArgs e)
+        {
+            ViewNotAvailableSubGroupsWindow viewS = new ViewNotAvailableSubGroupsWindow(dbContext1);
+            this.Close();
+            viewS.ShowDialog();
+        }
+        
+        public void GotoNotAvailableSessionsView(Object s, RoutedEventArgs e)
+        {
+            ViewNotAvailableSessionsWindow viewSession = new ViewNotAvailableSessionsWindow(dbContext1);
+            this.Close();
+            viewSession.ShowDialog();
+        }
     }
 }

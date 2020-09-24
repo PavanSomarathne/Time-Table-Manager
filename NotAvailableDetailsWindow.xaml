@@ -102,14 +102,14 @@
                         <materialDesign:TimePicker Name="et4" Grid.Column="3" HorizontalAlignment="Left" Grid.Row="7"  Height="26"  Width="150" VerticalAlignment="Top"/>
 
                         <Button Foreground="White" Background="#FF6839FF" Grid.Column="4" Content="Add" Margin="5,0,95,37" Grid.Row="1" Click="AddNotAvailableLecturers"/>
-                        <Button Foreground="White" Background="#FF6839FF" Grid.Row="2" Grid.Column="4" Content="Add" Margin="5,50,95,38" Grid.RowSpan="2"/>
+                        <Button Foreground="White" Background="#FF6839FF" Grid.Row="2" Grid.Column="4" Content="Add" Margin="5,50,95,38" Grid.RowSpan="2" Click="AddNotAvailableSessions"/>
                         <Button Foreground="White" Background="#FF6839FF" Grid.Row="4" Grid.Column="4" Content="Add" Margin="5,50,95,38" Grid.RowSpan="2" Click="AddNotAvailableGroups" />
                         <Button Foreground="White" Background="#FF6839FF" Grid.Row="7" Grid.Column="4" Content="Add" Margin="5,0,95,37" Click="AddNotAvailableSubGroups" />
 
                         <Button Foreground="White" Background="#FF6839FF" Grid.Column="5" Content="View List" Margin="5,0,95,37" Grid.Row="1" Click="GotoNotAvailableLecturersView"/>
-                        <Button Foreground="White" Background="#FF6839FF" Grid.Row="2" Grid.Column="5" Content="View List" Margin="5,50,95,38" Grid.RowSpan="2"/>
+                        <Button Foreground="White" Background="#FF6839FF" Grid.Row="2" Grid.Column="5" Content="View List" Margin="5,50,95,38" Grid.RowSpan="2" Click="GotoNotAvailableSessionsView"/>
                         <Button Foreground="White" Background="#FF6839FF" Grid.Row="4" Grid.Column="5" Content="View List" Margin="5,50,95,38" Grid.RowSpan="2" Click="GotoNotAvailableGroupView"/>
-                        <Button Foreground="White" Background="#FF6839FF" Grid.Row="7" Grid.Column="5" Content="View List" Margin="5,0,95,37"/>
+                        <Button Foreground="White" Background="#FF6839FF" Grid.Row="7" Grid.Column="5" Content="View List" Margin="5,0,95,37" Click="GotoNotAvailableSubGroupView"/>
 
                     </Grid>
 

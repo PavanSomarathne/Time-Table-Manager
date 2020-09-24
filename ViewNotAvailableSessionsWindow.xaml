@@ -3,11 +3,120 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         xmlns:local="clr-namespace:TimeTableManager"
         mc:Ignorable="d"
         WindowState="Maximized"
-        Title="ViewNotAvailableSessionsWindow" Height="450" Width="800">
+        TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+        TextElement.FontWeight="Regular"
+        TextElement.FontSize="13"
+        TextOptions.TextFormattingMode="Ideal"
+        TextOptions.TextRenderingMode="Auto"
+        Background="{DynamicResource MaterialDesignPaper}"
+        FontFamily="{DynamicResource MaterialDesignFont}"
+        Title="ViewNotAvailableSessionsWindow" Height="661" Width="1366">
     <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="60"/>
+            <RowDefinition Height="150"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+
+        <StackPanel Orientation="Horizontal" Background="#FF673AB7">
+
+            <Button Style="{StaticResource MaterialDesignFloatingActionMiniAccentButton}"
+                            ToolTip="MaterialDesignFloatingActionMiniAccentButton" Margin="10,0,0,0" Click="GoBack">
+                <materialDesign:PackIcon Kind="ArrowLeftCircle" Height="24" Width="24" />
+            </Button>
+
+            <Button Style="{StaticResource MaterialDesignFloatingActionMiniAccentButton}"
+                            ToolTip="MaterialDesignFloatingActionMiniAccentButton"  Margin="10,0,0,0" Click="Home">
+                <materialDesign:PackIcon Kind="House" Height="24" Width="24" />
+            </Button>
+
+        </StackPanel>
+
+        <Label Grid.Row="1" FontSize="20" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center" Content="Not Available Sessions Details"/>
+
+
+
+        <Border Grid.Row="2" Grid.Column="0" BorderBrush="Black" BorderThickness="1" Margin="10,5,10,0">
+            <StackPanel Margin="-1,5,0,38" HorizontalAlignment="Left" Width="1351">
+
+                <Grid Margin="5" Name="addNotAvailableDetailsGrid" Width="1202" Height="102">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="223*"/>
+                        <ColumnDefinition Width="178*"/>
+                        <ColumnDefinition Width="200*"/>
+                        <ColumnDefinition Width="200*"/>
+                        <ColumnDefinition Width="200*"/>
+
+                    </Grid.ColumnDefinitions>
+
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="50"/>
+                        <RowDefinition/>
+
+                    </Grid.RowDefinitions>
+
+                    <Label Grid.Row="0" Grid.Column="0" Content="Sessions" Margin="5,5,5,5"/>
+                    <Label Grid.Row="0" Grid.Column="1" Content="Date" Margin="5,5,5,5"/>
+                    <Label Grid.Row="0" Grid.Column="2" Content="Start At" Margin="5,5,5,5"/>
+                    <Label Grid.Row="0" Grid.Column="3" Content="End At" Margin="5,5,5,5"/>
+
+
+                    <ComboBox Name="cmb1" Grid.Column="0" Margin="0,48,60,0" Text="{}" Height="26" VerticalAlignment="Top" Grid.RowSpan="2"/>
+
+                    <DatePicker Name="date1" HorizontalAlignment="Left" Grid.Row="1" Height="26"  Width="150" VerticalAlignment="Top" Grid.Column="1"/>
+
+
+                    <materialDesign:TimePicker Is24Hours="False" Name="st1" Grid.Column="2" HorizontalAlignment="Left" Grid.Row="1"  Height="26"  Width="150" VerticalAlignment="Top"/>
+
+
+                    <materialDesign:TimePicker Name="et1" Grid.Column="3" HorizontalAlignment="Left" Grid.Row="1"  Height="26"  Width="150" VerticalAlignment="Top"/>
+
+                    <Button Foreground="White" Background="#FF6839FF" Grid.Column="4" Content="Update" Margin="0,0,80,20" Grid.Row="1" Click="UpdateSessions"/>
+
+                </Grid>
+
+            </StackPanel>
+        </Border>
+
+        <Border Grid.Row="3" BorderBrush="Black" BorderThickness="1" Margin="10,5,10,5">
+            <DataGrid Name="showGroupsGrid"  AutoGenerateColumns="False" Margin="0,9,0,0" IsReadOnly="True" Height="353" VerticalAlignment="Top" HorizontalAlignment="Center" Width="568">
+                <DataGrid.Columns>
+
+                    <DataGridTextColumn Header="Sessions" Binding="{Binding notAvailableSession}" />
+                    <DataGridTextColumn Header="Date" Binding="{Binding notAvailableSessionDate}" />
+                    <DataGridTextColumn Header="Start At" Binding="{Binding notAvailableSessionStAt}" />
+                    <DataGridTextColumn Header="End At" Binding="{Binding notAvailableSessionEndAt}" />
+
+
+
+                    <DataGridTemplateColumn Header="Edit">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <Button Background="#FF6839FF" Content="Edit" Click="updateSessionsForEdit"/>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+
+                    <DataGridTemplateColumn Header="Delete">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <Button Background="#FFFFA000" Content="Delete" Click="deleteSessions"/>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+
+
+
+
+                </DataGrid.Columns>
+            </DataGrid>
+
+        </Border>
         
     </Grid>
 </Window>
