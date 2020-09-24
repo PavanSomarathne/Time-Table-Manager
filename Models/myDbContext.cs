@@ -20,8 +20,9 @@ namespace TimeTableManager.Models
         public DbSet<Room> Rooms { get; set; }
         public DbSet<Student> Students { get; set; }
         public DbSet<Tag> Tags { get; set; }
+        public DbSet<Session> Sessions { get; set; }
+        public DbSet<SessionLecturer> SessionLecturers { get; set; }
 
- 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -50,6 +51,45 @@ namespace TimeTableManager.Models
             modelBuilder.Entity<Building>()
             .HasMany(c => c.RoomsAS)
             .WithOne(e => e.BuildingAS);
+
+
+
+
+            //many to many session and lecturer and sessionlecture
+
+            modelBuilder.Entity<SessionLecturer>()
+                 .HasKey(sl => new { sl.SessionrId, sl.LecturerId });
+
+            modelBuilder.Entity<SessionLecturer>()
+                .HasOne(rl => rl.Ssssion)
+                .WithMany(p => p.SessionLecturers)
+                .HasForeignKey(rl => rl.SessionrId);
+
+            modelBuilder.Entity<SessionLecturer>()
+                .HasOne(rl => rl.Lecdetaiils)
+                .WithMany(c => c.SessionLecturers)
+                .HasForeignKey(rl => rl.LecturerId);
+
+
+
+            //one to many session and tag//////
+            modelBuilder.Entity<Tag>()
+               .HasMany(q => q.sessionDSA)
+               .WithOne(k => k.tagDSA);
+
+            //one to many session and subject details/
+            modelBuilder.Entity<SubjectDetails>()
+               .HasMany(q => q.SessionDSA)
+               .WithOne(k => k.subjectDSA);
+
+
+
+            //one to many session and studentgroups /
+            modelBuilder.Entity<Student>()
+               .HasMany(q => q.sessionDSA)
+               .WithOne(k => k.studentDSA);
+
+
 
             base.OnModelCreating(modelBuilder);
 

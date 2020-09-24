@@ -78,7 +78,7 @@
             </StackPanel>
         </Button>
 
-        <Button  Grid.Row="2" Grid.Column="0" FontSize="24" Height="120" Width="200">
+        <Button  Grid.Row="2" Grid.Column="0" FontSize="24" Height="120" Width="200" Click="Sessionmanagement">
             <StackPanel>
                 <materialDesign:PackIcon Kind="NoteMultipleOutline" Width="50" Height="50" HorizontalAlignment="Center" VerticalAlignment="Center" />
                 <Label Content="    Session&#xa;Management" Foreground="#DDFFFFFF" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20"/>
