@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -161,17 +162,23 @@ namespace TimeTableManager
         {
             if (LVlecturer.SelectedItem != null)
             {
+                LecturerDetails lecturer = (LecturerDetails)LVlecturer.SelectedItem;
                 RoomLecturer roomLecturer = new RoomLecturer
                 {
-                    Lecturer = (LecturerDetails)LVlecturer.SelectedItem,
+                    Lecturer = lecturer,
                     Room = RoomToEdit
                 };
 
-                dbContext1.Remove(roomLecturer);
-                dbContext1.SaveChanges();
+                if (dbContext1.RoomLecturers.Any(r => r.RoomId == this.RoomToEdit.Id && r.LecturerId == lecturer.Id))
+                {
+                    //dbContext1.Entry(roomLecturer).State = EntityState.Detached;
+                    var roomLec = dbContext1.RoomLecturers.First(row => row.RoomId == RoomToEdit.Id && row.LecturerId == lecturer.Id);
+                    dbContext1.RoomLecturers.Remove(roomLec);
+                    dbContext1.SaveChanges();
 
-                LVlecturer.SelectedItem = null;
-                LoadLecturers();
+                    LVlecturer.SelectedIndex = -1;
+                    LoadLecturers();
+                }
             }
         }
 

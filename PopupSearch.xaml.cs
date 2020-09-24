@@ -69,14 +69,16 @@ namespace TimeTableManager
 
                 if (!(dbContext1.RoomLecturers.Any(r => r.RoomId == this.room.Id && r.LecturerId == lecturer.Id)))
                 {
-
-                    this.dbContext1.RoomLecturers.Add(new RoomLecturer
+                    RoomLecturer roomLecturer = new RoomLecturer
                     {
-                        Lecturer = lecturer,
-                        Room = this.room
-                    });
+                        Room = this.room,
+                        Lecturer = lecturer
+                    };
 
+                    dbContext1.RoomLecturers.Add(roomLecturer);
                     dbContext1.SaveChanges();
+
+                    new MessageBoxCustom("Lecturer Assigned Successfully !", MessageType.Success, MessageButtons.Ok).ShowDialog();
                 }
                 else
                 {
