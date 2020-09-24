@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations.Operations;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.Entity;
 using System.Globalization;
 using System.Linq;
@@ -31,34 +32,27 @@ namespace TimeTableManager
         Schedule wholeSchedule = new Schedule();
         Schedule SelectedSchedule = new Schedule();
         List<string> allChecked = new List<string>();
-
+        DataTable dt;
 
         public GenerateWindow(MyDbContext dbContext)
         {
             this.dbContext1 = dbContext;
             InitializeComponent();
-
-            GetSchedule();
+            //GetSchedule();
             studenSP.Visibility = Visibility.Collapsed;
             lecturerSP.Visibility = Visibility.Collapsed;
             roomSP.Visibility = Visibility.Collapsed;
 
-
-
-          
-
-           // Program.DisplayMember = "Name";
+           
+            // Program.DisplayMember = "Name";
             //comboBox1.ValueMember = "Name";
-
-
-
             // AddNewScheduleGrid.DataContext = NewSchedule;
         }
        
   
         private void GetSchedule()
         {
-            ScheduleDG.ItemsSource = dbContext1.Schedules.ToList();
+           // ScheduleDG.ItemsSource = dbContext1.Schedules.ToList();
         }
 
         private void AddSchedule(Object s, RoutedEventArgs e)
@@ -75,23 +69,16 @@ namespace TimeTableManager
             Boolean validator4 = true;
             Boolean validator5 = true;
 
-         
-
-
                 //NewSchedule.Working_days_count = int.Parse(Working_days_count.Text);
                 //NewSchedule.working_time_hrs = val1;
                 //NewSchedule.Working_time_mins = int.Parse(this.working_mins.Text);
                 //NewSchedule.Working_duration = duration.Text.ToString();
 
                 AddSchedule.Working_days_count = val;
-               
                 AddSchedule.working_time_hrs = val1;
                 AddSchedule.Working_time_mins = val2;
 
-
-
                 //Checkbox manipulation
-
                 if (allChecked.Count == 0)
                 {
                     validator1 = false;
@@ -118,7 +105,7 @@ namespace TimeTableManager
 
                 //validations
                 if (DateTime.ParseExact(AddSchedule.start_time, "h:mm tt", CultureInfo.InvariantCulture) >
-        DateTime.ParseExact("04:00 PM", "hh:mm tt", CultureInfo.InvariantCulture))
+                    DateTime.ParseExact("04:00 PM", "hh:mm tt", CultureInfo.InvariantCulture))
                 {
                     validator2 = false;
                     MessageBox.Show("Too late for start time!",
@@ -165,16 +152,8 @@ namespace TimeTableManager
 
                     ResetForm();
                     GetSchedule();
-
-
-
                 }
            
-
-
-
-
-
         }
         private void myCheckBox_Checked(object sender, RoutedEventArgs e)
         {
@@ -188,8 +167,6 @@ namespace TimeTableManager
             allChecked.Remove(cb.Content.ToString());
         }
 
-       
-
         private void UpdateSchedule(Object s, RoutedEventArgs e)
         {
             int val = 0;
@@ -201,10 +178,6 @@ namespace TimeTableManager
             Boolean validator3 = true;
             Boolean validator4 = true;
             Boolean validator5 = true;
-
-           
-
-
                 
                 SelectedSchedule.Working_days_count = val;
                // SelectedSchedule.start_time = PresetTimePicker.Text.ToString();
@@ -237,7 +210,7 @@ namespace TimeTableManager
 
                 //validations
                 if (DateTime.ParseExact(SelectedSchedule.start_time, "h:mm tt", CultureInfo.InvariantCulture) >
-        DateTime.ParseExact("04:00 PM", "hh:mm tt", CultureInfo.InvariantCulture))
+                DateTime.ParseExact("04:00 PM", "hh:mm tt", CultureInfo.InvariantCulture))
                 {
                     validator2 = false;
                     MessageBox.Show("Too late for start time!",
@@ -281,15 +254,8 @@ namespace TimeTableManager
                                      "", MessageBoxButton.OK, MessageBoxImage.Information);
 
                     ResetForm();
-
                     GetSchedule();
-
-
                 }
-           
-
-
-
         }
 
         private void DeleteSchedule(Object s, RoutedEventArgs e)
@@ -321,8 +287,6 @@ namespace TimeTableManager
 
         }
         //time picker
-
-
         private void GoBack(Object s, RoutedEventArgs e)
         {
             MainWindow mainWindow = new MainWindow(dbContext1);
@@ -369,11 +333,7 @@ namespace TimeTableManager
 
         }
 
-        private void program_load(object sender, RoutedEventArgs e)
-        {
-            List<String> programs = dbContext1.Students.Select(n=>n.programme).ToList();
-            Program.ItemsSource = programs;
-        }
+        
 
         private void lecturer_load(object sender, RoutedEventArgs e)
         {
@@ -405,6 +365,67 @@ namespace TimeTableManager
                 roomString.Add(item.Id + "-" + item.Rid);
             }
             Room.ItemsSource = roomString;
+        }
+        DataRow dr;
+        private void Table_loaded(object sender, RoutedEventArgs e)
+        {
+            dt = new DataTable("emp");
+
+            DataColumn dc1 = new DataColumn("id", typeof(int));
+
+            DataColumn dc2 = new DataColumn("name", typeof(string));
+
+            DataColumn dc3 = new DataColumn("email", typeof(string));
+
+            DataColumn dc4 = new DataColumn("city", typeof(string));
+
+            dt.Columns.Add(dc1);
+
+            dt.Columns.Add(dc2);
+
+            dt.Columns.Add(dc3);
+
+            dt.Columns.Add(dc4);
+
+            TimeTableDG.ItemsSource = dt.DefaultView;
+
+            
+
+            dr = dt.NewRow();
+
+            dr[0] = 0;
+
+            dr[1] ="hello";
+
+            dr[2] = "pavanpabs";
+
+            dr[3] = "Kurunegala";
+
+            dt.Rows.Add(dr);
+
+            TimeTableDG.ItemsSource = dt.DefaultView;
+
+            
+        }
+
+        private void program_load(object sender, EventArgs e)
+        {
+            String year = Year.Text;
+            
+            List<String> students = dbContext1.Students.Where(n => n.accYrSem == year).Select(n=>n.programme).ToList();
+
+            
+            Program.ItemsSource = students;
+        }
+
+        private void group_load(object sender, EventArgs e)
+        {
+            String program = Program.Text;
+
+            List<String> groups = dbContext1.Students.Where(n => n.programme == program).Select(n => n.groupId).ToList();
+
+
+            Group.ItemsSource = groups;
         }
     }
 }
