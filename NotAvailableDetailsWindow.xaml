@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         xmlns:local="clr-namespace:TimeTableManager"
+        WindowState="Maximized"
         mc:Ignorable="d"
         TextElement.Foreground="{DynamicResource MaterialDesignBody}"
         TextElement.FontWeight="Regular"
@@ -43,13 +44,14 @@
             <Border Grid.Column="0" BorderBrush="Black" BorderThickness="1" Margin="10,5,10,5">
                 <StackPanel Margin="-1,5,0,5" HorizontalAlignment="Left" Width="1351">
 
-                    <Grid Margin="5" Name="addUpdateStudentDetailsGrid" Width="1134" Height="477">
+                    <Grid Margin="5" Name="addNotAvailableDetailsGrid" Width="1202" Height="477">
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="191*"/>
-                            <ColumnDefinition Width="191*"/>
-                            <ColumnDefinition Width="191*"/>
-                            <ColumnDefinition Width="191*"/>
-                            <ColumnDefinition Width="191*"/>
+                            <ColumnDefinition Width="223*"/>
+                            <ColumnDefinition Width="178*"/>
+                            <ColumnDefinition Width="200*"/>
+                            <ColumnDefinition Width="200*"/>
+                            <ColumnDefinition Width="200*"/>
+                            <ColumnDefinition Width="200*"/>
                         </Grid.ColumnDefinitions>
 
                         <Grid.RowDefinitions>
@@ -69,46 +71,45 @@
                         <Label Grid.Row="0" Grid.Column="3" Content="End At" Margin="5,5,5,5"/>
 
 
-                        <ComboBox Name="cmb1" Grid.Row="1" Grid.Column="0" Margin="5,0,72,0" Text="{}" Height="26" Width="150" VerticalAlignment="Top">
+                        <ComboBox Loaded="lecturer_load" Name="cmb1" Grid.Row="1" Grid.Column="0" Margin="5,0,55,0" Text="{}" Height="26" VerticalAlignment="Top"/>
 
-                        </ComboBox>
+
 
                         <Label Grid.Row="2" Grid.Column="0" Content="Sessions" Margin="5,5,5,5"/>
 
-                        <ComboBox Name="cmb2" Grid.Row="2" Grid.Column="0" Margin="0,50,77,0" Text="{}" Height="26"  Width="150" VerticalAlignment="Top" Grid.RowSpan="2">
+                        <ComboBox Name="cmb2" Grid.Row="2" Grid.Column="0" Margin="0,50,60,0" Text="{}" Height="26" VerticalAlignment="Top" Grid.RowSpan="2"/>
 
-                        </ComboBox>
+                        <Label Grid.Row="4" Grid.Column="0" Content="Groups" Margin="5,6,5,4"/>
 
-                        <Label Grid.Row="4" Grid.Column="0" Content="Groups" Margin="5,5,5,5"/>
-
-                        <ComboBox Name="cmb3" Grid.Row="4" Grid.Column="0" Margin="0,50,77,0" Text="{}" Height="26"  Width="150" Grid.RowSpan="2" VerticalAlignment="Top">
-
-                        </ComboBox>
+                        <ComboBox  Loaded="groups_load" Name="cmb3" Grid.Row="4" Grid.Column="0" Margin="0,50,60,0" Text="{}" Height="26" Grid.RowSpan="2" VerticalAlignment="Top"/>
 
                         <Label Grid.Row="6" Grid.Column="0" Content="Sub-Groups" Margin="5,5,5,5"/>
 
-                        <ComboBox Name="cmb4" Grid.Row="7" Grid.Column="0" Margin="0,0,77,0" Text="{}" Height="26"  Width="150" VerticalAlignment="Top">
+                        <ComboBox Loaded="sub_groups_load" Name="cmb4" Grid.Row="7" Grid.Column="0" Margin="0,0,60,0" Text="{}" Height="26" VerticalAlignment="Top"/>
+                        <DatePicker Name="date1" HorizontalAlignment="Left" Grid.Row="1" Height="26"  Width="150" VerticalAlignment="Top" Grid.ColumnSpan="2" Margin="210,0,0,0"/>
+                        <DatePicker Name="date2" HorizontalAlignment="Left" Margin="210,50,0,0" Grid.Row="2" Height="26"  Width="150" VerticalAlignment="Top" Grid.RowSpan="2" Grid.ColumnSpan="2"/>
+                        <DatePicker Name="date3" HorizontalAlignment="Left" Margin="210,50,0,0" Grid.Row="4" Height="26"  Width="150" VerticalAlignment="Top" Grid.RowSpan="2" Grid.ColumnSpan="2"/>
+                        <DatePicker Name="date4" HorizontalAlignment="Left" Grid.Row="7" Height="26"  Width="150" VerticalAlignment="Top" Grid.ColumnSpan="2" Margin="210,0,0,0"/>
 
-                        </ComboBox>
-                        <DatePicker Grid.Column="1" HorizontalAlignment="Left" Grid.Row="1" Height="26"  Width="150" VerticalAlignment="Top"/>
-                        <DatePicker Grid.Column="1" HorizontalAlignment="Left" Margin="0,50,0,0" Grid.Row="2" Height="26"  Width="150" VerticalAlignment="Top" Grid.RowSpan="2"/>
-                        <DatePicker Grid.Column="1" HorizontalAlignment="Left" Margin="0,50,0,0" Grid.Row="4" Height="26"  Width="150" VerticalAlignment="Top" Grid.RowSpan="2"/>
-                        <DatePicker Grid.Column="1" HorizontalAlignment="Left" Grid.Row="7" Height="26"  Width="150" VerticalAlignment="Top"/>
+                        <materialDesign:TimePicker Is24Hours="False" Name="st1" Grid.Column="2" HorizontalAlignment="Left" Grid.Row="1"  Height="26"  Width="150" VerticalAlignment="Top" Margin="12,0,0,0"/>
+                        <materialDesign:TimePicker Is24Hours="False" Name="st2" Grid.Column="2" HorizontalAlignment="Left" Grid.Row="2"  Height="26"  Width="150" VerticalAlignment="Top" Margin="12,50,0,0" Grid.RowSpan="2"/>
+                        <materialDesign:TimePicker Is24Hours="False" Name="st3" Grid.Column="2" HorizontalAlignment="Left" Grid.Row="4"  Height="26"  Width="150" VerticalAlignment="Top" Margin="12,50,0,0" Grid.RowSpan="2"/>
+                        <materialDesign:TimePicker Is24Hours="False" Name="st4" Grid.Column="2" HorizontalAlignment="Left" Grid.Row="7"  Height="26"  Width="150" VerticalAlignment="Top" Margin="12,0,0,0"/>
 
-                        <materialDesign:TimePicker Grid.Column="2" HorizontalAlignment="Left" Grid.Row="1"  Height="26"  Width="150" VerticalAlignment="Top"/>
-                        <materialDesign:TimePicker Grid.Column="2" HorizontalAlignment="Left" Grid.Row="3"  Height="26"  Width="150" VerticalAlignment="Top"/>
-                        <materialDesign:TimePicker Grid.Column="2" HorizontalAlignment="Left" Grid.Row="5"  Height="26"  Width="150" VerticalAlignment="Top"/>
-                        <materialDesign:TimePicker Grid.Column="2" HorizontalAlignment="Left" Grid.Row="7"  Height="26"  Width="150" VerticalAlignment="Top"/>
+                        <materialDesign:TimePicker Name="et1" Grid.Column="3" HorizontalAlignment="Left" Grid.Row="1"  Height="26"  Width="150" VerticalAlignment="Top"/>
+                        <materialDesign:TimePicker Name="et2" Grid.Column="3" HorizontalAlignment="Left" Grid.Row="2"  Height="26"  Width="150" VerticalAlignment="Top" Margin="0,50,0,0" Grid.RowSpan="2"/>
+                        <materialDesign:TimePicker Name="et3" Grid.Column="3" HorizontalAlignment="Left" Grid.Row="4"  Height="26"  Width="150" VerticalAlignment="Top" Margin="0,50,0,0" Grid.RowSpan="2"/>
+                        <materialDesign:TimePicker Name="et4" Grid.Column="3" HorizontalAlignment="Left" Grid.Row="7"  Height="26"  Width="150" VerticalAlignment="Top"/>
 
-                        <materialDesign:TimePicker Grid.Column="3" HorizontalAlignment="Left" Grid.Row="1"  Height="26"  Width="150" VerticalAlignment="Top"/>
-                        <materialDesign:TimePicker Grid.Column="3" HorizontalAlignment="Left" Grid.Row="3"  Height="26"  Width="150" VerticalAlignment="Top"/>
-                        <materialDesign:TimePicker Grid.Column="3" HorizontalAlignment="Left" Grid.Row="5"  Height="26"  Width="150" VerticalAlignment="Top"/>
-                        <materialDesign:TimePicker Grid.Column="3" HorizontalAlignment="Left" Grid.Row="7"  Height="26"  Width="150" VerticalAlignment="Top"/>
+                        <Button Foreground="White" Background="#FF6839FF" Grid.Column="4" Content="Add" Margin="5,0,95,37" Grid.Row="1" Click="AddNotAvailableLecturers"/>
+                        <Button Foreground="White" Background="#FF6839FF" Grid.Row="2" Grid.Column="4" Content="Add" Margin="5,50,95,38" Grid.RowSpan="2" Click="AddNotAvailableSessions"/>
+                        <Button Foreground="White" Background="#FF6839FF" Grid.Row="4" Grid.Column="4" Content="Add" Margin="5,50,95,38" Grid.RowSpan="2" Click="AddNotAvailableGroups" />
+                        <Button Foreground="White" Background="#FF6839FF" Grid.Row="7" Grid.Column="4" Content="Add" Margin="5,0,95,37" Click="AddNotAvailableSubGroups" />
 
-                        <Button Foreground="White" Background="#FF6839FF" Grid.Column="3" Content="Add" Margin="227,47,103,40"  Grid.ColumnSpan="2" Grid.RowSpan="2"/>
-                        <Button Foreground="White" Background="#FF6839FF" Grid.Row="2" Grid.Column="3" Content="Add" Margin="227,47,103,40"  Grid.ColumnSpan="2" Grid.RowSpan="2"/>
-                        <Button Foreground="White" Background="#FF6839FF" Grid.Row="4" Grid.Column="3" Content="Add" Margin="227,46,103,41"  Grid.ColumnSpan="2" Grid.RowSpan="2"/>
-                        <Button Foreground="White" Background="#FF6839FF" Grid.Row="7" Grid.Column="3" Content="Add" Margin="227,2,103,35"  Grid.ColumnSpan="2"/>
+                        <Button Foreground="White" Background="#FF6839FF" Grid.Column="5" Content="View List" Margin="5,0,95,37" Grid.Row="1" Click="GotoNotAvailableLecturersView"/>
+                        <Button Foreground="White" Background="#FF6839FF" Grid.Row="2" Grid.Column="5" Content="View List" Margin="5,50,95,38" Grid.RowSpan="2" Click="GotoNotAvailableSessionsView"/>
+                        <Button Foreground="White" Background="#FF6839FF" Grid.Row="4" Grid.Column="5" Content="View List" Margin="5,50,95,38" Grid.RowSpan="2" Click="GotoNotAvailableGroupView"/>
+                        <Button Foreground="White" Background="#FF6839FF" Grid.Row="7" Grid.Column="5" Content="View List" Margin="5,0,95,37" Click="GotoNotAvailableSubGroupView"/>
 
                     </Grid>
 
