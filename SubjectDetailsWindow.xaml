@@ -102,9 +102,9 @@
                         <Label Content="OfferedYear" Margin="8 10 0 0"></Label>
                         <ComboBox x:Name="SubOfferYrr" Padding="2" Margin="8 0 0 0" Text="{Binding OfferedYear}">
                             <ComboBoxItem>1st Year</ComboBoxItem>
-                            <ComboBoxItem>2st Year</ComboBoxItem>
-                            <ComboBoxItem>3st Year</ComboBoxItem>
-                            <ComboBoxItem>4st Year</ComboBoxItem>
+                            <ComboBoxItem>2nd Year</ComboBoxItem>
+                            <ComboBoxItem>3rd Year</ComboBoxItem>
+                            <ComboBoxItem>4th Year</ComboBoxItem>
                         </ComboBox>
 
                         <Label Content="Offered Semester" Margin="8 10 0 0"></Label>

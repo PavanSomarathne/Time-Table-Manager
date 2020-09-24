@@ -24,5 +24,8 @@ namespace TimeTableManager.Models
 
         public virtual ICollection<RoomLecturer> RoomLecturers { get; set; }
 
+        public virtual ICollection<SessionLecturer> SessionLecturers { get; set; }
+
+
     }
 }

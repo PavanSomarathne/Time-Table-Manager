@@ -8,5 +8,7 @@ namespace TimeTableManager.Models
     {
         public int Id { get; set; }
         public String tags { get; set; }
+
+        public ICollection<Session> sessionDSA { get; set; }
     }
 }

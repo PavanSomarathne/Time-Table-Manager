@@ -13,5 +13,8 @@ namespace TimeTableManager.Models
         public String groupId { get; set; }
         public int subGroupNo { get; set; }
         public String subGroupId { get; set; }
+
+
+        public ICollection<Session> sessionDSA { get; set; }
     }
 }

@@ -139,6 +139,19 @@ namespace TimeTableManager
             sw.Show();
             this.Close();
         }
+      
+
+    private void Sessionmanagement(object sender, RoutedEventArgs e)
+        {
+
+            SessionWindow sw = new SessionWindow(dbContext1);
+            sw.Show();
+            this.Close();
+        }
+
+
+
+
     }
 
 }
