@@ -26,6 +26,8 @@ namespace TimeTableManager
 
                 case MessageType.Info:
                     txtTitle.Text = "Info";
+                    cardHeader.Background = (Brush)new BrushConverter().ConvertFrom("#2962FF");
+                    btnOk.Background = (Brush)new BrushConverter().ConvertFrom("#2962FF");
                     break;
                 case MessageType.Confirmation:
                     txtTitle.Text = "Confirmation";
@@ -33,14 +35,20 @@ namespace TimeTableManager
                 case MessageType.Success:
                     {
                         txtTitle.Text = "Success";
+                        cardHeader.Background = (Brush)new BrushConverter().ConvertFrom("#388E3C");
+                        btnOk.Background = (Brush)new BrushConverter().ConvertFrom("#388E3C");
                     }
                     break;
                 case MessageType.Warning:
                     txtTitle.Text = "Warning";
+                    cardHeader.Background = (Brush)new BrushConverter().ConvertFrom("#EF6C00");
+                    btnOk.Background = (Brush)new BrushConverter().ConvertFrom("#EF6C00");
                     break;
                 case MessageType.Error:
                     {
                         txtTitle.Text = "Error";
+                        cardHeader.Background  =  (Brush) new BrushConverter().ConvertFrom("#ff1744");
+                        btnOk.Background = (Brush)new BrushConverter().ConvertFrom("#ff1744");
                     }
                     break;
             }
