@@ -14,7 +14,7 @@
         Background="{DynamicResource MaterialDesignPaper}"
         FontFamily="{DynamicResource MaterialDesignFont}"
         
-        Title="" Height="840" Width="1366"  WindowStartupLocation="CenterScreen">
+        Title=""  Height="780" Width="1366"  WindowStartupLocation="CenterScreen">
 
     <Border Padding="0 0  0 20">
         <Grid>
@@ -133,33 +133,38 @@
                     <StackPanel Grid.Column="1" Margin="4" x:Name="AddNewLecturedetails">
 
                         <Label HorizontalAlignment="Center" FontSize="20" Content="Session Management"></Label>
-                        <Label Content="Select Year" Margin="8 10 0 0"></Label>
+                        <Label Content="Select Year" Margin="8 5 0 0"></Label>
                         <ComboBox x:Name="CByearselect" Padding="2" Margin="8 0 0 0"   SelectionChanged="yeardropdwn" Text="{Binding OfferedYear}">
                             <ComboBoxItem>1st Year</ComboBoxItem>
                             <ComboBoxItem>2nd Year</ComboBoxItem>
                             <ComboBoxItem>3rd Year</ComboBoxItem>
                             <ComboBoxItem>4th Year</ComboBoxItem>
                         </ComboBox>
-                        <Label Content="Select subject" Margin="8 10 0 0"></Label>
+                        <Label Content="Select subject" Margin="8 5 0 0"></Label>
                         <ComboBox  Padding="2" Margin="8 0 0 0" x:Name="selectsubjects" ItemsSource="{Binding Path=SubjectInformation}"  DisplayMemberPath="SubjectName" />
-                        <Label Content="Select lecturer or Lecturers" Margin="8 10 0 0"></Label>
+                        <Label Content="Select lecturer or Lecturers" Margin="8 5 0 0"></Label>
 
 
 
-                        <StackPanel Width="250" MaxHeight="120" Margin="10">
-                            <ListBox Name="listBoxZone" ItemsSource="{Binding lectureerList}" Height="120" Background="Azure">
-                                <ListBox.ItemTemplate>
-                                    <DataTemplate>
-                                        <CheckBox Name="CheckBoxZone" Content="{Binding LecName}" IsChecked="{Binding LecName}"
-                                       />
-                                    </DataTemplate>
-                                </ListBox.ItemTemplate>
-                            </ListBox>
-                        </StackPanel>
+                        <materialDesign:Card  materialDesign:ShadowAssist.ShadowDepth="Depth3" materialDesign:ShadowAssist.ShadowEdges="Bottom,Right" Padding="12 1 2 5 ">
+                            <StackPanel Orientation="Horizontal">
+                                <ComboBox SelectionChanged="SelectLectureritem"  Grid.Row="0" Grid.Column="1" Width="180" x:Name="LecturerDrpn" ItemsSource="{Binding Path=LectureInformation}"  DisplayMemberPath="LecName"  materialDesign:HintAssist.HintOpacity=".26" IsEditable="True"  VerticalAlignment="Top" Margin="0,10,0,0"/>
 
+                                <Button Style="{DynamicResource MaterialDesignRaisedButton}" Margin="10"  Content="Add Lecturer" Background="#79b700" Click="AssignLectureItemTo">
 
+                                </Button>
+                            </StackPanel>
+                        </materialDesign:Card>
 
-                        <Label Content="Tag Name" Margin="8 10 0 0"></Label>
+                      
+                        <GroupBox Grid.Row="2"  Grid.Column="2"  Header="Selected lecturers" Style="{DynamicResource MaterialDesignCardGroupBox}" MaxHeight="120" Height="110"
+                materialDesign:ColorZoneAssist.Mode="Custom" materialDesign:ColorZoneAssist.Background="#FF673AB7" materialDesign:ColorZoneAssist.Foreground="White"  >
+                            <ListView x:Name="LVlecturer" DisplayMemberPath="LecName"  />
+                        </GroupBox>
+
+                        
+
+                        <Label Content="Tag Name" Margin="8 5 0 0"></Label>
                         <ComboBox  Padding="2" Margin="8 0 0 0" x:Name="CBTagsNames" ItemsSource="{Binding Path=Tags}"  DisplayMemberPath="tags" />
 
                         <Label Content="Groups for relevent Year" Margin="8 10 0 0"></Label>
@@ -167,21 +172,18 @@
 
 
 
-                        <Label Content="Sub groups for relevant Year" Margin="8 10 0 0"></Label>
+                        <Label Content="Sub groups for relevant Year" Margin="8 5 0 0"></Label>
                         <ComboBox  Padding="2" Margin="8 0 0 0" x:Name="selectSubgrp" ItemsSource="{Binding Path=Students}"  DisplayMemberPath="subGroupId" />
 
 
-                        <Label Content="Student Count" Margin="8 10 0 0"></Label>
+                        <Label Content="Student Count" Margin="8 5 0 0"></Label>
                         <TextBox x:Name="StdntCnt" Padding="2" PreviewTextInput="NumberValidationForStudentCount"  Margin="8 0 0 0" />
 
-                        <Label Content="Duration In Minutes" Margin="8 10 0 0"></Label>
+                        <Label Content="Duration In Minutes" Margin="8 5 0 0"></Label>
                         <TextBox x:Name="Duration" Padding="2" PreviewTextInput="NumberValidationForDuration"  Margin="8 0 0 0" />
 
 
 
-
-                        <Label Content="Rank" Margin="8 1 0 0"></Label>
-                        <TextBox IsReadOnly="True" Background="#eee" Padding="1"   x:Name="rankDetail" Text="{Binding Rank}"></TextBox>
 
                         <Button  x:Name="Addlecbtn" Content="Add Session" FontWeight="Bold" Margin="8 10 0 0" Padding="6" MinHeight="50" MaxHeight="60" Click="AddSessionDetails"></Button>
                     </StackPanel>
