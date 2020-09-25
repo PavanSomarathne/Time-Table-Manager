@@ -25,16 +25,18 @@ namespace TimeTableManager.Models
         public DbSet<Groups_NotAvailable> Groups_NotAvailables { get; set; }
         public DbSet<SubGroups_NotAvailable> SubGroups_NotAvailables { get; set; }
 
-        public DbSet<Session> Sessions { get; set; }
-        public DbSet<SessionLecturer> SessionLecturers { get; set; }
-
+        public DbSet<ConsecutiveSession> ConsecutiveSessions { get; set; }
+        public DbSet<ParallelSession> ParallelSessions { get; set; }
         public DbSet<RoomLecturer> RoomLecturers { get; set; }
+        public DbSet<RoomSubject> RoomSubjects { get; set; }
+        public DbSet<SessionLecturer> SessionLecturers { get; set; }
+        
 
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-
+            //many to many relationship with room lecturer
             modelBuilder.Entity<RoomLecturer>()
                 .HasKey(rl => new { rl.RoomId, rl.LecturerId });
 
@@ -48,12 +50,25 @@ namespace TimeTableManager.Models
                 .WithMany(c => c.RoomLecturers)
                 .HasForeignKey(rl => rl.LecturerId);
 
+
+            //many to many relationship with room subject
+            modelBuilder.Entity<RoomSubject>()
+                .HasKey(rl => new { rl.RoomId, rl.SubjectId });
+
+            modelBuilder.Entity<RoomSubject>()
+                .HasOne(rl => rl.Room)
+                .WithMany(p => p.RoomSubjects)
+                .HasForeignKey(rl => rl.RoomId);
+
+            modelBuilder.Entity<RoomSubject>()
+                .HasOne(rl => rl.Subject)
+                .WithMany(c => c.RoomSubjects)
+                .HasForeignKey(rl => rl.SubjectId);
+
+
+
             modelBuilder.Entity<Schedule>().HasData(GetSchedules());
             modelBuilder.Entity<SubjectDetails>();
-            //modelBuilder.Entity<Building>().HasData(GetBuildings());
-
-
-
 
 
             //many to many session and lecturer and sessionlecture

@@ -108,15 +108,15 @@
 
         <GroupBox Grid.Row="2"  Grid.Column="4"  Header="Prefferd Subjects" Style="{DynamicResource MaterialDesignCardGroupBox}"
                 materialDesign:ColorZoneAssist.Mode="Custom" materialDesign:ColorZoneAssist.Background="#FF673AB7" materialDesign:ColorZoneAssist.Foreground="White"  >
-            <ListView x:Name="LVSubjects"/>
+            <ListView x:Name="LVSubjects" SelectionChanged="SubDelActive" DisplayMemberPath="SubjectCode"/>
         </GroupBox>
         <StackPanel Grid.Row="2"  Grid.Column="5" VerticalAlignment="Bottom" Margin="0,0,0,20">
             <Button  Style="{StaticResource MaterialDesignFloatingActionMiniAccentButton}"
-                        ToolTip="MaterialDesignFloatingActionMiniLightButton" Margin="0,0,0,10">
+                     Click="AddSub"   ToolTip="MaterialDesignFloatingActionMiniLightButton" Margin="0,0,0,10">
                 <materialDesign:PackIcon Kind="Plus" Height="24" Width="24" />
             </Button>
-            <Button  Style="{StaticResource MaterialDesignFloatingActionMiniAccentButton}"
-                        ToolTip="MaterialDesignFloatingActionMiniLightButton">
+            <Button Click="DelSub"  Style="{StaticResource MaterialDesignFloatingActionMiniAccentButton}"
+                        ToolTip="MaterialDesignFloatingActionMiniLightButton" x:Name="BTNdelSub">
                 <materialDesign:PackIcon Kind="Delete" Height="24" Width="24"  />
             </Button>
         </StackPanel>

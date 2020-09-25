@@ -58,15 +58,23 @@ namespace TimeTableManager
             BtnSave.Click += UpdateRoom;
 
             LoadLecturers();
-
+            LoadSubjects();
         }
 
         private void LoadLecturers()
         {
             LVlecturer.ItemsSource = dbContext1.Rooms
-            .Where(p => p.Id == 1)
+            .Where(p => p.Id == RoomToEdit.Id)
             .SelectMany(r => r.RoomLecturers)
             .Select(rl => rl.Lecturer).ToList();
+        }
+
+        private void LoadSubjects()
+        {
+            LVSubjects.ItemsSource = dbContext1.Rooms
+            .Where(p => p.Id == RoomToEdit.Id)
+            .SelectMany(r => r.RoomSubjects)
+            .Select(rl => rl.Subject).ToList();
         }
 
         private void AddRoom(Object s, RoutedEventArgs e)
@@ -194,6 +202,49 @@ namespace TimeTableManager
             }
         }
 
+        private void AddSub(Object s, RoutedEventArgs e)
+        {
+            PopupSearch popup = new PopupSearch(dbContext1, "sub", RoomToEdit);
+            popup.Closed += RefreshSub;
+            popup.ShowDialog();
+        }
+
+        private void SubDelActive(Object s, RoutedEventArgs e)
+        {
+            if (LVSubjects.SelectedItem != null)
+            {
+                BTNdelSub.IsEnabled = true;
+            }
+            else
+            {
+                BTNdelSub.IsEnabled = false;
+            }
+        }
+
+        private void DelSub(Object s, RoutedEventArgs e)
+        {
+            if (LVSubjects.SelectedItem != null)
+            {
+                SubjectDetails subject = (SubjectDetails)LVSubjects.SelectedItem;
+                RoomSubject roomSubject = new RoomSubject
+                {
+                    Subject = subject,
+                    Room = RoomToEdit
+                };
+
+                if (dbContext1.RoomSubjects.Any(r => r.RoomId == this.RoomToEdit.Id && r.SubjectId == subject.Id))
+                {
+                    //dbContext1.Entry(roomLecturer).State = EntityState.Detached;
+                    var roomSub = dbContext1.RoomSubjects.First(row => row.RoomId == RoomToEdit.Id && row.SubjectId == subject.Id);
+                    dbContext1.RoomSubjects.Remove(roomSub);
+                    dbContext1.SaveChanges();
+
+                    LVSubjects.SelectedIndex = -1;
+                    LoadSubjects();
+                }
+            }
+        }
+
         private bool ValidateInput()
         {
             if (TxtRid.Text.Trim() == "")
@@ -243,6 +294,14 @@ namespace TimeTableManager
             LVlecturer.ItemsSource = null;
             LoadLecturers();
   
+        }
+
+        public void RefreshSub(object sender, System.EventArgs e)
+        {
+            //This gets fired off
+            LVlecturer.ItemsSource = null;
+            LoadSubjects();
+
         }
     }
 }

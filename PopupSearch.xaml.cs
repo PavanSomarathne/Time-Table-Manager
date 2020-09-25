@@ -32,6 +32,10 @@ namespace TimeTableManager
             {
                 loadLecturers();
             }
+            else if (type.Equals("sub"))
+            {
+                loadSubjects();
+            }
 
         }
 
@@ -46,6 +50,19 @@ namespace TimeTableManager
             lbl0.Content = "Select Lecturer";
             CB1.ItemsSource = dbContext1.LectureInformation.ToList();
         }
+
+        private void loadSubjects()
+
+        {
+            LBL1.Content = "Code";
+            LBL2.Content = "Name";
+            LBL3.Content = "Offered Year";
+
+            lbl0.Content = "Select Subject";
+            CB1.ItemsSource = dbContext1.SubjectInformation.ToList();
+            CB1.DisplayMemberPath = "SubjectCode";
+        }
+
 
         private void SelectItem(Object s, RoutedEventArgs e)
         {
@@ -83,6 +100,31 @@ namespace TimeTableManager
                 else
                 {
                     new MessageBoxCustom("This Lecturer is Already Assigned to this Room !", MessageType.Error, MessageButtons.Ok).ShowDialog();
+
+                }
+            }else if (type.Equals("sub"))
+            {
+                //var roomToAdd = this.dbContext1.Rooms.FirstOrDefault(s => s.Id == 1);
+
+                //LecturerDetails lc1 = this.dbContext1.LectureInformation.FirstOrDefault(s => s.Id == 2);
+                SubjectDetails subject = (SubjectDetails)CB1.SelectedItem;
+
+                if (!(dbContext1.RoomSubjects.Any(r => r.RoomId == this.room.Id && r.SubjectId == subject.Id)))
+                {
+                    RoomSubject roomSubject = new RoomSubject
+                    {
+                        Room = this.room,
+                        Subject = subject
+                    };
+
+                    dbContext1.RoomSubjects.Add(roomSubject);
+                    dbContext1.SaveChanges();
+
+                    new MessageBoxCustom("Subject Assigned Successfully !", MessageType.Success, MessageButtons.Ok).ShowDialog();
+                }
+                else
+                {
+                    new MessageBoxCustom("This Subject is Already Assigned to this Room !", MessageType.Error, MessageButtons.Ok).ShowDialog();
 
                 }
             }
