@@ -39,18 +39,25 @@
         <Label Grid.Row="1" FontSize="20" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center" Content="Consecutive Sessions"/>
 
         <Grid Grid.Row="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
 
 
-            <Border Grid.Column="0" BorderBrush="Black" BorderThickness="1" Margin="10,5,10,5">
-                <StackPanel Margin="-1,5,0,5" HorizontalAlignment="Left" Width="1351">
+            <Border Grid.Column="0" BorderBrush="Black" BorderThickness="1" Margin="10,5,214,5">
+                <StackPanel Margin="0,5,0,5" HorizontalAlignment="Center" Width="459">
 
-                    <Grid Margin="5" Name="addUpdateStudentDetailsGrid" Width="1134" Height="477">
+                    <Grid Margin="5" Name="addUpdateSessionDetailsGrid" Width="431" Height="477">
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="191*"/>
-                            <ColumnDefinition Width="191*"/>
+                            <ColumnDefinition Width="228*"/>
+                            <ColumnDefinition Width="203*"/>
                         </Grid.ColumnDefinitions>
 
                         <Grid.RowDefinitions>
+                            <RowDefinition />
+                            <RowDefinition/>
+                            <RowDefinition/>
                             <RowDefinition/>
                             <RowDefinition/>
                             <RowDefinition/>
@@ -58,23 +65,70 @@
 
                         </Grid.RowDefinitions>
 
-                        <Label Grid.Row="0" Grid.Column="0" Content="Name of the session" Height="26"  Width="150" Margin="324,44,93,49"/>
-                        <Label Grid.Column="0" Content="Select 1st session" Height="26"  Width="150" Margin="324,44,93,50" Grid.Row="1"/>
-                        <Label Grid.Row="2" Grid.Column="0" Content="Select 2nd session" Height="26"  Width="150" Margin="324,44,93,49"/>
+                        <Label Grid.Row="0" Content="Enter a consecutive session name" Margin="0,42,10,1"/>
+                        <Label Content="Select 1st session" Margin="0,33,92,7" Grid.Row="1"/>
+                        <Label Grid.Row="2" Content="Select 2nd session" Margin="0,34,57,6"/>
+                        <!--<Label Grid.Row="3" Content="Day" Margin="0,34,57,6"/>
+                        <Label Grid.Row="4" Content="Start At" Margin="0,34,57,6"/>
+                        <Label Grid.Row="5" Content="Duration" Margin="0,34,57,6"/>-->
 
-                        <TextBox Name="txtSessionName" Grid.Row="0" Margin="0,44,417,49" Height="26"  Width="150" Text="{}" Grid.Column="1"/>
+                        <TextBox materialDesign:HintAssist.HelperText="Ex:CON-IT2030-Y1.S1.1" Name="txtSessionName" Grid.Row="0" Margin="0,43,0,0" Text="{}" Grid.Column="1" Height="24" VerticalAlignment="Top"/>
 
-                        <ComboBox Name="cmb1" Grid.Column="1" Margin="0,44,417,0" Text="{}" Height="26"  Width="150" VerticalAlignment="Top" Grid.Row="1"/>
+                        <ComboBox Name="cmb1" Grid.Column="1" Margin="0,34,0,0" Text="{}" Height="28" VerticalAlignment="Top" Grid.Row="1"/>
 
-                        <ComboBox Name="cmb2" Grid.Row="2" Margin="0,44,417,0" Text="{}" Height="26"  Width="150" Grid.Column="1" VerticalAlignment="Top"/>
+                        <ComboBox Name="cmb2" Grid.Row="2" Margin="0,28,0,0" Text="{}" Height="34" VerticalAlignment="Top" Grid.Column="1"/>
 
+                        <!--<ComboBox Name="cmb3" Grid.Column="1" Grid.Row="3" Margin="0,35,0,0" Height="27" VerticalAlignment="Top">
+                            <ComboBoxItem>Sunday</ComboBoxItem>
+                            <ComboBoxItem>Monday</ComboBoxItem>
+                            <ComboBoxItem>Tuesday</ComboBoxItem>
+                            <ComboBoxItem>Wednesday</ComboBoxItem>
+                            <ComboBoxItem>Thursday</ComboBoxItem>
+                            <ComboBoxItem>Friday</ComboBoxItem>
+                            <ComboBoxItem>Saturday</ComboBoxItem>
+                        </ComboBox>-->
 
-                        <Button Foreground="White" Background="#FF6839FF" Grid.Row="3" Content="Add" Margin="492,10,492,83"  Height="26"  Width="150" Grid.ColumnSpan="2"/>
-
+                        <Button Foreground="White" Background="#FF6839FF" Grid.Row="3" Grid.Column="0" Content="Add" Margin="0,19,104,18" Click="AddSession"/>
+                        <Button Foreground="White" Background="#FF6839FF" Grid.Row="3" Content="Update" Margin="152,19,153,18" Click="UpdateSession" Grid.ColumnSpan="2"/>
+                        <Button Foreground="White" Background="#FF6839FF" Grid.Row="3" Grid.Column="1" Content="Reset" Margin="81,19,0,18" Click="resetSessions"/>
                     </Grid>
 
                 </StackPanel>
             </Border>
+
+            <Border BorderBrush="Black" BorderThickness="1" Margin="474,5,10,5" Grid.ColumnSpan="2">
+                <DataGrid AutoGenerateColumns="False" Margin="9,9,9,11" Name="showDetailsGrid" IsReadOnly="True">
+                    <DataGrid.Columns>
+
+                        <DataGridTextColumn Header="Session Name" Binding="{Binding accYrSem}" />
+                        <DataGridTextColumn Header="1st Session" Binding="{Binding programme}" />
+                        <DataGridTextColumn Header="2nd Session" Binding="{Binding groupNo}" />
+
+
+                        <DataGridTemplateColumn Header="Edit">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <Button Background="#FF6839FF" Content="Edit" Click="updateSessionsForEdit" />
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+
+                        <DataGridTemplateColumn Header="Delete">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <Button Background="#FFFFA000" Content="Delete" Click="deleteSession"/>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+
+
+
+
+                    </DataGrid.Columns>
+                </DataGrid>
+
+            </Border>
+
         </Grid>
     </Grid>
 </Window>

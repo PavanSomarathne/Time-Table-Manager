@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
@@ -20,24 +21,157 @@ namespace TimeTableManager
     {
 
         private MyDbContext dbContext1;
-        public ParallelSessionsWindow()
-        {
-            InitializeComponent();
-        }
+        ParallelSession NewSession = new ParallelSession();
+        ParallelSession selectedSession = new ParallelSession();
 
         public ParallelSessionsWindow(MyDbContext dbContext1)
         {
             this.dbContext1 = dbContext1;
             InitializeComponent();
+            GetSessions();
 
+            addUpdateSessionDetailsGrid.DataContext = NewSession;
+
+        }
+
+        private void GetSessions()
+        {
+            showDetailsGrid.ItemsSource = dbContext1.ParallelSessions.ToList();
+        }
+
+        private void clear()
+        {
+
+            addUpdateSessionDetailsGrid.DataContext = null;
+        }
+
+        private void AddSession(object s, RoutedEventArgs e)
+        {
+            if (ValidateInput())
+            {
+                NewSession.parallelId = txtParallelSession.Text;
+                NewSession.firstSession = cmb1.Text;
+                NewSession.secondSession = cmb2.Text;
+                NewSession.thirdSession = cmb3.Text;
+
+                dbContext1.ParallelSessions.Add(NewSession);
+                dbContext1.SaveChanges();
+
+                NewSession = new ParallelSession();
+                addUpdateSessionDetailsGrid.DataContext = NewSession;
+
+                new MessageBoxCustom("Successfully added Parallel Session details !", MessageType.Success, MessageButtons.Ok).ShowDialog();
+
+                clear();
+                GetSessions();
+
+            }
+            else
+            {
+
+                new MessageBoxCustom("Please complete Parallel Session  details correctly !", MessageType.Warning, MessageButtons.Ok).ShowDialog();
+            }
+
+
+        }
+
+
+        private void updateSessionsForEdit(object s, RoutedEventArgs e)
+        {
+            selectedSession = (s as FrameworkElement).DataContext as ParallelSession;
+
+            txtParallelSession.Text = selectedSession.parallelId;
+            cmb1.Text = selectedSession.firstSession;
+            cmb2.Text = selectedSession.secondSession;
+            cmb3.Text = selectedSession.thirdSession;
+
+        }
+
+
+
+        private void UpdateSession(object s, RoutedEventArgs e)
+        {
+            if (ValidateInput())
+            {
+                selectedSession.parallelId = txtParallelSession.Text;
+                selectedSession.firstSession = cmb1.Text;
+                selectedSession.secondSession = cmb2.Text;
+                selectedSession.thirdSession = cmb3.Text;
+                dbContext1.Update(selectedSession);
+                dbContext1.SaveChanges();
+
+                new MessageBoxCustom("Successfully updated Parallel Session details !", MessageType.Success, MessageButtons.Ok).ShowDialog();
+                clear();
+                GetSessions();
+            }
+            else
+            {
+
+                new MessageBoxCustom("Please complete Parallel Session details correctly  !", MessageType.Warning, MessageButtons.Ok).ShowDialog();
+            }
+
+        }
+
+        private void deleteSession(object s, RoutedEventArgs e)
+        {
+            bool? Result = new MessageBoxCustom("Are you sure, you want to delete this session detail ? ",
+             MessageType.Confirmation, MessageButtons.YesNo).ShowDialog();
+
+            if (Result.Value)
+            {
+
+                var sessionToBeDeleted = (s as FrameworkElement).DataContext as ParallelSession;
+                dbContext1.ParallelSessions.Remove(sessionToBeDeleted);
+                dbContext1.SaveChanges();
+                GetSessions();
+            }
+
+        }
+
+        private void resetSessions(object s, RoutedEventArgs e)
+        {
+            clear();
+            ParallelSession NewSession = new ParallelSession();
+            addUpdateSessionDetailsGrid.DataContext = NewSession;
+            GetSessions();
+        }
+
+        private bool ValidateInput()
+        {
+            if (string.IsNullOrEmpty(txtParallelSession.Text))
+            {
+                txtParallelSession.Focus();
+                return false;
+            }
+
+            if (string.IsNullOrEmpty(cmb1.Text))
+            {
+                cmb1.Focus();
+                return false;
+            }
+
+            if (string.IsNullOrEmpty(cmb2.Text))
+            {
+                cmb2.Focus();
+                return false;
+            }
+
+            if (string.IsNullOrEmpty(cmb3.Text))
+            {
+                cmb3.Focus();
+                return false;
+            }
+
+
+            return true;
         }
 
         private void GoBack(Object s, RoutedEventArgs e)
-        {
-            MainWindow mainWindow = new MainWindow(dbContext1);
-            mainWindow.Show();
-            this.Close();
+            {
+                MainWindow mainWindow = new MainWindow(dbContext1);
+                mainWindow.Show();
+                this.Close();
 
+            }
         }
     }
-}

@@ -25,8 +25,10 @@ namespace TimeTableManager.Models
         public DbSet<Groups_NotAvailable> Groups_NotAvailables { get; set; }
         public DbSet<SubGroups_NotAvailable> SubGroups_NotAvailables { get; set; }
 
+        public DbSet<ConsecutiveSession> ConsecutiveSessions { get; set; }
+        public DbSet<ParallelSession> ParallelSessions { get; set; }
+        
 
- 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
