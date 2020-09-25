@@ -29,8 +29,9 @@ namespace TimeTableManager.Models
         public DbSet<ParallelSession> ParallelSessions { get; set; }
         public DbSet<RoomLecturer> RoomLecturers { get; set; }
         public DbSet<RoomSubject> RoomSubjects { get; set; }
+        public DbSet<Session> Sessions { get; set; }
         public DbSet<SessionLecturer> SessionLecturers { get; set; }
-        
+
 
 
 
