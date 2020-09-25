@@ -23,11 +23,11 @@ namespace TimeTableManager
     public partial class SessionWindow : Window
     {
 
-
+        List<LecturerDetails> LeLISTT = new List<LecturerDetails>();
         Session newSessionDl = new Session();
         MyDbContext dbContext1;
         //   List<SubjectDetails> subjects;
-        public List <LecturerDetails> lectureerList { get; set; }
+
         public List<Tag> tagList { get; set; }
         public SessionWindow(MyDbContext dbContext)
         {
@@ -35,14 +35,14 @@ namespace TimeTableManager
             this.dbContext1 = dbContext;
             getlecturers();
             getTags();
-         
+
         }
 
 
         public void getlecturers()
         {
-            lectureerList= dbContext1.LectureInformation.ToList();
-            this.DataContext = this;
+            LecturerDrpn.ItemsSource = dbContext1.LectureInformation.ToList();
+
 
         }
 
@@ -55,20 +55,20 @@ namespace TimeTableManager
 
 
 
-       public void getMainGroupdetails(String yrr)
+        public void getMainGroupdetails(String yrr)
         {
 
             String Mainstyr;
 
-            if(yrr.Equals("1st Year"))
+            if (yrr.Equals("1st Year"))
             {
                 Mainstyr = "Y1" + "%";
             }
-            else if(yrr.Equals("2nd Year"))
+            else if (yrr.Equals("2nd Year"))
             {
                 Mainstyr = "Y2" + "%";
             }
-            else if(yrr.Equals("3rd Year"))
+            else if (yrr.Equals("3rd Year"))
             {
                 Mainstyr = "Y3" + "%";
 
@@ -120,7 +120,7 @@ namespace TimeTableManager
         {
             MainWindow mainWindow = new MainWindow(dbContext1);
             mainWindow.Show();
- 
+
             this.Close();
 
         }
@@ -130,7 +130,7 @@ namespace TimeTableManager
 
             selectsubjects.ItemsSource = dbContext1.SubjectInformation.Where(s => s.OfferedYear == year).ToList();
 
-        
+
 
         }
 
@@ -141,16 +141,16 @@ namespace TimeTableManager
 
 
             //  rankDetail.Text = ContentOfItemOne;
-           
 
-         
+
+
 
             getMainGroupdetails(ContentOfItemOne);
             getSubgroupdetails(ContentOfItemOne);
             getSubjects(ContentOfItemOne);
-           
 
-           
+
+
         }
 
 
@@ -160,7 +160,7 @@ namespace TimeTableManager
             Regex regex = new Regex("[^0-9]+");
             e.Handled = regex.IsMatch(e.Text);
         }
-        
+
 
         private void NumberValidationForDuration(object sender, TextCompositionEventArgs e)
         {
@@ -172,17 +172,17 @@ namespace TimeTableManager
 
         {
             Tag tgggg = (Tag)CBTagsNames.SelectedItem;
-         String tagname = tgggg.tags;
+            String tagname = tgggg.tags;
 
 
-            
+
             newSessionDl.StdntCount = int.Parse(StdntCnt.Text);
             newSessionDl.durationinMinutes = int.Parse(Duration.Text);
             newSessionDl.tagDSA = (Tag)CBTagsNames.SelectedItem;
             newSessionDl.subjectDSA = (SubjectDetails)selectsubjects.SelectedItem;
-          
 
-            if(tagname.Equals("Lecture") || tagname.Equals("Tutorial"))
+
+            if (tagname.Equals("Lecture") || tagname.Equals("Tutorial"))
             {
 
                 newSessionDl.studentDSA = (Student)selectMainGroup.SelectedItem;
@@ -192,6 +192,41 @@ namespace TimeTableManager
             {
                 newSessionDl.studentDSA = (Student)selectSubgrp.SelectedItem;
             }
+
+
+            dbContext1.SaveChanges();
+
+
+
+
+
+            //
+            foreach (LecturerDetails lec in LeLISTT)
+            {
+
+
+                SessionLecturer sessionlc = new SessionLecturer
+                {
+
+                    Ssssion = newSessionDl,
+                    Lecdetaiils = lec
+
+                };
+
+                dbContext1.SessionLecturers.Add(sessionlc);
+                dbContext1.SaveChanges();
+
+
+
+
+            }
+
+
+
+
+
+
+
 
 
 
@@ -223,9 +258,32 @@ namespace TimeTableManager
 
 
 
-            // dbContext1.SaveChanges();
 
         }
+
+
+
+
+        private void SelectLectureritem(Object s, RoutedEventArgs e)
+        {
+            LecturerDetails TrytoAddLecture = (LecturerDetails)LecturerDrpn.SelectedItem;
+
+          
+            LeLISTT.Add(TrytoAddLecture);
+        }
+
+
+
+        private void AssignLectureItemTo(Object s, RoutedEventArgs e)
+        {
+
+            LVlecturer.ItemsSource = LeLISTT.ToList();
+
+
+
+        }
+
+
 
 
     }
