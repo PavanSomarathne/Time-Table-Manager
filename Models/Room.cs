@@ -16,7 +16,7 @@ namespace TimeTableManager.Models
         public String Type { get; set; }
         public int Capacity { get; set; }
         public virtual ICollection<RoomLecturer> RoomLecturers { get; set; }
-
+        public virtual ICollection<RoomSubject> RoomSubjects { get; set; }
 
     }
 }

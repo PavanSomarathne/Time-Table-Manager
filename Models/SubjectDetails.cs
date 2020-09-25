@@ -18,5 +18,7 @@ namespace TimeTableManager.Models
 
         public ICollection<Session> SessionDSA { get; set; }
 
+        public virtual ICollection<RoomSubject> RoomSubjects { get; set; }
+
     }
 }
