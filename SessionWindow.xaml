@@ -73,52 +73,50 @@
 
                                     <StackPanel Grid.Row="1">
 
-                                        <GroupBox Grid.Row="3"  Header="" Style="{DynamicResource MaterialDesignCardGroupBox}"
-                                        materialDesign:ColorZoneAssist.Mode="Custom" materialDesign:ColorZoneAssist.Background="#FF673AB7" materialDesign:ColorZoneAssist.Foreground="White" >
+                                        <GroupBox Grid.Row="2"  Grid.Column="2"  Header="Session details" Style="{DynamicResource MaterialDesignCardGroupBox}">
+                                            <ListView Name="SessionDGg">
+                                            <ListView.ItemTemplate>
+                                                <DataTemplate>
 
-                                            <ListView Name="lvDataBinding">
-                                                <ListView.ItemTemplate>
-                                                    <DataTemplate>
-                                                        <WrapPanel>
-
-                                                            <materialDesign:Card Background="#03a9f4" Foreground="{DynamicResource PrimaryHueDarkForegroundBrush}" Padding="0" Width="800">
-                                                        <Grid>
-                                                            <Grid.RowDefinitions>
-                                                                <RowDefinition Height="Auto" />
-                                                                <RowDefinition Height="Auto" />
-                                                                <RowDefinition Height="Auto" />
-                                                                <RowDefinition Height="Auto" />
-                                                                <RowDefinition Height="Auto" />
-                                                            </Grid.RowDefinitions>
-                                                            <TextBlock Grid.Row="0" Margin="30 5 1 14" FontSize="18" Padding="8" >
-                                                                Call J
-                                                            </TextBlock>
-
-                                                            <TextBlock  Grid.Row="1" Margin="30 5 1 14" VerticalAlignment="Center" HorizontalAlignment="Left" Style="{StaticResource MaterialDesignBody2TextBlock}">March 19, 2016
-                                                            </TextBlock>
-
-                                                            <TextBlock  Grid.Row="2" Margin="30 5 1 14" VerticalAlignment="Center" HorizontalAlignment="Left" Style="{StaticResource MaterialDesignBody2TextBlock}">March 19, 2016
-                                                            </TextBlock>
-
-                                                            <TextBlock  Grid.Row="3" Margin="30 5 1 14" VerticalAlignment="Center" HorizontalAlignment="Left" Style="{StaticResource MaterialDesignBody2TextBlock}">March 19, 2016
-                                                            </TextBlock>
-
-                                                            <TextBlock  Grid.Row="4" Margin="30 5 1 14" VerticalAlignment="Center" HorizontalAlignment="Left" Style="{StaticResource MaterialDesignBody2TextBlock}">March 19, 2016
-                                                            </TextBlock>
+                                                      
+                                                            <StackPanel Margin="3" materialDesign:ShadowAssist.Darken="True">
 
 
-                                                        </Grid>
-                                                    </materialDesign:Card>
+                                                                <TextBlock HorizontalAlignment="Stretch" VerticalAlignment="Center"  FontSize="18" FontWeight="Bold"   Text="{Binding lecturesLstByConcadinating}"/>
 
+                                                            <StackPanel Orientation="Horizontal">
 
-                                                        </WrapPanel>
+                                                                <TextBlock  
+                                                                     FontWeight="Bold" FontSize="14"  HorizontalAlignment="Stretch" VerticalAlignment="Center"  Text="{Binding subjectDSA.SubjectName}"/>
+                                                                <TextBlock  FontWeight="Bold" FontSize="14" >(</TextBlock>
+                                                                <TextBlock FontWeight="Bold" FontSize="14" Text="{Binding subjectDSA.SubjectCode}"></TextBlock>
+                                                                <TextBlock  FontWeight="Bold" FontSize="14" >)</TextBlock>
+                                                            </StackPanel>
+                                                               
+
+                                                            <TextBlock   HorizontalAlignment="Stretch" VerticalAlignment="Center"    FontWeight="Bold" 
+                                                                     Text="{Binding tagDSA.tags}" FontSize="14"  />
+
+                                                               
+                                                            <TextBlock   HorizontalAlignment="Stretch" VerticalAlignment="Center"
+                                                                      FontWeight="Bold" Text="{Binding studentDSA.groupId}" FontSize="14"/>
+
+                                                            <StackPanel Orientation="Horizontal">
+                                                                <TextBlock    HorizontalAlignment="Stretch" VerticalAlignment="Center" 
+                                                                    Text="{Binding StdntCount}" FontSize="14" />
+                                                                <TextBlock  FontWeight="Bold" FontSize="14" >(</TextBlock>
+                                                                <TextBlock FontWeight="Bold" FontSize="14" Text="{Binding durationinHours}"></TextBlock>
+                                                                <TextBlock  FontWeight="Bold" FontSize="14" >)</TextBlock>
+                                                            </StackPanel>
+
+                                                        </StackPanel>
+                                                      
                                                     </DataTemplate>
-                                                </ListView.ItemTemplate>
+                                            </ListView.ItemTemplate>
 
                                             </ListView>
 
                                         </GroupBox>
-
                                     </StackPanel>
 
                             
@@ -179,7 +177,7 @@
                         <Label Content="Student Count" Margin="8 5 0 0"></Label>
                         <TextBox x:Name="StdntCnt" Padding="2" PreviewTextInput="NumberValidationForStudentCount"  Margin="8 0 0 0" />
 
-                        <Label Content="Duration In Minutes" Margin="8 5 0 0"></Label>
+                        <Label Content="Duration In Hours" Margin="8 5 0 0"></Label>
                         <TextBox x:Name="Duration" Padding="2" PreviewTextInput="NumberValidationForDuration"  Margin="8 0 0 0" />
 
 

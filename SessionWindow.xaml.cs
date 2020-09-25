@@ -22,8 +22,12 @@ namespace TimeTableManager
     /// </summary>
     public partial class SessionWindow : Window
     {
+        
 
         List<LecturerDetails> LeLISTT = new List<LecturerDetails>();
+
+        List<LecturerDetails> LoadLec = new List<LecturerDetails>();
+        List<Session> sesinList = new List<Session>();
         Session newSessionDl = new Session();
         MyDbContext dbContext1;
         //   List<SubjectDetails> subjects;
@@ -35,7 +39,13 @@ namespace TimeTableManager
             this.dbContext1 = dbContext;
             getlecturers();
             getTags();
+            LoadSessions();
 
+        }
+
+        public void LoadSessions()
+        {
+            SessionDGg.ItemsSource = dbContext1.Sessions.Include(r => r.subjectDSA).Include(s => s.studentDSA);
         }
 
 
@@ -176,8 +186,11 @@ namespace TimeTableManager
 
 
 
+
+
+
             newSessionDl.StdntCount = int.Parse(StdntCnt.Text);
-            newSessionDl.durationinMinutes = int.Parse(Duration.Text);
+            newSessionDl.durationinHours = int.Parse(Duration.Text);
             newSessionDl.tagDSA = (Tag)CBTagsNames.SelectedItem;
             newSessionDl.subjectDSA = (SubjectDetails)selectsubjects.SelectedItem;
 
@@ -191,7 +204,10 @@ namespace TimeTableManager
             else
             {
                 newSessionDl.studentDSA = (Student)selectSubgrp.SelectedItem;
+
             }
+
+
 
 
             dbContext1.SaveChanges();
@@ -268,7 +284,9 @@ namespace TimeTableManager
         {
             LecturerDetails TrytoAddLecture = (LecturerDetails)LecturerDrpn.SelectedItem;
 
-          
+            newSessionDl.lecturesLstByConcadinating += TrytoAddLecture.LecName + " , ";
+
+
             LeLISTT.Add(TrytoAddLecture);
         }
 
