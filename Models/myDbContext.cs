@@ -25,8 +25,12 @@ namespace TimeTableManager.Models
         public DbSet<Groups_NotAvailable> Groups_NotAvailables { get; set; }
         public DbSet<SubGroups_NotAvailable> SubGroups_NotAvailables { get; set; }
 
-
- 
+        public DbSet<ConsecutiveSession> ConsecutiveSessions { get; set; }
+        public DbSet<ParallelSession> ParallelSessions { get; set; }
+        public DbSet<RoomLecturer> RoomLecturers { get; set; }
+        public DbSet<RoomSubject> RoomSubjects { get; set; }
+        public DbSet<SessionLecturer> SessionLecturers { get; set; }
+        
 
 
 
