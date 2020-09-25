@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -56,7 +57,24 @@ namespace TimeTableManager
             BtnSave.Click -= AddRoom;
             BtnSave.Click += UpdateRoom;
 
+            LoadLecturers();
+            LoadSubjects();
+        }
 
+        private void LoadLecturers()
+        {
+            LVlecturer.ItemsSource = dbContext1.Rooms
+            .Where(p => p.Id == RoomToEdit.Id)
+            .SelectMany(r => r.RoomLecturers)
+            .Select(rl => rl.Lecturer).ToList();
+        }
+
+        private void LoadSubjects()
+        {
+            LVSubjects.ItemsSource = dbContext1.Rooms
+            .Where(p => p.Id == RoomToEdit.Id)
+            .SelectMany(r => r.RoomSubjects)
+            .Select(rl => rl.Subject).ToList();
         }
 
         private void AddRoom(Object s, RoutedEventArgs e)
@@ -141,6 +159,92 @@ namespace TimeTableManager
             this.Close();
         }
 
+        private void AddLec(Object s, RoutedEventArgs e)
+        {
+            PopupSearch popup = new PopupSearch(dbContext1, "lec", RoomToEdit);
+            popup.Closed += RefreshLec;
+            popup.ShowDialog();
+        }
+
+        private void DelLec(Object s, RoutedEventArgs e)
+        {
+            if (LVlecturer.SelectedItem != null)
+            {
+                LecturerDetails lecturer = (LecturerDetails)LVlecturer.SelectedItem;
+                RoomLecturer roomLecturer = new RoomLecturer
+                {
+                    Lecturer = lecturer,
+                    Room = RoomToEdit
+                };
+
+                if (dbContext1.RoomLecturers.Any(r => r.RoomId == this.RoomToEdit.Id && r.LecturerId == lecturer.Id))
+                {
+                    //dbContext1.Entry(roomLecturer).State = EntityState.Detached;
+                    var roomLec = dbContext1.RoomLecturers.First(row => row.RoomId == RoomToEdit.Id && row.LecturerId == lecturer.Id);
+                    dbContext1.RoomLecturers.Remove(roomLec);
+                    dbContext1.SaveChanges();
+
+                    LVlecturer.SelectedIndex = -1;
+                    LoadLecturers();
+                }
+            }
+        }
+
+        private void LecDelActive(Object s, RoutedEventArgs e)
+        {
+            if (LVlecturer.SelectedItem != null)
+            {
+                BTNdelLec.IsEnabled = true;
+            }
+            else
+            {
+                BTNdelLec.IsEnabled = false;
+            }
+        }
+
+        private void AddSub(Object s, RoutedEventArgs e)
+        {
+            PopupSearch popup = new PopupSearch(dbContext1, "sub", RoomToEdit);
+            popup.Closed += RefreshSub;
+            popup.ShowDialog();
+        }
+
+        private void SubDelActive(Object s, RoutedEventArgs e)
+        {
+            if (LVSubjects.SelectedItem != null)
+            {
+                BTNdelSub.IsEnabled = true;
+            }
+            else
+            {
+                BTNdelSub.IsEnabled = false;
+            }
+        }
+
+        private void DelSub(Object s, RoutedEventArgs e)
+        {
+            if (LVSubjects.SelectedItem != null)
+            {
+                SubjectDetails subject = (SubjectDetails)LVSubjects.SelectedItem;
+                RoomSubject roomSubject = new RoomSubject
+                {
+                    Subject = subject,
+                    Room = RoomToEdit
+                };
+
+                if (dbContext1.RoomSubjects.Any(r => r.RoomId == this.RoomToEdit.Id && r.SubjectId == subject.Id))
+                {
+                    //dbContext1.Entry(roomLecturer).State = EntityState.Detached;
+                    var roomSub = dbContext1.RoomSubjects.First(row => row.RoomId == RoomToEdit.Id && row.SubjectId == subject.Id);
+                    dbContext1.RoomSubjects.Remove(roomSub);
+                    dbContext1.SaveChanges();
+
+                    LVSubjects.SelectedIndex = -1;
+                    LoadSubjects();
+                }
+            }
+        }
+
         private bool ValidateInput()
         {
             if (TxtRid.Text.Trim() == "")
@@ -178,8 +282,25 @@ namespace TimeTableManager
 
         private void GoBack(Object s, RoutedEventArgs e)
         {
-    
+
             this.Close();
+
+        }
+
+
+        public void RefreshLec(object sender, System.EventArgs e)
+        {
+            //This gets fired off
+            LVlecturer.ItemsSource = null;
+            LoadLecturers();
+  
+        }
+
+        public void RefreshSub(object sender, System.EventArgs e)
+        {
+            //This gets fired off
+            LVlecturer.ItemsSource = null;
+            LoadSubjects();
 
         }
     }

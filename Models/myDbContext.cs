@@ -25,14 +25,14 @@ namespace TimeTableManager.Models
         public DbSet<Groups_NotAvailable> Groups_NotAvailables { get; set; }
         public DbSet<SubGroups_NotAvailable> SubGroups_NotAvailables { get; set; }
 
-        public DbSet<ConsecutiveSession> ConsecutiveSessions { get; set; }
-        public DbSet<ParallelSession> ParallelSessions { get; set; }
-        
+
+ 
+
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-        
+            //many to many relationship with room lecturer
             modelBuilder.Entity<RoomLecturer>()
                 .HasKey(rl => new { rl.RoomId, rl.LecturerId });
 
@@ -46,17 +46,62 @@ namespace TimeTableManager.Models
                 .WithMany(c => c.RoomLecturers)
                 .HasForeignKey(rl => rl.LecturerId);
 
-            modelBuilder.Entity<Building>()
-                .HasMany(q => q.LecturesDSA)
-                .WithOne(k => k.BuildinDSA);
+
+            //many to many relationship with room subject
+            modelBuilder.Entity<RoomSubject>()
+                .HasKey(rl => new { rl.RoomId, rl.SubjectId });
+
+            modelBuilder.Entity<RoomSubject>()
+                .HasOne(rl => rl.Room)
+                .WithMany(p => p.RoomSubjects)
+                .HasForeignKey(rl => rl.RoomId);
+
+            modelBuilder.Entity<RoomSubject>()
+                .HasOne(rl => rl.Subject)
+                .WithMany(c => c.RoomSubjects)
+                .HasForeignKey(rl => rl.SubjectId);
+
+
 
             modelBuilder.Entity<Schedule>().HasData(GetSchedules());
             modelBuilder.Entity<SubjectDetails>();
-            //modelBuilder.Entity<Building>().HasData(GetBuildings());
 
-            modelBuilder.Entity<Building>()
-            .HasMany(c => c.RoomsAS)
-            .WithOne(e => e.BuildingAS);
+
+            //many to many session and lecturer and sessionlecture
+
+            modelBuilder.Entity<SessionLecturer>()
+                 .HasKey(sl => new { sl.SessionrId, sl.LecturerId });
+
+            modelBuilder.Entity<SessionLecturer>()
+                .HasOne(rl => rl.Ssssion)
+                .WithMany(p => p.SessionLecturers)
+                .HasForeignKey(rl => rl.SessionrId);
+
+            modelBuilder.Entity<SessionLecturer>()
+                .HasOne(rl => rl.Lecdetaiils)
+                .WithMany(c => c.SessionLecturers)
+                .HasForeignKey(rl => rl.LecturerId);
+
+
+
+            //one to many session and tag//////
+            modelBuilder.Entity<Tag>()
+               .HasMany(q => q.sessionDSA)
+               .WithOne(k => k.tagDSA);
+
+            //one to many session and subject details/
+            modelBuilder.Entity<SubjectDetails>()
+               .HasMany(q => q.SessionDSA)
+               .WithOne(k => k.subjectDSA);
+
+
+
+            //one to many session and studentgroups /
+            modelBuilder.Entity<Student>()
+               .HasMany(q => q.sessionDSA)
+               .WithOne(k => k.studentDSA);
+
+
 
             base.OnModelCreating(modelBuilder);
 
