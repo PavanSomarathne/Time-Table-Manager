@@ -171,18 +171,24 @@
 
                         <materialDesign:Card  materialDesign:ShadowAssist.ShadowDepth="Depth3" materialDesign:ShadowAssist.ShadowEdges="Bottom,Right" Padding="12 1 2 5 ">
                             <StackPanel Orientation="Horizontal">
-                                <ComboBox SelectionChanged="SelectLectureritem"  Grid.Row="0" Grid.Column="1" Width="180" x:Name="LecturerDrpn" ItemsSource="{Binding Path=LectureInformation}"  DisplayMemberPath="LecName"  materialDesign:HintAssist.HintOpacity=".26" IsEditable="True"  VerticalAlignment="Top" Margin="0,10,0,0"/>
+                                <ComboBox   Grid.Row="0" Grid.Column="1" Width="160" x:Name="LecturerDrpn" ItemsSource="{Binding Path=LectureInformation}"  DisplayMemberPath="LecName"  materialDesign:HintAssist.HintOpacity=".26" IsEditable="True"  VerticalAlignment="Top" Margin="0,10,0,0"/>
 
                                 <Button Style="{DynamicResource MaterialDesignRaisedButton}" Margin="10"  Content="Add Lecturer" Background="#79b700" Click="AssignLectureItemTo">
 
                                 </Button>
+
+                                <Button  x:Name="TrashlecBtn"  Style="{StaticResource MaterialDesignFloatingActionMiniAccentButton}"
+                        ToolTip="MaterialDesignFloatingActionMiniLightButton" Background="#FFFF1744" IsEnabled="False" Click="Delectlecturec">
+                                    <materialDesign:PackIcon  Kind="Delete" Height="24" Width="24"  />
+                                </Button>
+
                             </StackPanel>
                         </materialDesign:Card>
 
                       
                         <GroupBox Grid.Row="2"  Grid.Column="2"  Header="Selected lecturers" Style="{DynamicResource MaterialDesignCardGroupBox}" MaxHeight="120" Height="110"
                 materialDesign:ColorZoneAssist.Mode="Custom" materialDesign:ColorZoneAssist.Background="#FF673AB7" materialDesign:ColorZoneAssist.Foreground="White"  >
-                            <ListView x:Name="LVlecturer" DisplayMemberPath="LecName"  />
+                            <ListView x:Name="LVlecturer" DisplayMemberPath="LecName" SelectionChanged="SelectLectureRooww" />
                         </GroupBox>
 
                         
