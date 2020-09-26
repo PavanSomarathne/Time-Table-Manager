@@ -24,5 +24,7 @@ namespace TimeTableManager.Models
 
         public String lecturesLstByConcadinating { get;set; }
 
+        public String GroupOrsubgroupForDisplay { get; set; }
+
     }
 }

@@ -45,7 +45,7 @@ namespace TimeTableManager
 
         public void LoadSessions()
         {
-            SessionDGg.ItemsSource = dbContext1.Sessions.Include(r => r.subjectDSA).Include(s => s.studentDSA);
+            SessionDGg.ItemsSource = dbContext1.Sessions.Include(r => r.subjectDSA);
         }
 
 
@@ -195,15 +195,22 @@ namespace TimeTableManager
             newSessionDl.subjectDSA = (SubjectDetails)selectsubjects.SelectedItem;
 
 
+
+            Student getGrpsub; ;
+
             if (tagname.Equals("Lecture") || tagname.Equals("Tutorial"))
             {
 
                 newSessionDl.studentDSA = (Student)selectMainGroup.SelectedItem;
+                getGrpsub = (Student)selectMainGroup.SelectedItem;
+                newSessionDl.GroupOrsubgroupForDisplay = getGrpsub.groupId;
 
             }
             else
             {
                 newSessionDl.studentDSA = (Student)selectSubgrp.SelectedItem;
+                getGrpsub = (Student)selectSubgrp.SelectedItem;
+                newSessionDl.GroupOrsubgroupForDisplay = getGrpsub.subGroupId;
 
             }
 
@@ -239,13 +246,13 @@ namespace TimeTableManager
 
 
 
-            
 
 
 
 
 
 
+            getGrpsub = null;
 
 
             LoadSessions();
@@ -329,5 +336,38 @@ namespace TimeTableManager
             }
 
         }
+
+
+        private void SelectSessionRow(object s,RoutedEventArgs e)
+        {
+            if (SessionDGg.SelectedItem != null)
+            {
+                Addlecbtn.IsEnabled = false;
+                Sessionupdatebtn.IsEnabled = true;
+            }
+            else
+            {
+                Addlecbtn.IsEnabled = true;
+                Sessionupdatebtn.IsEnabled = false;
+            }
+
+
+        }
+
+
+
+        private void UpdateSessionDetails(Object s, RoutedEventArgs e)
+        {
+            if (SessionDGg.SelectedItem != null)
+            {
+                Session selectedSession = (Session)SessionDGg.SelectedItem;
+
+                MessageBox.Show(selectedSession.tagDSA.tags);
+             
+            }
+        }
+
+
+
     }
 }
