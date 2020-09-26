@@ -208,34 +208,38 @@ namespace TimeTableManager
             }
 
 
+            dbContext1.Sessions.Add(newSessionDl);
+
+       int condition=  dbContext1.SaveChanges();
+
+          //  MessageBox.Show(condition.ToString());
 
 
-            dbContext1.SaveChanges();
 
+        //    if (condition > 0)
+       //    { }
 
-
-
-
-            //
-            foreach (LecturerDetails lec in LeLISTT)
-            {
-
-
-                SessionLecturer sessionlc = new SessionLecturer
+                foreach (LecturerDetails lec in LeLISTT)
                 {
 
-                    Ssssion = newSessionDl,
-                    Lecdetaiils = lec
 
-                };
+                    SessionLecturer sessionlc = new SessionLecturer
+                    {
 
-                dbContext1.SessionLecturers.Add(sessionlc);
-                dbContext1.SaveChanges();
+                        Ssssion = newSessionDl,
+                        Lecdetaiils = lec
+
+                    };
+
+                    dbContext1.SessionLecturers.Add(sessionlc);
+                    dbContext1.SaveChanges();
+
+
+                }
 
 
 
-
-            }
+            
 
 
 

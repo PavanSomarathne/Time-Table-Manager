@@ -79,7 +79,7 @@
                                                 <DataTemplate>
 
                                                       
-                                                            <StackPanel Margin="3" materialDesign:ShadowAssist.Darken="True">
+                                                            <StackPanel Margin="3" materialDesign:ShadowAssist.Darken="True" >
 
 
                                                                 <TextBlock HorizontalAlignment="Stretch" VerticalAlignment="Center"  FontSize="18" FontWeight="Bold"   Text="{Binding lecturesLstByConcadinating}"/>
@@ -108,7 +108,7 @@
                                                                 <TextBlock FontWeight="Bold" FontSize="14" Text="{Binding durationinHours}"></TextBlock>
                                                                 <TextBlock  FontWeight="Bold" FontSize="14" >)</TextBlock>
                                                             </StackPanel>
-
+                                                         
                                                         </StackPanel>
                                                       
                                                     </DataTemplate>
