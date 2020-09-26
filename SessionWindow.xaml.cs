@@ -305,8 +305,29 @@ namespace TimeTableManager
 
         }
 
+        private void TagValueChanged(Object s, RoutedEventArgs e)
+        {
+            Tag CheckingTT = (Tag)CBTagsNames.SelectedItem;
+            String checkingTag = CheckingTT.tags;
 
 
 
+            if (checkingTag.Equals("Lecture") || checkingTag.Equals("Tutorial"))
+            {
+
+                selectMainGroup.IsEnabled = true;
+                selectSubgrp.IsEnabled = false;
+               
+
+            }
+
+            if (checkingTag.Equals("Practical"))
+            {
+                selectSubgrp.IsEnabled = true;
+                selectMainGroup.IsEnabled = false;
+
+            }
+
+        }
     }
 }
