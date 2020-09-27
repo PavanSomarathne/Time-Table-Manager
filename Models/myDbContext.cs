@@ -32,6 +32,7 @@ namespace TimeTableManager.Models
 
         public DbSet<RoomSubject> RoomSubjects { get; set; }
 
+        public DbSet<RoomNAT> RoomNATs { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

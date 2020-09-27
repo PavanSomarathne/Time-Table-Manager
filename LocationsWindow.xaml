@@ -39,7 +39,6 @@
 
             <ComboBox Width="150" x:Name="CBSearchBuilding"  DisplayMemberPath="Name" materialDesign:HintAssist.Hint="Select Building" materialDesign:HintAssist.HintOpacity=".26" IsEditable="True" SelectionChanged="SearchByBuilding" FontSize="16" Margin="20,10,0,0"/>
             <ComboBox Width="150" x:Name="CBSearchType" Margin="20,10,0,0"  materialDesign:HintAssist.Hint="Select Type" materialDesign:HintAssist.HintOpacity=".26" IsEditable="True" SelectionChanged="SearchByType" FontSize="16" >
-
                 <ComboBoxItem Content="LectureRoom" />
                 <ComboBoxItem Content="Lab" />
             </ComboBox>
@@ -51,7 +50,6 @@
                 <Label Content="Status : " FontWeight="Bold" />
                 <Label x:Name="txtSts" Content="Status"  Margin="20,0,0,0" />
             </StackPanel>
-
         </materialDesign:Card>
 
         <Rectangle Margin="0,492,0,10" Stroke="Black" HorizontalAlignment="Center" Width="1364"/>
