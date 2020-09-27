@@ -10,7 +10,7 @@ namespace TimeTableManager.Models
 
         public int StdntCount { get; set; }
 
-        public int durationinMinutes{get; set;}
+        public int durationinHours{get; set;}
 
         //one to many
         public Tag tagDSA { get; set; }
@@ -22,7 +22,9 @@ namespace TimeTableManager.Models
         //many to many
         public virtual ICollection<SessionLecturer> SessionLecturers { get; set; }
 
+        public String lecturesLstByConcadinating { get;set; }
 
+        public String GroupOrsubgroupForDisplay { get; set; }
 
     }
 }

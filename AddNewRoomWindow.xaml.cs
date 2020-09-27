@@ -59,6 +59,7 @@ namespace TimeTableManager
 
             LoadLecturers();
             LoadSubjects();
+            LoadNATS();
         }
 
         private void LoadLecturers()
@@ -75,6 +76,14 @@ namespace TimeTableManager
             .Where(p => p.Id == RoomToEdit.Id)
             .SelectMany(r => r.RoomSubjects)
             .Select(rl => rl.Subject).ToList();
+        }
+
+        private void LoadNATS()
+        {
+            
+            LVNAT.ItemsSource = dbContext1.RoomNATs
+            .Where(r => r.room.Id == RoomToEdit.Id)
+            .ToList();
         }
 
         private void AddRoom(Object s, RoutedEventArgs e)
@@ -168,6 +177,7 @@ namespace TimeTableManager
 
         private void DelLec(Object s, RoutedEventArgs e)
         {
+            //Lvlecturer list name
             if (LVlecturer.SelectedItem != null)
             {
                 LecturerDetails lecturer = (LecturerDetails)LVlecturer.SelectedItem;
@@ -199,6 +209,45 @@ namespace TimeTableManager
             else
             {
                 BTNdelLec.IsEnabled = false;
+            }
+        }
+
+
+        private void AddNAT(Object s, RoutedEventArgs e)
+        {
+            PopupTimeSelect popup = new PopupTimeSelect(dbContext1, RoomToEdit);
+            popup.Closed += RefreshNAT;
+            popup.ShowDialog();
+        }
+
+        private void DelNAT(Object s, RoutedEventArgs e)
+        {
+            if (LVNAT.SelectedItem != null)
+            {
+                RoomNAT roomNAT = (RoomNAT)LVNAT.SelectedItem;
+
+                if (dbContext1.RoomNATs.Any(r => r.room.Id == this.RoomToEdit.Id && r.Id == roomNAT.Id))
+                {
+                    //dbContext1.Entry(roomLecturer).State = EntityState.Detached;
+                    var rrn = dbContext1.RoomNATs.First(row => row.Id == roomNAT.Id);
+                    dbContext1.RoomNATs.Remove(rrn);
+                    dbContext1.SaveChanges();
+
+                    LVNAT.SelectedIndex = -1;
+                    LoadNATS();
+                }
+            }
+        }
+
+        private void NATDelActive(Object s, RoutedEventArgs e)
+        {
+            if (LVNAT.SelectedItem != null)
+            {
+                BTNdelNAT.IsEnabled = true;
+            }
+            else
+            {
+                BTNdelNAT.IsEnabled = false;
             }
         }
 
@@ -301,6 +350,14 @@ namespace TimeTableManager
             //This gets fired off
             LVlecturer.ItemsSource = null;
             LoadSubjects();
+
+        }
+
+        public void RefreshNAT(object sender, System.EventArgs e)
+        {
+            //This gets fired off
+            LVNAT.ItemsSource = null;
+            LoadNATS();
 
         }
     }

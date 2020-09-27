@@ -103,7 +103,20 @@
             </Button>
         </StackPanel>
 
-
+        <GroupBox Grid.Row="1"  Grid.Column="4"  Header="Not Available Times" Style="{DynamicResource MaterialDesignCardGroupBox}"
+                materialDesign:ColorZoneAssist.Mode="Custom" materialDesign:ColorZoneAssist.Background="#FF673AB7" materialDesign:ColorZoneAssist.Foreground="White" Margin="0,5,0,10"  >
+            <ListView x:Name="LVNAT" SelectionChanged="NATDelActive"/>
+        </GroupBox>
+        <StackPanel Grid.Row="1"  Grid.Column="5"  VerticalAlignment="Bottom" Margin="0,0,0,20">
+            <Button  Style="{StaticResource MaterialDesignFloatingActionMiniAccentButton}" Click="AddNAT"
+                        ToolTip="Assign Prefered Lecturer" Margin="0,0,0,10">
+                <materialDesign:PackIcon Kind="Plus" Height="24" Width="24" />
+            </Button>
+            <Button  x:Name="BTNdelNAT"  Style="{StaticResource MaterialDesignFloatingActionMiniAccentButton}"
+                        ToolTip="MaterialDesignFloatingActionMiniLightButton" Background="#FFFF1744" IsEnabled="False" Click="DelNAT">
+                <materialDesign:PackIcon  Kind="Delete" Height="24" Width="24"  />
+            </Button>
+        </StackPanel>
 
 
         <GroupBox Grid.Row="2"  Grid.Column="4"  Header="Prefferd Subjects" Style="{DynamicResource MaterialDesignCardGroupBox}"

@@ -111,7 +111,7 @@
                             <StackPanel x:Name="checkboxes" Width="100">
                                 <CheckBox  Checked="myCheckBox_Checked" Unchecked="myCheckBox_Unchecked" x:Name="MondayCheckBox" Content="Monday"></CheckBox>
                                 <CheckBox Checked="myCheckBox_Checked" Unchecked="myCheckBox_Unchecked" x:Name="TuesdayCheckBox" Content="Tuesday"></CheckBox>
-                                <CheckBox Checked="myCheckBox_Checked" Unchecked="myCheckBox_Unchecked" x:Name="WednessdayCheckBox" Content="Wednessday"></CheckBox>
+                                <CheckBox Checked="myCheckBox_Checked" Unchecked="myCheckBox_Unchecked" x:Name="WednessdayCheckBox" Content="Wednesday"></CheckBox>
                                 <CheckBox Checked="myCheckBox_Checked" Unchecked="myCheckBox_Unchecked" x:Name="ThursdayCheckBox" Content="Thursday"></CheckBox>
                                 <CheckBox Checked="myCheckBox_Checked" Unchecked="myCheckBox_Unchecked" x:Name="FridayCheckBox" Content="Friday"></CheckBox>
                                 <CheckBox Checked="myCheckBox_Checked" Unchecked="myCheckBox_Unchecked" x:Name="SaturdayCheckBox" Content="Saturday"></CheckBox>
