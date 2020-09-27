@@ -222,7 +222,7 @@ namespace TimeTableManager
                 {
                     TuesdayCheckBox.IsChecked = true;
                 }
-                else if (item == "Wednessday")
+                else if (item == "Wednesday")
                 {
                     WednessdayCheckBox.IsChecked = true;
                 }
