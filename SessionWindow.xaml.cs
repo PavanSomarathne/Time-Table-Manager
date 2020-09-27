@@ -24,6 +24,7 @@ namespace TimeTableManager
     {
 
         Boolean Addseesion = true;
+        Boolean settingEmptyValues = false;
         List<LecturerDetails> LeLISTT = new List<LecturerDetails>();
 
       //  List<LecturerDetails> LoadLec = new List<LecturerDetails>();
@@ -39,6 +40,7 @@ namespace TimeTableManager
             InitializeComponent();
             this.dbContext1 = dbContext;
             Addseesion = true;
+            settingEmptyValues = false;
             getlecturers();
             getTags();
             LoadSessions();
@@ -149,19 +151,24 @@ namespace TimeTableManager
         private void yeardropdwn(Object s, RoutedEventArgs e)
 
         {
-            String ContentOfItemOne = (CByearselect.Items[CByearselect.SelectedIndex] as ComboBoxItem).Content.ToString();
+            //MessageBox.Show(CByearselect.Text.ToString());
+
+            if (!settingEmptyValues)
+            {
+
+                String ContentOfItemOne = (CByearselect.Items[CByearselect.SelectedIndex] as ComboBoxItem).Content.ToString();
 
 
-            //  rankDetail.Text = ContentOfItemOne;
+                //  rankDetail.Text = ContentOfItemOne;
 
 
 
 
-            getMainGroupdetails(ContentOfItemOne);
-            getSubgroupdetails(ContentOfItemOne);
-            getSubjects(ContentOfItemOne);
+                getMainGroupdetails(ContentOfItemOne);
+                getSubgroupdetails(ContentOfItemOne);
+                getSubjects(ContentOfItemOne);
 
-
+            }
 
         }
 
@@ -183,6 +190,7 @@ namespace TimeTableManager
         private void AddSessionDetails(object s, RoutedEventArgs e)
 
         {
+           
             Addseesion = true;
 
             Tag tgggg = (Tag)CBTagsNames.SelectedItem;
@@ -200,7 +208,7 @@ namespace TimeTableManager
 
 
 
-            Student getGrpsub; ;
+            Student getGrpsub; 
 
             if (tagname.Equals("Lecture") || tagname.Equals("Tutorial"))
             {
@@ -248,17 +256,26 @@ namespace TimeTableManager
 
                 }
 
+            settingEmptyValues = true;
+
+            CByearselect.Text = " ";
+            LVlecturer.ItemsSource = null;
+            CBTagsNames.Text = null;
+            selectMainGroup.Text = "";
+            selectSubgrp.Text = "";
+            StdntCnt.Text = "";
+            Duration.Text = "";
+            LecturerDrpn.Text = "";
+            selectsubjects.Text = "";
 
 
-
-
-            newSessionDl = new Session();
+         newSessionDl = new Session();
 
              LeLISTT = null;
-
+            LeLISTT = new List<LecturerDetails>();
              getGrpsub = null;
 
-
+            settingEmptyValues = false;
             LoadSessions();
 
 
@@ -307,43 +324,50 @@ namespace TimeTableManager
 
         private void AssignLectureItemTo(Object s, RoutedEventArgs e)
         {
+          if (!LecturerDrpn.Text.ToString().Equals("") || !LecturerDrpn.Text.ToString().Equals(null))
+            {
+              //  MessageBox.Show(LecturerDrpn.Text.ToString());
+                LecturerDetails TrytoAddLecture = (LecturerDetails)LecturerDrpn.SelectedItem;
 
-            LecturerDetails TrytoAddLecture = (LecturerDetails)LecturerDrpn.SelectedItem;
+                newSessionDl.lecturesLstByConcadinating += TrytoAddLecture.LecName + " , ";
 
-            newSessionDl.lecturesLstByConcadinating += TrytoAddLecture.LecName + " , ";
+                MessageBox.Show(TrytoAddLecture.LecName);
+                LeLISTT.Add(TrytoAddLecture);
 
-
-            LeLISTT.Add(TrytoAddLecture);
-
-            LVlecturer.ItemsSource = LeLISTT.ToList();
+                LVlecturer.ItemsSource = LeLISTT.ToList();
 
 
-
+            }
+          
         }
 
         private void TagValueChanged(Object s, RoutedEventArgs e)
         {
-            Tag CheckingTT = (Tag)CBTagsNames.SelectedItem;
-            String checkingTag = CheckingTT.tags;
 
-
-
-            if (checkingTag.Equals("Lecture") || checkingTag.Equals("Tutorial"))
+            if (!settingEmptyValues)
             {
 
-                selectMainGroup.IsEnabled = true;
-                selectSubgrp.IsEnabled = false;
-               
+                Tag CheckingTT = (Tag)CBTagsNames.SelectedItem;
+                String checkingTag = CheckingTT.tags;
 
+
+
+                if (checkingTag.Equals("Lecture") || checkingTag.Equals("Tutorial"))
+                {
+
+                    selectMainGroup.IsEnabled = true;
+                    selectSubgrp.IsEnabled = false;
+
+
+                }
+
+                if (checkingTag.Equals("Practical"))
+                {
+                    selectSubgrp.IsEnabled = true;
+                    selectMainGroup.IsEnabled = false;
+
+                }
             }
-
-            if (checkingTag.Equals("Practical"))
-            {
-                selectSubgrp.IsEnabled = true;
-                selectMainGroup.IsEnabled = false;
-
-            }
-
         }
 
 
