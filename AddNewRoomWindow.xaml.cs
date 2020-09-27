@@ -177,6 +177,7 @@ namespace TimeTableManager
 
         private void DelLec(Object s, RoutedEventArgs e)
         {
+            //Lvlecturer list name
             if (LVlecturer.SelectedItem != null)
             {
                 LecturerDetails lecturer = (LecturerDetails)LVlecturer.SelectedItem;

@@ -67,58 +67,81 @@
                                      </Grid.RowDefinitions>
 
                                     <StackPanel Grid.Row="0">
-                                        
+                                        <Grid>
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="*"/>
+                                                <RowDefinition Height="*"/>
+                                                
+                                            </Grid.RowDefinitions>
+
+
+                                            <StackPanel Grid.Row="1">
+                                                <Grid>
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="4*"/>
+                                                        <ColumnDefinition Width="*"/>
+                                                    </Grid.ColumnDefinitions>
+
+                                                    <StackPanel Grid.Column="1">
+                                                        <Button Content="Update" Margin="5" x:Name="Sessionupdatebtn" IsEnabled="False" Click="UpdateSessionDetails"></Button>
+                                                        <Button Content="Delete" Margin="5"></Button>
+                                                    </StackPanel>
+                                                    
+                                                    
+                                                </Grid>
+                                            </StackPanel>
+                                            
+                                            
+                                        </Grid>
                                     </StackPanel>
 
 
                                     <StackPanel Grid.Row="1">
 
-                                        <GroupBox Grid.Row="3"  Header="" Style="{DynamicResource MaterialDesignCardGroupBox}"
-                                        materialDesign:ColorZoneAssist.Mode="Custom" materialDesign:ColorZoneAssist.Background="#FF673AB7" materialDesign:ColorZoneAssist.Foreground="White" >
+                                        <GroupBox Grid.Row="2"  Grid.Column="2"  Header="Session details" Style="{DynamicResource MaterialDesignCardGroupBox}"   materialDesign:ColorZoneAssist.Mode="Custom" materialDesign:ColorZoneAssist.Background="#FF673AB7" materialDesign:ColorZoneAssist.Foreground="White"  >
+                                            <ListView Name="SessionDGg" SelectionChanged="SelectSessionRow">
+                                            <ListView.ItemTemplate>
+                                                <DataTemplate>
 
-                                            <ListView Name="lvDataBinding">
-                                                <ListView.ItemTemplate>
-                                                    <DataTemplate>
-                                                        <WrapPanel>
-
-                                                            <materialDesign:Card Background="#03a9f4" Foreground="{DynamicResource PrimaryHueDarkForegroundBrush}" Padding="0" Width="800">
-                                                        <Grid>
-                                                            <Grid.RowDefinitions>
-                                                                <RowDefinition Height="Auto" />
-                                                                <RowDefinition Height="Auto" />
-                                                                <RowDefinition Height="Auto" />
-                                                                <RowDefinition Height="Auto" />
-                                                                <RowDefinition Height="Auto" />
-                                                            </Grid.RowDefinitions>
-                                                            <TextBlock Grid.Row="0" Margin="30 5 1 14" FontSize="18" Padding="8" >
-                                                                Call J
-                                                            </TextBlock>
-
-                                                            <TextBlock  Grid.Row="1" Margin="30 5 1 14" VerticalAlignment="Center" HorizontalAlignment="Left" Style="{StaticResource MaterialDesignBody2TextBlock}">March 19, 2016
-                                                            </TextBlock>
-
-                                                            <TextBlock  Grid.Row="2" Margin="30 5 1 14" VerticalAlignment="Center" HorizontalAlignment="Left" Style="{StaticResource MaterialDesignBody2TextBlock}">March 19, 2016
-                                                            </TextBlock>
-
-                                                            <TextBlock  Grid.Row="3" Margin="30 5 1 14" VerticalAlignment="Center" HorizontalAlignment="Left" Style="{StaticResource MaterialDesignBody2TextBlock}">March 19, 2016
-                                                            </TextBlock>
-
-                                                            <TextBlock  Grid.Row="4" Margin="30 5 1 14" VerticalAlignment="Center" HorizontalAlignment="Left" Style="{StaticResource MaterialDesignBody2TextBlock}">March 19, 2016
-                                                            </TextBlock>
+                                                    
+                                                        <StackPanel Margin="3" materialDesign:ShadowAssist.Darken="True" >
 
 
-                                                        </Grid>
-                                                    </materialDesign:Card>
+                                                                <TextBlock HorizontalAlignment="Stretch" VerticalAlignment="Center"  FontSize="18" FontWeight="Bold"   Text="{Binding lecturesLstByConcadinating}"/>
 
+                                                            <StackPanel Orientation="Horizontal">
 
-                                                        </WrapPanel>
+                                                                <TextBlock  
+                                                                     FontWeight="Bold" FontSize="14"  HorizontalAlignment="Stretch" VerticalAlignment="Center"  Text="{Binding subjectDSA.SubjectName}"/>
+                                                                <TextBlock  FontWeight="Bold" FontSize="14" >(</TextBlock>
+                                                                <TextBlock FontWeight="Bold" FontSize="14" Text="{Binding subjectDSA.SubjectCode}"></TextBlock>
+                                                                <TextBlock  FontWeight="Bold" FontSize="14" >)</TextBlock>
+                                                            </StackPanel>
+                                                               
+
+                                                            <TextBlock   HorizontalAlignment="Stretch" VerticalAlignment="Center"    FontWeight="Bold" 
+                                                                     Text="{Binding tagDSA.tags}" FontSize="14"  />
+
+                                                               
+                                                            <TextBlock   HorizontalAlignment="Stretch" VerticalAlignment="Center"
+                                                                      FontWeight="Bold" Text="{Binding GroupOrsubgroupForDisplay}" FontSize="14"/>
+
+                                                            <StackPanel Orientation="Horizontal">
+                                                                <TextBlock    HorizontalAlignment="Stretch" VerticalAlignment="Center" 
+                                                                    Text="{Binding StdntCount}" FontSize="14" />
+                                                                <TextBlock  FontWeight="Bold" FontSize="14" >(</TextBlock>
+                                                                <TextBlock FontWeight="Bold" FontSize="14" Text="{Binding durationinHours}"></TextBlock>
+                                                                <TextBlock  FontWeight="Bold" FontSize="14" >)</TextBlock>
+                                                            </StackPanel>
+                                                         
+                                                        </StackPanel>
+                                                      
                                                     </DataTemplate>
-                                                </ListView.ItemTemplate>
+                                            </ListView.ItemTemplate>
 
                                             </ListView>
 
                                         </GroupBox>
-
                                     </StackPanel>
 
                             
@@ -148,44 +171,50 @@
 
                         <materialDesign:Card  materialDesign:ShadowAssist.ShadowDepth="Depth3" materialDesign:ShadowAssist.ShadowEdges="Bottom,Right" Padding="12 1 2 5 ">
                             <StackPanel Orientation="Horizontal">
-                                <ComboBox SelectionChanged="SelectLectureritem"  Grid.Row="0" Grid.Column="1" Width="180" x:Name="LecturerDrpn" ItemsSource="{Binding Path=LectureInformation}"  DisplayMemberPath="LecName"  materialDesign:HintAssist.HintOpacity=".26" IsEditable="True"  VerticalAlignment="Top" Margin="0,10,0,0"/>
+                                <ComboBox   Grid.Row="0" Grid.Column="1" Width="160" x:Name="LecturerDrpn" ItemsSource="{Binding Path=LectureInformation}"  DisplayMemberPath="LecName"  materialDesign:HintAssist.HintOpacity=".26" IsEditable="True"  VerticalAlignment="Top" Margin="0,10,0,0"/>
 
                                 <Button Style="{DynamicResource MaterialDesignRaisedButton}" Margin="10"  Content="Add Lecturer" Background="#79b700" Click="AssignLectureItemTo">
 
                                 </Button>
+
+                                <Button  x:Name="TrashlecBtn"  Style="{StaticResource MaterialDesignFloatingActionMiniAccentButton}"
+                        ToolTip="MaterialDesignFloatingActionMiniLightButton" Background="#FFFF1744" IsEnabled="False" Click="Delectlecturec">
+                                    <materialDesign:PackIcon  Kind="Delete" Height="24" Width="24"  />
+                                </Button>
+
                             </StackPanel>
                         </materialDesign:Card>
 
                       
                         <GroupBox Grid.Row="2"  Grid.Column="2"  Header="Selected lecturers" Style="{DynamicResource MaterialDesignCardGroupBox}" MaxHeight="120" Height="110"
                 materialDesign:ColorZoneAssist.Mode="Custom" materialDesign:ColorZoneAssist.Background="#FF673AB7" materialDesign:ColorZoneAssist.Foreground="White"  >
-                            <ListView x:Name="LVlecturer" DisplayMemberPath="LecName"  />
+                            <ListView x:Name="LVlecturer" DisplayMemberPath="LecName" SelectionChanged="SelectLectureRooww" />
                         </GroupBox>
 
                         
 
                         <Label Content="Tag Name" Margin="8 5 0 0"></Label>
-                        <ComboBox  Padding="2" Margin="8 0 0 0" x:Name="CBTagsNames" ItemsSource="{Binding Path=Tags}"  DisplayMemberPath="tags" />
+                        <ComboBox  Padding="2" Margin="8 0 0 0" x:Name="CBTagsNames" ItemsSource="{Binding Path=Tags}"  DisplayMemberPath="tags" SelectionChanged="TagValueChanged"/>
 
                         <Label Content="Groups for relevent Year" Margin="8 10 0 0"></Label>
-                        <ComboBox  Padding="2" Margin="8 0 0 0" x:Name="selectMainGroup" ItemsSource="{Binding Path=Students}"  DisplayMemberPath="groupId" />
+                        <ComboBox  Padding="2" Margin="8 0 0 0" x:Name="selectMainGroup" ItemsSource="{Binding Path=Students}"  DisplayMemberPath="groupId" IsEnabled="True" />
 
 
 
                         <Label Content="Sub groups for relevant Year" Margin="8 5 0 0"></Label>
-                        <ComboBox  Padding="2" Margin="8 0 0 0" x:Name="selectSubgrp" ItemsSource="{Binding Path=Students}"  DisplayMemberPath="subGroupId" />
+                        <ComboBox  Padding="2" Margin="8 0 0 0" x:Name="selectSubgrp" ItemsSource="{Binding Path=Students}"  DisplayMemberPath="subGroupId" IsEnabled="True" />
 
 
                         <Label Content="Student Count" Margin="8 5 0 0"></Label>
                         <TextBox x:Name="StdntCnt" Padding="2" PreviewTextInput="NumberValidationForStudentCount"  Margin="8 0 0 0" />
 
-                        <Label Content="Duration In Minutes" Margin="8 5 0 0"></Label>
+                        <Label Content="Duration In Hours" Margin="8 5 0 0"></Label>
                         <TextBox x:Name="Duration" Padding="2" PreviewTextInput="NumberValidationForDuration"  Margin="8 0 0 0" />
 
 
 
 
-                        <Button  x:Name="Addlecbtn" Content="Add Session" FontWeight="Bold" Margin="8 10 0 0" Padding="6" MinHeight="50" MaxHeight="60" Click="AddSessionDetails"></Button>
+                        <Button  x:Name="Addlecbtn" Content="Add Session" FontWeight="Bold" Margin="8 10 0 0" Padding="6" MinHeight="50" MaxHeight="60" Click="AddSessionDetails" IsEnabled="True"></Button>
                     </StackPanel>
                 </Grid>
             </StackPanel>
