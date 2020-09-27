@@ -49,6 +49,18 @@ namespace TimeTableManager
             cmb1.ItemsSource = lecString;
         }
 
+        //private void session_load(object sender, RoutedEventArgs e)
+        //{
+        //    List<String> lecString = new List<String>();
+        //    List<> lecturers = dbContext1..ToList();
+
+        //    foreach (var item in lecturers)
+        //    {
+        //        lecString.Add(item.LecName);
+        //    }
+        //    cmb1.ItemsSource = lecString;
+        //}
+
         private void groups_load(object sender, RoutedEventArgs e)
         {
             List<String> grpString = new List<String>();
