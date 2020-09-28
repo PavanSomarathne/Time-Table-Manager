@@ -29,5 +29,10 @@ namespace TimeTableManager.Models
 
         public String GroupOrsubgroupForDisplay { get; set; }
 
+        public override string ToString()
+        {
+            return lecturesLstByConcadinating + "\n " + subjectDSA.SubjectName + " \n " + tagDSA.tags + "\n " + GroupOrsubgroupForDisplay;
+        }
+
     }
 }

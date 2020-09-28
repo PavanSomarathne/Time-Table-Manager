@@ -61,7 +61,7 @@
 
                                 <Grid.RowDefinitions>
 
-                                    <RowDefinition Height="100"/>
+                                    <RowDefinition Height="180"/>
                                     <RowDefinition Height="*"/>
 
                                      </Grid.RowDefinitions>
@@ -74,7 +74,17 @@
                                                 
                                             </Grid.RowDefinitions>
 
+                                            <StackPanel Grid.Row="0"  Margin="80 30 0 12 ">
+                                                <StackPanel Orientation="Horizontal">
+                                                    <TextBlock Background="Wheat" FontSize="12" FontWeight="Bold" Width="450" Margin="5 5 21 0" Padding="15"  />
 
+
+
+                                                    <Button x:Name="FBCButton" HorizontalAlignment="Right" Margin="0,8,13,4" Width="111" Content="Browse" Grid.Column="1" />
+                                                </StackPanel>
+                                                
+
+                                            </StackPanel>
                                             <StackPanel Grid.Row="1">
                                                 <Grid>
                                                     <Grid.ColumnDefinitions>
@@ -99,7 +109,7 @@
                                     <StackPanel Grid.Row="1">
 
                                         <GroupBox Grid.Row="2"  Grid.Column="2"  Header="Session details" Style="{DynamicResource MaterialDesignCardGroupBox}"   materialDesign:ColorZoneAssist.Mode="Custom" materialDesign:ColorZoneAssist.Background="#FF673AB7" materialDesign:ColorZoneAssist.Foreground="White"  >
-                                            <ListView Name="SessionDGg" SelectionChanged="SelectSessionRow">
+                                            <ListView Name="SessionDGg" SelectionChanged="SelectSessionRow" MaxHeight="720">
                                             <ListView.ItemTemplate>
                                                 <DataTemplate>
 
