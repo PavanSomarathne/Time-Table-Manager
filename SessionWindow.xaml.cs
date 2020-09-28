@@ -22,12 +22,12 @@ namespace TimeTableManager
     /// </summary>
     public partial class SessionWindow : Window
     {
-      
+
         Boolean Addseesion = true;
         Boolean settingEmptyValues = false;
         List<LecturerDetails> LeLISTT = new List<LecturerDetails>();
 
-      //  List<LecturerDetails> LoadLec = new List<LecturerDetails>();
+        //  List<LecturerDetails> LoadLec = new List<LecturerDetails>();
         List<Session> sesinList = new List<Session>();
         Session newSessionDl = new Session();
         Session UpdatingSession = new Session();
@@ -190,7 +190,7 @@ namespace TimeTableManager
         private void AddSessionDetails(object s, RoutedEventArgs e)
 
         {
-           
+
             Addseesion = true;
 
             Tag tgggg = (Tag)CBTagsNames.SelectedItem;
@@ -218,7 +218,7 @@ namespace TimeTableManager
 
 
 
-            Student getGrpsub; 
+            Student getGrpsub;
 
             if (tagname.Equals("Lecture") || tagname.Equals("Tutorial"))
             {
@@ -233,38 +233,38 @@ namespace TimeTableManager
                 newSessionDl.studentDSA = (Student)selectSubgrp.SelectedItem;
                 getGrpsub = (Student)selectSubgrp.SelectedItem;
                 newSessionDl.GroupOrsubgroupForDisplay = getGrpsub.subGroupId;
-                newSessionDl.GroupType = "Sub Group"; 
+                newSessionDl.GroupType = "Sub Group";
             }
 
 
             dbContext1.Sessions.Add(newSessionDl);
 
-       int condition=  dbContext1.SaveChanges();
+            int condition = dbContext1.SaveChanges();
 
-          //  MessageBox.Show(condition.ToString());
+            //  MessageBox.Show(condition.ToString());
 
 
 
-        //    if (condition > 0)
-       //    { }
+            //    if (condition > 0)
+            //    { }
 
-                foreach (LecturerDetails lec in LeLISTT)
+            foreach (LecturerDetails lec in LeLISTT)
+            {
+
+
+                SessionLecturer sessionlc = new SessionLecturer
                 {
 
+                    Ssssion = newSessionDl,
+                    Lecdetaiils = lec
 
-                    SessionLecturer sessionlc = new SessionLecturer
-                    {
+                };
 
-                        Ssssion = newSessionDl,
-                        Lecdetaiils = lec
-
-                    };
-
-                    dbContext1.SessionLecturers.Add(sessionlc);
-                    dbContext1.SaveChanges();
+                dbContext1.SessionLecturers.Add(sessionlc);
+                dbContext1.SaveChanges();
 
 
-                }
+            }
 
             settingEmptyValues = true;
 
@@ -279,11 +279,11 @@ namespace TimeTableManager
             selectsubjects.Text = "";
 
 
-         newSessionDl = new Session();
+            newSessionDl = new Session();
 
-             LeLISTT = null;
+            LeLISTT = null;
             LeLISTT = new List<LecturerDetails>();
-             getGrpsub = null;
+            getGrpsub = null;
 
             settingEmptyValues = false;
             LoadSessions();
@@ -322,33 +322,102 @@ namespace TimeTableManager
 
 
 
-     //   private void SelectLectureritem(Object s, RoutedEventArgs e)
+        //   private void SelectLectureritem(Object s, RoutedEventArgs e)
 
-      //  {                      
+        //  {                      
 
-        
 
-      //  }
+
+        //  }
 
 
 
         private void AssignLectureItemTo(Object s, RoutedEventArgs e)
-        {
-           
-            if (!LecturerDrpn.Text.ToString().Equals("") )
+  {
+
+            if (!LecturerDrpn.Text.ToString().Equals(""))
             {
-                       
+
+                if (Addseesion)
+                { 
                     LecturerDetails TrytoAddLecture = (LecturerDetails)LecturerDrpn.SelectedItem;
-                    LeLISTT.Add(TrytoAddLecture);
-                    LVlecturer.ItemsSource = LeLISTT.ToList();
-          
+
+                    foreach (LecturerDetails Lliss in LeLISTT)
+                    {
+                        if (Lliss.Id == TrytoAddLecture.Id)
+                        {
+                            LecturerDrpn.SelectedIndex = -1;
+                            new MessageBoxCustom("This Lecture already You assigned,Can't add again!", MessageType.Error, MessageButtons.Ok).ShowDialog();
+                            return;
+
+                        }
+
+                    }
+
+                      LeLISTT.Add(TrytoAddLecture);
+
+                            String test = null;
+                            foreach(LecturerDetails ll in LeLISTT)
+                            {
+                                test += ll.LecName + " ";
+                            }
+                            MessageBox.Show(test);
+                            LVlecturer.ItemsSource = LeLISTT.ToList();
+                            LecturerDrpn.SelectedIndex = -1;
+                        
+                    
+
+                  
+
+                }
+                else
+                {
+                    LecturerDetails lectu = (LecturerDetails)LecturerDrpn.SelectedItem;
+                    MessageBox.Show(lectu.Id.ToString());
+                    if (dbContext1.SessionLecturers.Any(r => r.SessionrId == UpdatingSession.SessionId && r.LecturerId == lectu.Id))
+                     {
+                        new MessageBoxCustom("This Lecture already assigned to this Session,Can't add again!", MessageType.Error, MessageButtons.Ok).ShowDialog();
+                        LecturerDrpn.SelectedIndex = -1;
+                     }
+                    else
+                     {
+                         
+
+
+                            SessionLecturer assgni = new SessionLecturer
+                            {
+
+                                Ssssion = UpdatingSession,
+                                Lecdetaiils = lectu
+
+                            };
+
+                            dbContext1.SessionLecturers.Add(assgni);
+                            dbContext1.SaveChanges();
+
+                        LeLISTT.Add(lectu);
+                        LVlecturer.ItemsSource = LeLISTT.ToList();
+                        LecturerDrpn.SelectedIndex = -1;
+
+                      }
+
+
+                }
+            
+
+                  
+            }
+            else
+            {
+                new MessageBoxCustom("Please Select the lecture before to assign", MessageType.Warning, MessageButtons.Ok).ShowDialog();
             }
           
-        }
+
+ }
 
         private void TagValueChanged(Object s, RoutedEventArgs e)
         {
-         
+            
             if (!settingEmptyValues)
             {
 
@@ -376,12 +445,12 @@ namespace TimeTableManager
         }
 
 
-        private void SelectSessionRow(object s,RoutedEventArgs e)
+        private void SelectSessionRow(object s, RoutedEventArgs e)
         {
-           // MessageBox.Show("Im outer");
+            // MessageBox.Show("Im outer");
             if (SessionDGg.SelectedItem != null)
             {
-             //   MessageBox.Show("Im In");
+                //   MessageBox.Show("Im In");
                 Addlecbtn.IsEnabled = false;
                 Sessionupdatebtn.IsEnabled = true;
 
@@ -402,7 +471,7 @@ namespace TimeTableManager
                 {
                     selectSubgrp.Text = UpdatingSession.GroupOrsubgroupForDisplay;
                 }
-             
+
 
                 StdntCnt.Text = UpdatingSession.StdntCount.ToString();
                 Duration.Text = UpdatingSession.durationinHours.ToString();
@@ -416,13 +485,13 @@ namespace TimeTableManager
                 Sessionupdatebtn.IsEnabled = false;
             }
 
-         
+
 
         }
 
-        private void SelectLectureRooww(object s,RoutedEventArgs e)
+        private void SelectLectureRooww(object s, RoutedEventArgs e)
         {
-          
+
             if (LVlecturer.SelectedItem != null)
             {
                 TrashlecBtn.IsEnabled = true;
@@ -434,9 +503,9 @@ namespace TimeTableManager
 
         }
 
-        private void Delectlecturec(object s,RoutedEventArgs e)
+        private void Delectlecturec(object s, RoutedEventArgs e)
         {
-       
+
 
             if (LVlecturer.SelectedItem != null)
             {
@@ -445,13 +514,13 @@ namespace TimeTableManager
 
                 if (Addseesion == true)
                 {
-                   
-                      
+
+
                     var item = LeLISTT.Find(x => x.Id == lecturer.Id);
                     LeLISTT.Remove(item);
 
 
-                
+
                     LVlecturer.ItemsSource = LeLISTT.ToList();
 
                     LVlecturer.SelectedIndex = -1;
@@ -459,7 +528,7 @@ namespace TimeTableManager
 
                 else
                 {
-                   
+
 
 
                     LecturerDetails lecturerrty = (LecturerDetails)LVlecturer.SelectedItem;
@@ -467,28 +536,39 @@ namespace TimeTableManager
                     var item = LeLISTT.Find(x => x.Id == lecturerrty.Id);
                     LeLISTT.Remove(item);
 
-                    LVlecturer.ItemsSource = LeLISTT.ToList();
-                   // if (dbContext1.SessionLecturers.Any(r => r.SessionrId == UpdatingSession.SessionId && r.LecturerId == lecturerrty.Id))
-                    //{
-                     
-                     //   var SesLert = dbContext1.SessionLecturers.First(row => row.SessionrId == UpdatingSession.SessionId && row.LecturerId == lecturerrty.Id);
-                      //  dbContext1.SessionLecturers.Remove(SesLert);
-                     //   dbContext1.SaveChanges();
 
-                        LVlecturer.SelectedIndex = -1;
-                       // LoadLecturesGivenBySessionId(UpdatingSession.SessionId);
-                   // }
+                    if (dbContext1.SessionLecturers.Any(r => r.SessionrId == UpdatingSession.SessionId && r.LecturerId == lecturerrty.Id))
+                    {
+
+                        var SesLert = dbContext1.SessionLecturers.First(row => row.SessionrId == UpdatingSession.SessionId && row.LecturerId == lecturerrty.Id);
+                        dbContext1.SessionLecturers.Remove(SesLert);
+                        dbContext1.SaveChanges();
+
+                      
+                        // LoadLecturesGivenBySessionId(UpdatingSession.SessionId);
+                    }
+
+
+
+
+                    LVlecturer.ItemsSource = LeLISTT.ToList();
+                    LVlecturer.SelectedIndex = -1;
+                 
 
 
                 }
 
 
             }
+            else
+            {
+                MessageBox.Show("please select lecture before clicking teh button  ");
+            }
 
-            
+
 
         }
-        
+
 
 
 
@@ -501,7 +581,7 @@ namespace TimeTableManager
             //    new MessageBoxCustom("Please Select session before the update !", MessageType.Warning, MessageButtons.Ok).ShowDialog();
             //  }
 
-          
+
 
 
             UpdatingSession.lecturesLstByConcadinating = null;
@@ -521,7 +601,7 @@ namespace TimeTableManager
             UpdatingSession.StdntCount = int.Parse(StdntCnt.Text);
             UpdatingSession.durationinHours = int.Parse(Duration.Text);
             UpdatingSession.tagDSA = (Tag)CBTagsNames.SelectedItem;
-            UpdatingSession.subjectDSA= (SubjectDetails)selectsubjects.SelectedItem;
+            UpdatingSession.subjectDSA = (SubjectDetails)selectsubjects.SelectedItem;
 
 
             Student UpadtinggetGrpsubb;
@@ -551,10 +631,11 @@ namespace TimeTableManager
 
 
 
-            foreach(LecturerDetails lecdetl in LeLISTT)
-        {
+            foreach (LecturerDetails lecdetl in LeLISTT)
+            {
+                MessageBox.Show("updating... outer");
                 if (dbContext1.SessionLecturers.Any(r => r.SessionrId == UpdatingSession.SessionId && r.LecturerId == lecdetl.Id))
-
+                    MessageBox.Show("upadaing ...inner");
                 {
 
                     var SesLert = dbContext1.SessionLecturers.First(row => row.SessionrId == UpdatingSession.SessionId && row.LecturerId == lecdetl.Id);
@@ -589,14 +670,14 @@ namespace TimeTableManager
             UpdatingSession = null;
             UpdatingSession = new Session();
 
-             settingEmptyValues = false;
+            settingEmptyValues = false;
             LoadSessions();
 
             settingEmptyValues = false;
 
             Addlecbtn.IsEnabled = true;
             Sessionupdatebtn.IsEnabled = false;
-         Addseesion = true;
+            Addseesion = true;
             SessionDGg.SelectedItem = null;
             LoadSessions();
             //antima addsession eka true karann
@@ -605,14 +686,14 @@ namespace TimeTableManager
 
         public void LoadLecturesGivenBySessionId(int sesin)
         {
-        
 
-                   LeLISTT = dbContext1.Sessions
-               .Where(p => p.SessionId == sesin)
-              .SelectMany(r => r.SessionLecturers)
-             .Select(rl => rl.Lecdetaiils).ToList();
 
-              LVlecturer.ItemsSource = LeLISTT;
+            LeLISTT = dbContext1.Sessions
+        .Where(p => p.SessionId == sesin)
+       .SelectMany(r => r.SessionLecturers)
+      .Select(rl => rl.Lecdetaiils).ToList();
+
+            LVlecturer.ItemsSource = LeLISTT;
 
             String name = null;
             foreach (LecturerDetails kk in LeLISTT)
@@ -631,7 +712,7 @@ namespace TimeTableManager
         private void SessionDelete(object s, RoutedEventArgs e)
         {
 
-            if(SessionDGg.SelectedItem != null)
+            if (SessionDGg.SelectedItem != null)
             {
 
 
@@ -681,7 +762,7 @@ namespace TimeTableManager
 
             }
 
-       
+
 
 
         }
