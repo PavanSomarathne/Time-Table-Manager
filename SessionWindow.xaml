@@ -84,7 +84,7 @@
 
                                                     <StackPanel Grid.Column="1">
                                                         <Button Content="Update" Margin="5" x:Name="Sessionupdatebtn" IsEnabled="False" Click="UpdateSessionDetails"></Button>
-                                                        <Button Content="Delete" Margin="5"></Button>
+                                                        <Button Content="Delete" Margin="5" x:Name="SessionDeletebtn" Click="SessionDelete"></Button>
                                                     </StackPanel>
                                                     
                                                     
@@ -157,7 +157,8 @@
 
                         <Label HorizontalAlignment="Center" FontSize="20" Content="Session Management"></Label>
                         <Label Content="Select Year" Margin="8 5 0 0"></Label>
-                        <ComboBox x:Name="CByearselect" Padding="2" Margin="8 0 0 0"   SelectionChanged="yeardropdwn" Text="{Binding OfferedYear}">
+     
+                        <ComboBox x:Name="CByearselect" Padding="2" Margin="8 0 0 0"   SelectionChanged="yeardropdwn" >
                             <ComboBoxItem>1st Year</ComboBoxItem>
                             <ComboBoxItem>2nd Year</ComboBoxItem>
                             <ComboBoxItem>3rd Year</ComboBoxItem>

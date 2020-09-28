@@ -10,6 +10,9 @@ namespace TimeTableManager.Models
 
         public int StdntCount { get; set; }
 
+        public String GroupType { get; set; }
+
+        public String Year { get; set; }
         public int durationinHours{get; set;}
 
         //one to many
