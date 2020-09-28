@@ -31,7 +31,7 @@ namespace TimeTableManager.Models
 
         public override string ToString()
         {
-            return lecturesLstByConcadinating + "\n " + subjectDSA.SubjectName + " \n " + tagDSA.tags + "\n " + GroupOrsubgroupForDisplay;
+            return lecturesLstByConcadinating + "\n " + subjectDSA.SubjectName + " \n " + tagDSA.tags + "\n " + GroupOrsubgroupForDisplay + "\n" + StdntCount + "(" + durationinHours + ")";
         }
 
     }
