@@ -369,39 +369,91 @@ namespace TimeTableManager
         DataRow dr;
         private void Table_loaded(object sender, RoutedEventArgs e)
         {
+            int dura = 0;
+            //new schedule object
+            Schedule NewSchedule = new Schedule();
+            //Table initialization
             dt = new DataTable("emp");
-
-            DataColumn dc1 = new DataColumn("id", typeof(int));
-
-            DataColumn dc2 = new DataColumn("name", typeof(string));
-
-            DataColumn dc3 = new DataColumn("email", typeof(string));
-
-            DataColumn dc4 = new DataColumn("city", typeof(string));
-
+            //Time heading
+            DataColumn dc1 = new DataColumn("Time", typeof(string));
             dt.Columns.Add(dc1);
 
-            dt.Columns.Add(dc2);
+            NewSchedule =dbContext1.Schedules.Find(1);
+            DateTime startTime = DateTime.ParseExact(NewSchedule.start_time, "h:mm tt", CultureInfo.InvariantCulture);
+            int worktimeHrs= NewSchedule.working_time_hrs;
+            int worktimeMins = NewSchedule.Working_time_mins;
+            String duration = NewSchedule.Working_duration;
 
-            dt.Columns.Add(dc3);
+            //Time slots
+            DateTime endTime= startTime.AddHours(worktimeHrs);
+            endTime = endTime.AddMinutes(worktimeMins);
 
-            dt.Columns.Add(dc4);
+            DateTime timeVal=startTime;
 
-            TimeTableDG.ItemsSource = dt.DefaultView;
+            if (duration == "One Hour")
+            {
+                dura = 60;
+            }
+
+            else if (duration == "Thirty Minutes" )
+            {
+                dura = 30;
+            }
+
+                while (timeVal.AddMinutes(dura) <= endTime)
+                {
+
+                dr = dt.NewRow();
+                timeVal = timeVal.AddMinutes(dura);
+                dr["Time"] = timeVal.ToString("h:mm tt");
+                dt.Rows.Add(dr);
+ 
+            }
+
+
+
+            var arr = NewSchedule.Working_days.Split(',');
+
+            
+           
+
+            String[] arr1 = { "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday" };
+            foreach (var data in arr1)
+            {
+                foreach (var item in arr)
+                {
+                    if (data == item)
+                    {
+                        dt.Columns.Add(new DataColumn(data, typeof(string)));
+                    }           
+                }
+            }
+            
 
             
 
-            dr = dt.NewRow();
 
-            dr[0] = 0;
+            
 
-            dr[1] ="hello";
+            //TimeTableDG.ItemsSource = dt.DefaultView;
 
-            dr[2] = "pavanpabs";
+           // dr = dt.NewRow();
 
-            dr[3] = "Kurunegala";
+          // dr["Time"] = "Hello";
+           // dr["Time"] = "Hello";
+           // foreach (DataRow dr in dt.Rows)
+           // {
+             //   dr["Time"] = "Hello";
+           // }
+            //  dr[1] = "hello";
+            //dr[2] = "pavanpabs";
+            //   dr[3] = "Kurunegala";
+            //dr[4] = "hello";
+            // dr[5] = "pavanpabs";
+            // dr[6] = "Kurunegala";
+            // dr[7] = "pavanpabs";
 
-            dt.Rows.Add(dr);
+           // dt.Rows.Add(dr);
 
             TimeTableDG.ItemsSource = dt.DefaultView;
 

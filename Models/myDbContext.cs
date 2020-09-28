@@ -33,6 +33,7 @@ namespace TimeTableManager.Models
         public DbSet<SessionLecturer> SessionLecturers { get; set; }
 
 
+        public DbSet<RoomNAT> RoomNATs { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
