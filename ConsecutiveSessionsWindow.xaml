@@ -74,9 +74,9 @@
 
                         <!--<TextBox materialDesign:HintAssist.HelperText="Ex:CON-IT2030-Y1.S1.1" Name="txtSessionName" Grid.Row="0" Margin="0,43,0,0" Text="{}" Grid.Column="1" Height="24" VerticalAlignment="Top"/>-->
 
-                        <ComboBox Loaded="load_consecfirst" Name="cmb1" Grid.Column="1" Margin="0,34,0,0"  Height="28" VerticalAlignment="Top" Grid.Row="1"/>
+                        <ComboBox  Name="cmb1" Grid.Column="1" Margin="0,34,0,0"  Height="28" VerticalAlignment="Top" Grid.Row="1"/>
 
-                        <ComboBox Loaded="load_consecsecond" Name="cmb2" Grid.Row="2" Margin="0,28,0,0"  Height="34" VerticalAlignment="Top" Grid.Column="1"/>
+                        <ComboBox  Name="cmb2" Grid.Row="2" Margin="0,28,0,0"  Height="34" VerticalAlignment="Top" Grid.Column="1"/>
 
                         <!--<ComboBox Name="cmb3" Grid.Column="1" Grid.Row="3" Margin="0,35,0,0" Height="27" VerticalAlignment="Top">
                             <ComboBoxItem>Sunday</ComboBoxItem>
