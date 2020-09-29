@@ -82,7 +82,7 @@ namespace TimeTableManager
 
             lbl0.Content = "Select Session";
             CB1.ItemsSource = dbContext1.Sessions.Include(s => s.subjectDSA).Include(s => s.tagDSA).ToList();
-            CB1.DisplayMemberPath = "SessionId";
+          
         }
 
 
@@ -111,19 +111,22 @@ namespace TimeTableManager
 
         private void SelectItem(Object s, RoutedEventArgs e)
         {
-            if (type.Equals("lec"))
+            if (CB1.SelectedItem != null)
             {
-                LecturerDetails lecturer = (LecturerDetails)CB1.SelectedItem;
-                TXT1.Text = lecturer.LecName;
-                TXT2.Text = lecturer.EmpId;
-                TXT3.Text = lecturer.Department;
-            }
-            else if (type.Equals("ses"))
-            {
-                Session session = (Session)CB1.SelectedItem;
-                TXT1.Text = session.SessionId.ToString();
-                TXT2.Text = session.subjectDSA.SubjectCode;
-                TXT3.Text = session.tagDSA.tags;
+                if (type.Equals("lec"))
+                {
+                    LecturerDetails lecturer = (LecturerDetails)CB1.SelectedItem;
+                    TXT1.Text = lecturer.LecName;
+                    TXT2.Text = lecturer.EmpId;
+                    TXT3.Text = lecturer.Department;
+                }
+                else if (type.Equals("ses"))
+                {
+                    Session session = (Session)CB1.SelectedItem;
+                    TXT1.Text = session.SessionId.ToString();
+                    TXT2.Text = session.subjectDSA.SubjectCode;
+                    TXT3.Text = session.tagDSA.tags;
+                }
             }
         }
 

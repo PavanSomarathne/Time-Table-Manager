@@ -52,7 +52,7 @@
 
         
         <StackPanel  Grid.Column="4" Grid.Row="2" Grid.ColumnSpan="2" Orientation="Horizontal" Margin="0,234,0,0" Grid.RowSpan="2" >
-            <Button x:Name="BtnSave" Click="AddRoom" Content="Save Room" HorizontalAlignment="Center" VerticalAlignment="Bottom" Height="40" Width="200" FontSize="20" Margin="20,0,0,20"/>
+            <Button x:Name="BtnSaveChanges" Click="AddRoom" Content="Save Changes" HorizontalAlignment="Center" VerticalAlignment="Bottom" Height="40" Width="200" FontSize="20" Margin="20,0,0,20"/>
             <Button Content="Close"  HorizontalAlignment="Center"  VerticalAlignment="Bottom" Height="40" Width="200" FontSize="20" Margin="10,0,0,20" Background="#FFFF1744" BorderBrush="{x:Null}" Click="CloseWindow"/>
 
         </StackPanel>
@@ -84,6 +84,13 @@
                     </StackPanel>
 
                 </StackPanel>
+                <Button x:Name="BtnSave" Click="AddRoom" Content="Save Room" HorizontalAlignment="Right" VerticalAlignment="Bottom" Height="40" Width="200" FontSize="20" Margin="90,0,0,20" Background="#FF1565C0" BorderBrush="{x:Null}"/>
+
+            </StackPanel>
+
+            <StackPanel Orientation="Horizontal" Margin="50,20,0,0" x:Name="warningMSG">
+                <materialDesign:PackIcon  Kind="InfoCircle" Height="24" Width="24" Foreground="#FF1565C0"  />
+                <Label Content="You need to Save the Basic Room Details First to the Database In order to assign anything ! "/>
             </StackPanel>
         </StackPanel>
 
@@ -94,7 +101,7 @@
         </GroupBox>
         <StackPanel Grid.Row="2"  Grid.Column="3"  VerticalAlignment="Bottom" Margin="0,0,0,20">
             <Button  Style="{StaticResource MaterialDesignFloatingActionMiniAccentButton}" Click="AddLec"
-                        ToolTip="Assign Prefered Lecturer" Margin="0,0,0,10">
+                        ToolTip="Assign Prefered Lecturer" Margin="0,0,0,10" x:Name="BTNAddLectureres">
                 <materialDesign:PackIcon Kind="Plus" Height="24" Width="24" />
             </Button>
             <Button  x:Name="BTNdelLec"  Style="{StaticResource MaterialDesignFloatingActionMiniAccentButton}"
@@ -104,12 +111,12 @@
         </StackPanel>
 
         <GroupBox Grid.Row="3"  Grid.Column="2"  Header="Prefferd Groups" Style="{DynamicResource MaterialDesignCardGroupBox}"
-                materialDesign:ColorZoneAssist.Mode="Custom" materialDesign:ColorZoneAssist.Background="#FF673AB7" materialDesign:ColorZoneAssist.Foreground="White"  >
+                materialDesign:ColorZoneAssist.Mode="Custom" materialDesign:ColorZoneAssist.Background="#FF673AB7" materialDesign:ColorZoneAssist.Foreground="White" Margin="0,10,0,10"  >
             <ListView x:Name="LVGroups" DisplayMemberPath="Group" SelectionChanged="GRPDelActive"/>
         </GroupBox>
         <StackPanel Grid.Row="3"  Grid.Column="3"  VerticalAlignment="Bottom" Margin="0,0,0,20">
             <Button  Style="{StaticResource MaterialDesignFloatingActionMiniAccentButton}" Click="AddGRP"
-                        ToolTip="Assign Prefered Lecturer" Margin="0,0,0,10">
+                        ToolTip="Assign Prefered Lecturer" Margin="0,0,0,10" x:Name="BTNAddGroups">
                 <materialDesign:PackIcon Kind="Plus" Height="24" Width="24" />
             </Button>
             <Button  x:Name="BTNdelGRP"  Style="{StaticResource MaterialDesignFloatingActionMiniAccentButton}"
@@ -124,7 +131,7 @@
         </GroupBox>
         <StackPanel Grid.Row="1"  Grid.Column="5"  VerticalAlignment="Bottom" Margin="0,0,0,20">
             <Button  Style="{StaticResource MaterialDesignFloatingActionMiniAccentButton}" Click="AddNAT"
-                        ToolTip="Assign Prefered Lecturer" Margin="0,0,0,10">
+                        ToolTip="Assign Prefered Lecturer" Margin="0,0,0,10" x:Name="BTNAddNAT">
                 <materialDesign:PackIcon Kind="Plus" Height="24" Width="24" />
             </Button>
             <Button  x:Name="BTNdelNAT"  Style="{StaticResource MaterialDesignFloatingActionMiniAccentButton}"
@@ -140,12 +147,12 @@
         </GroupBox>
         <StackPanel Grid.Row="2"  Grid.Column="5" VerticalAlignment="Bottom" Margin="0,0,0,20">
             <Button  Style="{StaticResource MaterialDesignFloatingActionMiniAccentButton}"
-                     Click="AddSub"   ToolTip="MaterialDesignFloatingActionMiniLightButton" Margin="0,0,0,10">
+                     Click="AddSub"   ToolTip="MaterialDesignFloatingActionMiniLightButton" Margin="0,0,0,10" x:Name="BTNAddSubject">
                 <materialDesign:PackIcon Kind="Plus" Height="24" Width="24" />
             </Button>
             <Button Click="DelSub"  Style="{StaticResource MaterialDesignFloatingActionMiniAccentButton}"
-                        ToolTip="MaterialDesignFloatingActionMiniLightButton" x:Name="BTNdelSub">
-                <materialDesign:PackIcon Kind="Delete" Height="24" Width="24"  />
+                        ToolTip="MaterialDesignFloatingActionMiniLightButton" x:Name="BTNdelSub" Background="#FFFF1744">
+                <materialDesign:PackIcon Kind="Delete" Height="24" Width="24"   />
             </Button>
         </StackPanel>
 
