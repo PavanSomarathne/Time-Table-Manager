@@ -30,8 +30,15 @@ namespace TimeTableManager
             this.dbContext1 = dbContext1;
             InitializeComponent();
             GetSessions();
+            loadsessions();
 
             addUpdateSessionDetailsGrid.DataContext = NewSession;
+        }
+
+        public void loadsessions()
+        {
+            cmb1.ItemsSource = dbContext1.Sessions.ToList();
+            cmb2.ItemsSource = dbContext1.Sessions.ToList();
         }
 
         private void GetSessions()
@@ -41,15 +48,17 @@ namespace TimeTableManager
 
         private void clear()
         {
+            cmb1.Text = null;
+            cmb2.Text = null;
 
-            addUpdateSessionDetailsGrid.DataContext = null;
+            //addUpdateSessionDetailsGrid.DataContext = null;
         }
 
         private void AddSession(object s, RoutedEventArgs e)
         {
             if (ValidateInput())
             {
-                NewSession.consecutiveId = txtSessionName.Text;
+                //NewSession.consecutiveId = txtSessionName.Text;
                 NewSession.firstSession = cmb1.Text;
                 NewSession.secondSession = cmb2.Text;
                
@@ -79,7 +88,7 @@ namespace TimeTableManager
         {
             selectedSession = (s as FrameworkElement).DataContext as ConsecutiveSession;
 
-            txtSessionName.Text = selectedSession.consecutiveId;
+            //txtSessionName.Text = selectedSession.consecutiveId;
             cmb1.Text = selectedSession.firstSession;
             cmb2.Text = selectedSession.secondSession;
            
@@ -91,7 +100,7 @@ namespace TimeTableManager
         {
             if (ValidateInput())
             {
-                selectedSession.consecutiveId = txtSessionName.Text;
+                //selectedSession.consecutiveId = txtSessionName.Text;
                 selectedSession.firstSession = cmb1.Text;
                 selectedSession.secondSession = cmb2.Text;
                 dbContext1.Update(selectedSession);
@@ -133,13 +142,26 @@ namespace TimeTableManager
             GetSessions();
         }
 
+        private void sessions_load(object sender, RoutedEventArgs e)
+        {
+            List<String> sesString = new List<String>();
+            List<Session> sess = dbContext1.Sessions.ToList();
+
+            foreach (var item in sess)
+            {
+                sesString.Add(item.lecturesLstByConcadinating + "\n " + item.subjectDSA.SubjectName + "(" + item.subjectDSA.SubjectCode + ")" + " \n " + item.tagDSA.tags + "\n " + item.GroupOrsubgroupForDisplay + "\n" + item.StdntCount + "(" + item.durationinHours + ")");
+            }
+            cmb1.ItemsSource = sesString;
+            cmb2.ItemsSource = sesString;
+        }
+
         private bool ValidateInput()
         {
-            if (string.IsNullOrEmpty(txtSessionName.Text))
-            {
-                txtSessionName.Focus();
-                return false;
-            }
+            //if (string.IsNullOrEmpty(txtSessionName.Text))
+            //{
+            //    txtSessionName.Focus();
+            //    return false;
+            //}
 
             if (string.IsNullOrEmpty(cmb1.Text))
             {
@@ -156,6 +178,30 @@ namespace TimeTableManager
 
 
             return true;
+        }
+
+        private void load_consecfirst(object sender, RoutedEventArgs e)
+        {
+            List<String> sesString = new List<String>();
+            List<ConsecutiveSession> sess = dbContext1.ConsecutiveSessions.ToList();
+
+            foreach (var item in sess)
+            {
+                sesString.Add(item.firstSession);
+            }
+            cmb1.ItemsSource = sesString;
+        }
+
+        private void load_consecsecond(object sender, RoutedEventArgs e)
+        {
+            List<String> sesStrings = new List<String>();
+            List<ConsecutiveSession> sessS = dbContext1.ConsecutiveSessions.ToList();
+
+            foreach (var item in sessS)
+            {
+                sesStrings.Add(item.secondSession);
+            }
+            cmb2.ItemsSource = sesStrings;
         }
 
         private void GoBack(Object s, RoutedEventArgs e)
