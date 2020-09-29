@@ -89,7 +89,7 @@
 
 
         <GroupBox Grid.Row="2"  Grid.Column="2"  Header="Prefferd Lecturers" Style="{DynamicResource MaterialDesignCardGroupBox}"
-                materialDesign:ColorZoneAssist.Mode="Custom" materialDesign:ColorZoneAssist.Background="#FF673AB7" materialDesign:ColorZoneAssist.Foreground="White"  >
+                materialDesign:ColorZoneAssist.Mode="Custom" materialDesign:ColorZoneAssist.Background="#FF673AB7" materialDesign:ColorZoneAssist.Foreground="White" Margin="0,-5,0,0"  >
             <ListView x:Name="LVlecturer" DisplayMemberPath="LecName" SelectionChanged="LecDelActive"/>
         </GroupBox>
         <StackPanel Grid.Row="2"  Grid.Column="3"  VerticalAlignment="Bottom" Margin="0,0,0,20">
@@ -99,6 +99,21 @@
             </Button>
             <Button  x:Name="BTNdelLec"  Style="{StaticResource MaterialDesignFloatingActionMiniAccentButton}"
                         ToolTip="MaterialDesignFloatingActionMiniLightButton" Background="#FFFF1744" IsEnabled="False" Click="DelLec">
+                <materialDesign:PackIcon  Kind="Delete" Height="24" Width="24"  />
+            </Button>
+        </StackPanel>
+
+        <GroupBox Grid.Row="3"  Grid.Column="2"  Header="Prefferd Groups" Style="{DynamicResource MaterialDesignCardGroupBox}"
+                materialDesign:ColorZoneAssist.Mode="Custom" materialDesign:ColorZoneAssist.Background="#FF673AB7" materialDesign:ColorZoneAssist.Foreground="White"  >
+            <ListView x:Name="LVGroups" DisplayMemberPath="Group" SelectionChanged="GRPDelActive"/>
+        </GroupBox>
+        <StackPanel Grid.Row="3"  Grid.Column="3"  VerticalAlignment="Bottom" Margin="0,0,0,20">
+            <Button  Style="{StaticResource MaterialDesignFloatingActionMiniAccentButton}" Click="AddGRP"
+                        ToolTip="Assign Prefered Lecturer" Margin="0,0,0,10">
+                <materialDesign:PackIcon Kind="Plus" Height="24" Width="24" />
+            </Button>
+            <Button  x:Name="BTNdelGRP"  Style="{StaticResource MaterialDesignFloatingActionMiniAccentButton}"
+                        ToolTip="MaterialDesignFloatingActionMiniLightButton" Background="#FFFF1744" IsEnabled="False" Click="DelGRP">
                 <materialDesign:PackIcon  Kind="Delete" Height="24" Width="24"  />
             </Button>
         </StackPanel>
@@ -136,21 +151,22 @@
 
         <GroupBox Grid.Row="2" Grid.RowSpan="2" Grid.Column="0"  Header="Allocated Sessions" Style="{DynamicResource MaterialDesignCardGroupBox}"
                 materialDesign:ColorZoneAssist.Mode="Custom" materialDesign:ColorZoneAssist.Background="#FF673AB7" materialDesign:ColorZoneAssist.Foreground="White"  Margin="10,0,0,10"  >
-            <DataGrid  x:Name="SessionDG" AutoGenerateColumns="False"  ItemsSource="{Binding Items}">
+            <DataGrid  x:Name="SessionDG" AutoGenerateColumns="False"  ItemsSource="{Binding Items}" SelectionChanged="SeesionDelAct">
                 <DataGrid.Columns>
-                    <DataGridTextColumn Header="Tag" Binding="{Binding Rid}" />
-                    <DataGridTextColumn Header="Subject" Binding="{Binding BuildingAS.Name}" />
-                    <DataGridTextColumn Header="Student Amount" Binding="{Binding Type}" />
+                    <DataGridTextColumn  Header="ID" Binding="{Binding SessionId}" />
+                    <DataGridTextColumn  Header="Tag" Binding="{Binding tagDSA.tags}" />
+                    <DataGridTextColumn Header="Subject" Binding="{Binding subjectDSA.SubjectCode}" />
+                    <DataGridTextColumn Header="Student Amount" Binding="{Binding StdntCount}" />
                 </DataGrid.Columns>
             </DataGrid>
         </GroupBox>
         <StackPanel Grid.Row="2" Grid.RowSpan="2" Grid.Column="1"  VerticalAlignment="Bottom" Margin="0,0,0,20">
             <Button  Style="{StaticResource MaterialDesignFloatingActionMiniAccentButton}"
-                        ToolTip="Add Session" Margin="0,0,0,10">
+                        ToolTip="Add Session" Margin="0,0,0,10" Click="AddSession" x:Name="BTNAddSession">
                 <materialDesign:PackIcon Kind="Plus" Height="24" Width="24" />
             </Button>
             <Button IsEnabled="false" Style="{StaticResource MaterialDesignFloatingActionMiniAccentButton}"
-                        ToolTip="Delete Session" Background="#FFFF1744">
+                        ToolTip="Delete Session" Background="#FFFF1744" Click="DelSession" x:Name="BTNDelSession">
                 <materialDesign:PackIcon Kind="Delete" Height="24" Width="24"  />
             </Button>
         </StackPanel>

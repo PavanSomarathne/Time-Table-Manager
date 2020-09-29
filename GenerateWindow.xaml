@@ -16,7 +16,7 @@
                 </Grid.RowDefinitions>
             </Grid>
             <StackPanel Grid.Row="0">
-                
+
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*"/>
@@ -32,7 +32,7 @@
                             ToolTip="MaterialDesignFloatingActionMiniAccentButton" Click="GoBack" Margin="10,0,0,0">
                         <materialDesign:PackIcon Kind="House" Height="24" Width="24" />
                     </Button>
-                    
+
                 </Grid>
             </StackPanel>
             <Grid Grid.Row="1">
@@ -42,25 +42,31 @@
 
                 </Grid.ColumnDefinitions>
                 <Border  Grid.Column="0" BorderBrush="Black" BorderThickness="1" Margin="0 15 0 0" MaxHeight="720" MinHeight="600">
-                    <StackPanel Grid.Column="0"  MaxHeight="720" MinHeight="600" >
-                        <Grid >
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="400" />
-                                <RowDefinition Height="*"/>
-                            </Grid.RowDefinitions>
+                    <StackPanel Grid.Column="0" MaxHeight="720" MinHeight="600">
+                        <StackPanel MaxHeight="400" MinHeight="400">
 
-                            <StackPanel  Grid.Row="0"  Margin="3">
+                            <ScrollViewer MaxHeight="400" MinHeight="400" Focusable="True">
+                    <StackPanel  Name="tableArea">
 
 
-                                <DataGrid AutoGenerateColumns="True" Margin="5" Name="TimeTableDG" IsReadOnly="True"  >
-                                    
-                                        
-                                </DataGrid>
-                            </StackPanel>
-                            <StackPanel Grid.Row="1" Background="Beige">
 
-                            </StackPanel>
-                        </Grid>
+
+
+
+                        <Label Content="Title" HorizontalAlignment="Center" FontWeight="Bold" FontSize="20" />
+
+
+                        <DataGrid  AutoGenerateColumns="True" x:Name="TimeTableDG" IsReadOnly="True" VerticalScrollBarVisibility="Visible"  HorizontalAlignment="Stretch"  />
+
+
+                      
+                           
+                            
+
+
+                    </StackPanel>
+                            </ScrollViewer>
+                        </StackPanel>
                     </StackPanel>
                 </Border>
 
@@ -96,7 +102,7 @@
                                     </TextBlock.Style>
                                 </TextBlock>
                             </Grid>
-                            
+
                             <!-- Student Part-->
                             <StackPanel  Margin="3" Name="studenSP">
                                 <TextBlock Text="Academic year and semester" FontWeight="SemiBold" Margin="0 20 0 0"/>
@@ -123,10 +129,10 @@
                                             </Style>
                                         </TextBlock.Style>
                                     </TextBlock>
-                                    
+
                                 </Grid>
-                                
-                                
+
+
 
                                 <TextBlock Text="Program" FontWeight="SemiBold" Margin="0 20 0 0"/>
                                 <Grid>
@@ -201,7 +207,7 @@
                                     </TextBlock>
                                 </Grid>
                                 <TextBlock Text="Room" FontWeight="SemiBold" Margin="0 20 0 0"/>
-                                
+
                                 <Grid>
                                     <ComboBox Name="Room"  Padding="2"  IsEditable="True" ></ComboBox>
                                     <TextBlock IsHitTestVisible="False" Text="Select one" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,0,0,0" Foreground="DarkGray">
@@ -232,17 +238,17 @@
                         <StackPanel Grid.Row="1">
                             <StackPanel Margin="5">
                                 <Button x:Name="ViewButton" Content="View" Click="ResetSchedule" Padding="3" Margin="4"></Button>
-                                <Button x:Name="PrintButton" Content="Print" Click="AddSchedule" Padding="3" Margin="4"></Button>
-                               
+                                <Button x:Name="PrintButton" Content="Print" Click="PrintTable" Padding="3" Margin="4"></Button>
+
                             </StackPanel>
                         </StackPanel>
                     </Grid>
 
                 </StackPanel>
             </Grid>
-           
-                
+
+
         </StackPanel>
-        
+
     </Border>
 </Window>

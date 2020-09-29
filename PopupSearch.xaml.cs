@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -36,6 +37,14 @@ namespace TimeTableManager
             {
                 loadSubjects();
             }
+            else if (type.Equals("ses"))
+            {
+                loadSessions();
+            }
+            else if (type.Equals("grp"))
+            {
+                loadGroups();
+            }
 
         }
 
@@ -49,6 +58,7 @@ namespace TimeTableManager
 
             lbl0.Content = "Select Lecturer";
             CB1.ItemsSource = dbContext1.LectureInformation.ToList();
+            CB1.DisplayMemberPath = "LecName";
         }
 
         private void loadSubjects()
@@ -63,6 +73,41 @@ namespace TimeTableManager
             CB1.DisplayMemberPath = "SubjectCode";
         }
 
+        private void loadSessions()
+
+        {
+            LBL1.Content = "ID";
+            LBL2.Content = "Subject";
+            LBL3.Content = "Tag";
+
+            lbl0.Content = "Select Session";
+            CB1.ItemsSource = dbContext1.Sessions.Include(s => s.subjectDSA).Include(s => s.tagDSA).ToList();
+            CB1.DisplayMemberPath = "SessionId";
+        }
+
+
+        private void loadGroups()
+
+        {
+            LBL1.Content = "";
+            LBL2.Content = "";
+            LBL3.Content = "";
+            TXT1.Visibility = Visibility.Hidden;
+            TXT2.Visibility = Visibility.Hidden;
+            TXT3.Visibility = Visibility.Hidden;
+
+            lbl0.Content = "Select a Group";
+
+            List<String> data1 = dbContext1.Students.Select(r => r.groupId).Distinct().ToList();
+            List<String> data = dbContext1.Students.Select(r => r.subGroupId).Distinct().ToList();
+
+            foreach (String s in data)
+            {
+                data1.Add(s);
+            }
+            CB1.ItemsSource = data1;
+        }
+
 
         private void SelectItem(Object s, RoutedEventArgs e)
         {
@@ -73,60 +118,121 @@ namespace TimeTableManager
                 TXT2.Text = lecturer.EmpId;
                 TXT3.Text = lecturer.Department;
             }
+            else if (type.Equals("ses"))
+            {
+                Session session = (Session)CB1.SelectedItem;
+                TXT1.Text = session.SessionId.ToString();
+                TXT2.Text = session.subjectDSA.SubjectCode;
+                TXT3.Text = session.tagDSA.tags;
+            }
         }
 
         private void AssignItem(Object s, RoutedEventArgs e)
         {
-            if (type.Equals("lec"))
+            if (CB1.SelectedItem != null)
             {
-                //var roomToAdd = this.dbContext1.Rooms.FirstOrDefault(s => s.Id == 1);
-
-                //LecturerDetails lc1 = this.dbContext1.LectureInformation.FirstOrDefault(s => s.Id == 2);
-                LecturerDetails lecturer = (LecturerDetails)CB1.SelectedItem;
-
-                if (!(dbContext1.RoomLecturers.Any(r => r.RoomId == this.room.Id && r.LecturerId == lecturer.Id)))
+                if (type.Equals("lec"))
                 {
-                    RoomLecturer roomLecturer = new RoomLecturer
+                    //var roomToAdd = this.dbContext1.Rooms.FirstOrDefault(s => s.Id == 1);
+
+                    //LecturerDetails lc1 = this.dbContext1.LectureInformation.FirstOrDefault(s => s.Id == 2);
+                    LecturerDetails lecturer = (LecturerDetails)CB1.SelectedItem;
+
+                    if (!(dbContext1.RoomLecturers.Any(r => r.RoomId == this.room.Id && r.LecturerId == lecturer.Id)))
                     {
-                        Room = this.room,
-                        Lecturer = lecturer
+                        RoomLecturer roomLecturer = new RoomLecturer
+                        {
+                            Room = this.room,
+                            Lecturer = lecturer
+                        };
+
+                        dbContext1.RoomLecturers.Add(roomLecturer);
+                        dbContext1.SaveChanges();
+
+                        new MessageBoxCustom("Lecturer Assigned Successfully !", MessageType.Success, MessageButtons.Ok).ShowDialog();
+                    }
+                    else
+                    {
+                        new MessageBoxCustom("This Lecturer is Already Assigned to this Room !", MessageType.Error, MessageButtons.Ok).ShowDialog();
+
+                    }
+                }
+                else if (type.Equals("sub"))
+                {
+                    //var roomToAdd = this.dbContext1.Rooms.FirstOrDefault(s => s.Id == 1);
+
+                    //LecturerDetails lc1 = this.dbContext1.LectureInformation.FirstOrDefault(s => s.Id == 2);
+                    SubjectDetails subject = (SubjectDetails)CB1.SelectedItem;
+
+                    if (!(dbContext1.RoomSubjects.Any(r => r.RoomId == this.room.Id && r.SubjectId == subject.Id)))
+                    {
+                        RoomSubject roomSubject = new RoomSubject
+                        {
+                            Room = this.room,
+                            Subject = subject
+                        };
+
+                        dbContext1.RoomSubjects.Add(roomSubject);
+                        dbContext1.SaveChanges();
+
+                        new MessageBoxCustom("Subject Assigned Successfully !", MessageType.Success, MessageButtons.Ok).ShowDialog();
+                    }
+                    else
+                    {
+                        new MessageBoxCustom("This Subject is Already Assigned to this Room !", MessageType.Error, MessageButtons.Ok).ShowDialog();
+
+                    }
+                }
+                else if (type.Equals("ses"))
+                {
+                    //var roomToAdd = this.dbContext1.Rooms.FirstOrDefault(s => s.Id == 1);
+
+                    //LecturerDetails lc1 = this.dbContext1.LectureInformation.FirstOrDefault(s => s.Id == 2);
+                    Session session = (Session)CB1.SelectedItem;
+
+                    if (!(dbContext1.Sessions.Any(r => r.Room.Id == this.room.Id && r.SessionId == session.SessionId)))
+                    {
+                        session.Room = this.room;
+                        dbContext1.Sessions.Update(session);
+                        dbContext1.SaveChanges();
+
+                        new MessageBoxCustom("Session Assigned Successfully !", MessageType.Success, MessageButtons.Ok).ShowDialog();
+                    }
+                    else
+                    {
+                        new MessageBoxCustom("This Session is Already Assigned to this Room !", MessageType.Error, MessageButtons.Ok).ShowDialog();
+
+                    }
+                }
+                else if (type.Equals("grp"))
+                {
+
+                    RoomGroup roomGroup = new RoomGroup
+                    {
+                        room = this.room,
+                        Group = CB1.Text
+
                     };
 
-                    dbContext1.RoomLecturers.Add(roomLecturer);
-                    dbContext1.SaveChanges();
-
-                    new MessageBoxCustom("Lecturer Assigned Successfully !", MessageType.Success, MessageButtons.Ok).ShowDialog();
-                }
-                else
-                {
-                    new MessageBoxCustom("This Lecturer is Already Assigned to this Room !", MessageType.Error, MessageButtons.Ok).ShowDialog();
-
-                }
-            }else if (type.Equals("sub"))
-            {
-                //var roomToAdd = this.dbContext1.Rooms.FirstOrDefault(s => s.Id == 1);
-
-                //LecturerDetails lc1 = this.dbContext1.LectureInformation.FirstOrDefault(s => s.Id == 2);
-                SubjectDetails subject = (SubjectDetails)CB1.SelectedItem;
-
-                if (!(dbContext1.RoomSubjects.Any(r => r.RoomId == this.room.Id && r.SubjectId == subject.Id)))
-                {
-                    RoomSubject roomSubject = new RoomSubject
+                    if (dbContext1.RoomGroups.Any(r => r.Group == roomGroup.Group && r.room.Id == roomGroup.room.Id))
                     {
-                        Room = this.room,
-                        Subject = subject
-                    };
+                        new MessageBoxCustom("This Group has alreday Assigned to this room!", MessageType.Error, MessageButtons.Ok).ShowDialog();
+                    }
+                    else
+                    {
 
-                    dbContext1.RoomSubjects.Add(roomSubject);
-                    dbContext1.SaveChanges();
+                        dbContext1.RoomGroups.Add(roomGroup);
+                        dbContext1.SaveChanges();
 
-                    new MessageBoxCustom("Subject Assigned Successfully !", MessageType.Success, MessageButtons.Ok).ShowDialog();
+                        new MessageBoxCustom("Group Assigned Successfully !", MessageType.Success, MessageButtons.Ok).ShowDialog();
+
+                    }
                 }
-                else
-                {
-                    new MessageBoxCustom("This Subject is Already Assigned to this Room !", MessageType.Error, MessageButtons.Ok).ShowDialog();
+            }
+            else
+            {
+                new MessageBoxCustom("No Selection!", MessageType.Error, MessageButtons.Ok).ShowDialog();
 
-                }
             }
         }
     }
