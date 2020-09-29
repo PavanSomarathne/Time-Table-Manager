@@ -67,7 +67,8 @@
 
                         <materialDesign:Card  materialDesign:ShadowAssist.ShadowDepth="Depth3" materialDesign:ShadowAssist.ShadowEdges="Bottom,Right" Padding="12 1 2 5 " Margin="0,0,0,79" Grid.RowSpan="2">
                             <StackPanel Orientation="Horizontal">
-                                <ComboBox  Loaded="sessions_load" Grid.Row="0" Grid.Column="1" Width="260" x:Name="cmb1"  DisplayMemberPath="LecName"  materialDesign:HintAssist.HintOpacity=".26" IsEditable="True"  VerticalAlignment="Top" Margin="0,10,0,0"/>
+                                <ComboBox   Grid.Row="0" Grid.Column="1" Width="260" x:Name="cmb1"   VerticalAlignment="Top" Margin="0,10,0,0"/>
+                                <!--DisplayMemberPath="LecName"  materialDesign:HintAssist.HintOpacity=".26" IsEditable="True"-->
 
                                 <Button Style="{DynamicResource MaterialDesignRaisedButton}" Margin="10"  Content="Add parallel sessions" Background="#79b700">
 
