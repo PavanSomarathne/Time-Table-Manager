@@ -19,6 +19,9 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using TimeTableManager.Models;
+using System.Printing;
+using System.Windows.Documents;
+using MaterialDesignThemes.Wpf;
 
 namespace TimeTableManager
 {
@@ -55,106 +58,7 @@ namespace TimeTableManager
            // ScheduleDG.ItemsSource = dbContext1.Schedules.ToList();
         }
 
-        private void AddSchedule(Object s, RoutedEventArgs e)
-        {
-            Schedule AddSchedule = new Schedule();
-            var checkString = "";
-            int val = 0;
-            int val1 = 0;
-            int val2 = 0;
-
-            Boolean validator1 = true;
-            Boolean validator2 = true;
-            Boolean validator3 = true;
-            Boolean validator4 = true;
-            Boolean validator5 = true;
-
-                //NewSchedule.Working_days_count = int.Parse(Working_days_count.Text);
-                //NewSchedule.working_time_hrs = val1;
-                //NewSchedule.Working_time_mins = int.Parse(this.working_mins.Text);
-                //NewSchedule.Working_duration = duration.Text.ToString();
-
-                AddSchedule.Working_days_count = val;
-                AddSchedule.working_time_hrs = val1;
-                AddSchedule.Working_time_mins = val2;
-
-                //Checkbox manipulation
-                if (allChecked.Count == 0)
-                {
-                    validator1 = false;
-                    MessageBox.Show("No working days Checked !",
-                  "", MessageBoxButton.OK, MessageBoxImage.Warning);
-
-                }
-                else
-                {
-
-                    for (int i = 0; i < allChecked.Count; i++)
-                    {
-                        if (i == 0)
-                        {
-                            checkString = allChecked[i];
-                        }
-                        else
-                        {
-                            checkString = checkString + "," + allChecked[i];
-                        }
-                    }
-
-                }
-
-                //validations
-                if (DateTime.ParseExact(AddSchedule.start_time, "h:mm tt", CultureInfo.InvariantCulture) >
-                    DateTime.ParseExact("04:00 PM", "hh:mm tt", CultureInfo.InvariantCulture))
-                {
-                    validator2 = false;
-                    MessageBox.Show("Too late for start time!",
-                   "", MessageBoxButton.OK, MessageBoxImage.Warning);
-
-                }
-                if (allChecked.Count != AddSchedule.Working_days_count)
-                {
-                    validator2 = false;
-                    MessageBox.Show("Please check the same number of days that you have entered in Working days per week count!",
-                   "", MessageBoxButton.OK, MessageBoxImage.Warning);
-
-                }
-                if (AddSchedule.working_time_hrs > 14 || AddSchedule.working_time_hrs < 1)
-                {
-                    validator3 = false;
-                    MessageBox.Show("Working hours out of range!",
-                  "", MessageBoxButton.OK, MessageBoxImage.Warning);
-                }
-                if (AddSchedule.Working_time_mins >= 60 || AddSchedule.Working_time_mins < 0)
-                {
-                    validator4 = false;
-                    MessageBox.Show("Working hours out of range!",
-                 "", MessageBoxButton.OK, MessageBoxImage.Warning);
-                }
-                if (AddSchedule.Working_duration == null)
-                {
-                    validator5 = false;
-                    MessageBox.Show("Please select a timeslot duration!",
-                                     "", MessageBoxButton.OK, MessageBoxImage.Warning);
-                }
-
-                if (validator1 && validator2 && validator3 && validator4 && validator5)
-                {
-                    //insert new values
-                    //insert checkbox values to object
-                    AddSchedule.Working_days = checkString;
-
-                    //insert that object to database
-                    dbContext1.Schedules.Add(AddSchedule);
-                    dbContext1.SaveChanges();
-                    MessageBox.Show("Schedule Added Successfully!",
-                                 "", MessageBoxButton.OK, MessageBoxImage.Information);
-
-                    ResetForm();
-                    GetSchedule();
-                }
-           
-        }
+       
         private void myCheckBox_Checked(object sender, RoutedEventArgs e)
         {
             CheckBox cb = sender as CheckBox;
@@ -369,43 +273,166 @@ namespace TimeTableManager
         DataRow dr;
         private void Table_loaded(object sender, RoutedEventArgs e)
         {
+            int dura = 0;
+            int noOfSlots = 0;
+            String[] arr1 = { "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday" };
+
+            //new schedule object
+            Schedule NewSchedule = new Schedule();
+            
+            //Table initialization
             dt = new DataTable("emp");
-
-            DataColumn dc1 = new DataColumn("id", typeof(int));
-
-            DataColumn dc2 = new DataColumn("name", typeof(string));
-
-            DataColumn dc3 = new DataColumn("email", typeof(string));
-
-            DataColumn dc4 = new DataColumn("city", typeof(string));
-
+  
+            //Time heading
+            //tableName.Content = "Test";
+            DataColumn dc1 = new DataColumn("Time", typeof(string));
             dt.Columns.Add(dc1);
 
-            dt.Columns.Add(dc2);
+            NewSchedule =dbContext1.Schedules.Find(1);
+            DateTime startTime = DateTime.ParseExact(NewSchedule.start_time, "h:mm tt", CultureInfo.InvariantCulture);
+            int worktimeHrs= NewSchedule.working_time_hrs;
+            int worktimeMins = NewSchedule.Working_time_mins;
+            String duration = NewSchedule.Working_duration;
 
-            dt.Columns.Add(dc3);
+            //getting working days
+            var workingDays = NewSchedule.Working_days.Split(',');
+            //getting sessions
+            List<Session> sessionList = dbContext1.Sessions.ToList() ;
 
-            dt.Columns.Add(dc4);
+            //colums
+            foreach (var data in arr1)
+            {
+                foreach (var item in workingDays)
+                {
+                    if (data == item)
+                    {
+                        dt.Columns.Add(new DataColumn(data, typeof(string)));
+                    }
+                }
+            }
 
-            TimeTableDG.ItemsSource = dt.DefaultView;
 
+
+            //Time slots
+            DateTime endTime= startTime.AddHours(worktimeHrs);
+            endTime = endTime.AddMinutes(worktimeMins);
+
+            DateTime timeVal=startTime;
+
+            if (duration == "One Hour")
+            {
+                dura = 60;
+            }
+
+            else if (duration == "Thirty Minutes" )
+            {
+                dura = 30;
+            }
+
+                while (timeVal.AddMinutes(dura) <= endTime)
+                {
+                noOfSlots++;
+                dr = dt.NewRow();
+                timeVal = timeVal.AddMinutes(dura);
+                dr["Time"] = timeVal.ToString("h:mm tt");
+                dt.Rows.Add(dr);
+ 
+                }
+
+            //Session slots
+
+            int sessionCnt = 0;
+            decimal val = 0;
+
+
+                for (int i = 0; i < NewSchedule.Working_days_count; i++)
+                {
+                    for (int j = 0; j < noOfSlots; j++)
+                    {
+
+
+                    if (sessionCnt < sessionList.Count())
+                    {
+                        //dr = dt.NewRow();
+                        
+                        
+                        if(val > 1)
+                        {
+                            val--;
+                            dt.Rows[j][workingDays[i]] = sessionList[sessionCnt].SessionId + "\n"  + val;
+                            if (val == 1)
+                            {
+                                val = 0;
+                                sessionCnt++;
+                            }
+                        }
+                        else if(val == 0)
+                        {
+
+                            val = sessionList[sessionCnt].durationinHours / dura;
+                            dt.Rows[j][workingDays[i]] = sessionList[sessionCnt].SessionId + "\n" + val;
+                            if (val == 0)
+                            {
+                                sessionCnt++;
+                            }
+                            
+                        }
+                        //dt.Rows.Add(dr);
+
+
+
+                    }
+                    else {
+                        break;
+                    }
+                             
+                             
+                                
+                    }
+
+                }
+            
             
 
-            dr = dt.NewRow();
 
-            dr[0] = 0;
 
-            dr[1] ="hello";
-
-            dr[2] = "pavanpabs";
-
-            dr[3] = "Kurunegala";
-
-            dt.Rows.Add(dr);
-
-            TimeTableDG.ItemsSource = dt.DefaultView;
 
             
+           
+
+            
+            
+
+
+
+
+
+
+
+            //TimeTableDG.ItemsSource = dt.DefaultView;
+
+            // dr = dt.NewRow();
+
+            // dr["Time"] = "Hello";
+            // dr["Time"] = "Hello";
+            // foreach (DataRow dr in dt.Rows)
+            // {
+            //   dr["Time"] = "Hello";
+            // }
+            //  dr[1] = "hello";
+            //dr[2] = "pavanpabs";
+            //   dr[3] = "Kurunegala";
+            //dr[4] = "hello";
+            // dr[5] = "pavanpabs";
+            // dr[6] = "Kurunegala";
+            // dr[7] = "pavanpabs";
+
+            // dt.Rows.Add(dr);
+            //TimeTableDG_print.ItemsSource = dt.DefaultView;
+            TimeTableDG.ItemsSource = dt.DefaultView;
+            
+
+
         }
 
         private void program_load(object sender, EventArgs e)
@@ -426,6 +453,22 @@ namespace TimeTableManager
 
 
             Group.ItemsSource = groups;
+        }
+
+        private void PrintTable(object sender, RoutedEventArgs e)
+        {
+            System.Windows.Controls.PrintDialog Printdlg = new System.Windows.Controls.PrintDialog();
+            if ((bool)Printdlg.ShowDialog().GetValueOrDefault())
+            {
+                Size pageSize = new Size(Printdlg.PrintableAreaWidth, Printdlg.PrintableAreaHeight);
+                // sizing of the element.
+                tableArea.Measure(pageSize);
+                tableArea.Arrange(new Rect(5, 5, pageSize.Width, pageSize.Height));
+               
+                Printdlg.PrintVisual(tableArea, Title);
+            }
+
+
         }
     }
 }

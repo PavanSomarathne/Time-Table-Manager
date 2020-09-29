@@ -10,6 +10,9 @@ namespace TimeTableManager.Models
 
         public int StdntCount { get; set; }
 
+        public String GroupType { get; set; }
+
+        public String Year { get; set; }
         public int durationinHours{get; set;}
 
         //one to many
@@ -28,6 +31,11 @@ namespace TimeTableManager.Models
         public String GroupOrsubgroupForDisplay { get; set; }
 
       
+
+        public override string ToString()
+        {
+            return lecturesLstByConcadinating + "\n " + subjectDSA.SubjectName + " \n " + tagDSA.tags + "\n " + GroupOrsubgroupForDisplay + "\n" + StdntCount + "(" + durationinHours + ")";
+        }
 
     }
 }
