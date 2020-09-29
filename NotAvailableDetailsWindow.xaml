@@ -76,8 +76,54 @@
 
 
                         <Label Grid.Row="2" Grid.Column="0" Content="Sessions" Margin="5,5,5,5"/>
-                        <!--Loaded="session_load"-->
-                        <ComboBox  Name="cmb2" Grid.Row="2" Grid.Column="0" Margin="0,50,60,0" Text="{}" Height="26" VerticalAlignment="Top" Grid.RowSpan="2"/>
+
+                        <ComboBox   Name="cmb2" Grid.Row="2" Grid.Column="0" Margin="0,50,60,0" Text="{}" Height="26" VerticalAlignment="Top" Grid.RowSpan="2"/>
+                        <!--<GroupBox Grid.Row="2"  Grid.Column="2"  Header="Session details" Style="{DynamicResource MaterialDesignCardGroupBox}"   materialDesign:ColorZoneAssist.Mode="Custom" materialDesign:ColorZoneAssist.Background="#FF673AB7" materialDesign:ColorZoneAssist.Foreground="White"  >
+                                <ListView Name="SessionDGg">
+                                    <ListView.ItemTemplate>
+                                        <DataTemplate>
+
+
+                                            <StackPanel Margin="3" materialDesign:ShadowAssist.Darken="True" >
+
+
+                                                <TextBlock HorizontalAlignment="Stretch" VerticalAlignment="Center"  FontSize="18" FontWeight="Bold"   Text="{Binding lecturesLstByConcadinating}"/>
+
+                                                <StackPanel Orientation="Horizontal">
+
+                                                    <TextBlock  
+                                                                     FontWeight="Bold" FontSize="14"  HorizontalAlignment="Stretch" VerticalAlignment="Center"  Text="{Binding subjectDSA.SubjectName}"/>
+                                                    <TextBlock  FontWeight="Bold" FontSize="14" >(</TextBlock>
+                                                    <TextBlock FontWeight="Bold" FontSize="14" Text="{Binding subjectDSA.SubjectCode}"></TextBlock>
+                                                    <TextBlock  FontWeight="Bold" FontSize="14" >)</TextBlock>
+                                                </StackPanel>
+
+
+                                                <TextBlock   HorizontalAlignment="Stretch" VerticalAlignment="Center"    FontWeight="Bold" 
+                                                                     Text="{Binding tagDSA.tags}" FontSize="14"  />
+
+
+                                                <TextBlock   HorizontalAlignment="Stretch" VerticalAlignment="Center"
+                                                                      FontWeight="Bold" Text="{Binding GroupOrsubgroupForDisplay}" FontSize="14"/>
+
+                                                <StackPanel Orientation="Horizontal">
+                                                    <TextBlock    HorizontalAlignment="Stretch" VerticalAlignment="Center" 
+                                                                    Text="{Binding StdntCount}" FontSize="14" />
+                                                    <TextBlock  FontWeight="Bold" FontSize="14" >(</TextBlock>
+                                                    <TextBlock FontWeight="Bold" FontSize="14" Text="{Binding durationinHours}"></TextBlock>
+                                                    <TextBlock  FontWeight="Bold" FontSize="14" >)</TextBlock>
+                                                </StackPanel>
+
+                                            </StackPanel>
+
+                                        </DataTemplate>
+                                    </ListView.ItemTemplate>
+
+                                </ListView>
+
+                            </GroupBox>
+                        </ComboBox>-->
+
 
                         <Label Grid.Row="4" Grid.Column="0" Content="Groups" Margin="5,6,5,4"/>
 

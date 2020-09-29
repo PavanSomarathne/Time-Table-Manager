@@ -33,8 +33,13 @@ namespace TimeTableManager
         {
             this.dbContext1 = dbContext1;
             InitializeComponent();
-           
+            loadsessions();
 
+        }
+
+        public void loadsessions()
+        {
+            cmb2.ItemsSource = dbContext1.Sessions.ToList();
         }
 
         private void lecturer_load(object sender, RoutedEventArgs e)
@@ -51,14 +56,14 @@ namespace TimeTableManager
 
         //private void session_load(object sender, RoutedEventArgs e)
         //{
-        //    List<String> lecString = new List<String>();
-        //    List<> lecturers = dbContext1..ToList();
+        //    List<int> sesString = new List<int>();
+        //    List<Session> sessions = dbContext1.Sessions.ToList();
 
-        //    foreach (var item in lecturers)
+        //    foreach (var item in sessions)
         //    {
-        //        lecString.Add(item.LecName);
+        //        sesString.Add(item.SessionId);
         //    }
-        //    cmb1.ItemsSource = lecString;
+        //    cmb2.ItemsSource = sesString;
         //}
 
         private void groups_load(object sender, RoutedEventArgs e)
@@ -149,12 +154,12 @@ namespace TimeTableManager
 
         private void AddNotAvailableSessions(object s, RoutedEventArgs e)
         {
-            if (ValidateInputForLecturers())
+            if (ValidateInputForSessions())
             {
-                sessions_NotAvailable.notAvailableSession = cmb1.Text;
-                sessions_NotAvailable.notAvailableSessionDate = date1.Text.ToString();
-                sessions_NotAvailable.notAvailableSessionStAt = st1.Text.ToString();
-                sessions_NotAvailable.notAvailableSessionEndAt = et1.Text.ToString();
+                sessions_NotAvailable.notAvailableSession = cmb2.Text;
+                sessions_NotAvailable.notAvailableSessionDate = date2.Text.ToString();
+                sessions_NotAvailable.notAvailableSessionStAt = st2.Text.ToString();
+                sessions_NotAvailable.notAvailableSessionEndAt = et2.Text.ToString();
                 dbContext1.Sessions_NotAvailables.Add(sessions_NotAvailable);
                 dbContext1.SaveChanges();
 
@@ -264,6 +269,34 @@ namespace TimeTableManager
             return true;
         }
 
+        private bool ValidateInputForSessions()
+        {
+            if (string.IsNullOrEmpty(cmb2.Text))
+            {
+                cmb2.Focus();
+                return false;
+            }
+            if (string.IsNullOrEmpty(date2.Text))
+            {
+                date2.Focus();
+                return false;
+            }
+            if (string.IsNullOrEmpty(st2.Text))
+            {
+                st2.Focus();
+                return false;
+            }
+            if (string.IsNullOrEmpty(et2.Text))
+            {
+                et2.Focus();
+                return false;
+            }
+
+
+
+            return true;
+        }
+
         private bool ValidateInputForGroups()
         {
             if (string.IsNullOrEmpty(cmb3.Text))
@@ -354,5 +387,8 @@ namespace TimeTableManager
             this.Close();
             viewSession.ShowDialog();
         }
+
+      
+
     }
 }

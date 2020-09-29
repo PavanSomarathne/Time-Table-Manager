@@ -121,17 +121,17 @@ namespace TimeTableManager
             return true;
         }
 
-        //private void sessions_load(object sender, RoutedEventArgs e)
-        //{
-        //    List<String> grpString = new List<String>();
-        //    List<Student> grps = dbContext1.Students.ToList();
+        private void sessions_load(object sender, RoutedEventArgs e)
+        {
+            List<String> sesString = new List<String>();
+            List<Session> sess = dbContext1.Sessions.ToList();
 
-        //    foreach (var item in grps)
-        //    {
-        //        grpString.Add(item.groupId);
-        //    }
-        //    cmb1.ItemsSource = grpString;
-        //}
+            foreach (var item in sess)
+            {
+                sesString.Add(item.lecturesLstByConcadinating + "\n " + item.subjectDSA.SubjectName + "(" + item.subjectDSA.SubjectCode + ")" + " \n " + item.tagDSA.tags + "\n " + item.GroupOrsubgroupForDisplay + "\n" + item.StdntCount + "(" + item.durationinHours + ")");
+            }
+            cmb1.ItemsSource = sesString;
+        }
 
         private void Home(Object s, RoutedEventArgs e)
         {
