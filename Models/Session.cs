@@ -16,6 +16,7 @@ namespace TimeTableManager.Models
         public Tag tagDSA { get; set; }
         public SubjectDetails subjectDSA { get; set; }
 
+        public Room Room { get; set; }
         //getting grpidas and subgrids
         public Student studentDSA { get; set; }
 
@@ -25,6 +26,8 @@ namespace TimeTableManager.Models
         public String lecturesLstByConcadinating { get;set; }
 
         public String GroupOrsubgroupForDisplay { get; set; }
+
+      
 
     }
 }

@@ -31,9 +31,8 @@ namespace TimeTableManager.Models
         public DbSet<RoomSubject> RoomSubjects { get; set; }
         public DbSet<Session> Sessions { get; set; }
         public DbSet<SessionLecturer> SessionLecturers { get; set; }
-
-
         public DbSet<RoomNAT> RoomNATs { get; set; }
+        public DbSet<RoomGroup> RoomGroups { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -66,7 +65,6 @@ namespace TimeTableManager.Models
                 .HasOne(rl => rl.Subject)
                 .WithMany(c => c.RoomSubjects)
                 .HasForeignKey(rl => rl.SubjectId);
-
 
 
             modelBuilder.Entity<Schedule>().HasData(GetSchedules());
@@ -106,7 +104,6 @@ namespace TimeTableManager.Models
             modelBuilder.Entity<Student>()
                .HasMany(q => q.sessionDSA)
                .WithOne(k => k.studentDSA);
-
 
 
             base.OnModelCreating(modelBuilder);

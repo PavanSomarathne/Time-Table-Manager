@@ -18,8 +18,13 @@ namespace TimeTableManager.Models
 
         public IList<RoomNAT> RoomNATs { get; set; }
 
+        public IList<RoomGroup> RoomGroups { get; set; }
+
         public virtual ICollection<RoomLecturer> RoomLecturers { get; set; }
         public virtual ICollection<RoomSubject> RoomSubjects { get; set; }
+
+        public ICollection<Room> SessionsAS { get; set; }
+
 
     }
 }

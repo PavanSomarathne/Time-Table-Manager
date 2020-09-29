@@ -60,6 +60,8 @@ namespace TimeTableManager
             LoadLecturers();
             LoadSubjects();
             LoadNATS();
+            LoadSessions();
+            LoadGroups();
         }
 
         private void LoadLecturers()
@@ -80,10 +82,24 @@ namespace TimeTableManager
 
         private void LoadNATS()
         {
-            
+
             LVNAT.ItemsSource = dbContext1.RoomNATs
             .Where(r => r.room.Id == RoomToEdit.Id)
             .ToList();
+        }
+
+        private void LoadSessions()
+        {
+
+            SessionDG.ItemsSource = dbContext1.Sessions
+            .Where(p => p.Room.Id == RoomToEdit.Id).ToList();
+        }
+
+        private void LoadGroups()
+        {
+
+            LVGroups.ItemsSource = dbContext1.RoomGroups
+            .Where(p => p.room.Id == RoomToEdit.Id).ToList();
         }
 
         private void AddRoom(Object s, RoutedEventArgs e)
@@ -251,6 +267,44 @@ namespace TimeTableManager
             }
         }
 
+        private void AddSession(Object s, RoutedEventArgs e)
+        {
+            PopupSearch popup = new PopupSearch(dbContext1, "ses", RoomToEdit);
+            popup.Closed += RefreshSes;
+            popup.ShowDialog();
+        }
+
+        private void DelSession(Object s, RoutedEventArgs e)
+        {
+            if (SessionDG.SelectedItem != null)
+            {
+                Session session = (Session)SessionDG.SelectedItem;
+
+                if (dbContext1.Sessions.Any(r => r.Room.Id == this.RoomToEdit.Id && r.SessionId == session.SessionId))
+                {
+                    //dbContext1.Entry(roomLecturer).State = EntityState.Detached;
+                    session.Room = null;
+                    dbContext1.Update(session);
+                    dbContext1.SaveChanges();
+
+                    SessionDG.SelectedIndex = -1;
+                    LoadSessions();
+                }
+            }
+        }
+
+        private void SeesionDelAct(Object s, RoutedEventArgs e)
+        {
+            if (SessionDG.SelectedItem != null)
+            {
+                BTNDelSession.IsEnabled = true;
+            }
+            else
+            {
+                BTNDelSession.IsEnabled = false;
+            }
+        }
+
         private void AddSub(Object s, RoutedEventArgs e)
         {
             PopupSearch popup = new PopupSearch(dbContext1, "sub", RoomToEdit);
@@ -291,6 +345,44 @@ namespace TimeTableManager
                     LVSubjects.SelectedIndex = -1;
                     LoadSubjects();
                 }
+            }
+        }
+
+        private void AddGRP(Object s, RoutedEventArgs e)
+        {
+            PopupSearch popup = new PopupSearch(dbContext1, "grp", RoomToEdit);
+            popup.Closed += RefreshGRP;
+            popup.ShowDialog();
+        }
+
+        private void DelGRP(Object s, RoutedEventArgs e)
+        {
+            if (LVGroups.SelectedItem != null)
+            {
+                RoomGroup roomGroup = (RoomGroup)LVGroups.SelectedItem;
+
+                if (dbContext1.RoomGroups.Any(r => r.room.Id == this.RoomToEdit.Id && r.Id == roomGroup.Id))
+                {
+                    //dbContext1.Entry(roomLecturer).State = EntityState.Detached;
+                    var rrn = dbContext1.RoomGroups.First(row => row.Id == roomGroup.Id);
+                    dbContext1.RoomGroups.Remove(rrn);
+                    dbContext1.SaveChanges();
+
+                    LVGroups.SelectedIndex = -1;
+                    LoadGroups();
+                }
+            }
+        }
+
+        private void GRPDelActive(Object s, RoutedEventArgs e)
+        {
+            if (LVGroups.SelectedItem != null)
+            {
+                BTNdelGRP.IsEnabled = true;
+            }
+            else
+            {
+                BTNdelGRP.IsEnabled = false;
             }
         }
 
@@ -342,7 +434,7 @@ namespace TimeTableManager
             //This gets fired off
             LVlecturer.ItemsSource = null;
             LoadLecturers();
-  
+
         }
 
         public void RefreshSub(object sender, System.EventArgs e)
@@ -358,6 +450,22 @@ namespace TimeTableManager
             //This gets fired off
             LVNAT.ItemsSource = null;
             LoadNATS();
+
+        }
+
+        public void RefreshSes(object sender, System.EventArgs e)
+        {
+            //This gets fired off
+            SessionDG.ItemsSource = null;
+            LoadSessions();
+
+        }
+
+        public void RefreshGRP(object sender, System.EventArgs e)
+        {
+            //This gets fired off
+            SessionDG.ItemsSource = null;
+            LoadGroups();
 
         }
     }
