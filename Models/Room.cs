@@ -23,7 +23,7 @@ namespace TimeTableManager.Models
         public virtual ICollection<RoomLecturer> RoomLecturers { get; set; }
         public virtual ICollection<RoomSubject> RoomSubjects { get; set; }
 
-        public ICollection<Room> SessionsAS { get; set; }
+        public ICollection<Session> SessionsAS { get; set; }
 
 
     }

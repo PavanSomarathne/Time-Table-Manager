@@ -101,7 +101,7 @@
                     <DataGrid.Columns>
 
                         <!--<DataGridTextColumn Header="Session Name" Binding="{Binding accYrSem}" />-->
-                        <DataGridTextColumn Header="1st Session" Binding="{Binding firstSession}" />
+                        <DataGridTextColumn Header="1st Session" Binding="{Binding firstSession}"/>
                         <DataGridTextColumn Header="2nd Session" Binding="{Binding secondSession}" />
 
 
