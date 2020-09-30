@@ -37,6 +37,10 @@ namespace TimeTableManager
 
                 EnableUpdateMode();
             }
+            else
+            {
+                EnableAddMode();
+            }
         }
 
         private void GetBuildings()
@@ -47,6 +51,7 @@ namespace TimeTableManager
 
         private void EnableUpdateMode()
         {
+
             TxtTitle.Content = "Change Room Details";
             TxtRid.Text = RoomToEdit.Rid;
             TxtCapacity.Text = RoomToEdit.Capacity.ToString();
@@ -62,6 +67,24 @@ namespace TimeTableManager
             LoadNATS();
             LoadSessions();
             LoadGroups();
+        }
+
+
+        private void EnableAddMode()
+        {
+            TxtTitle.Content = "Add New Room";
+            BTNAddGroups.IsEnabled = false;
+            BTNAddLectureres.IsEnabled = false;
+            BTNAddNAT.IsEnabled = false;
+            BTNAddSubject.IsEnabled = false;
+            BTNAddSession.IsEnabled = false;
+
+            warningMSG.Visibility = Visibility.Hidden;
+
+            BtnSave.Content = "Update";
+            BtnSave.Click -= UpdateRoom;
+            BtnSave.Click += AddRoom;
+
         }
 
         private void LoadLecturers()

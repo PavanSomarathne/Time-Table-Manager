@@ -338,7 +338,8 @@ namespace TimeTableManager
                 dt.Rows.Add(dr);
  
                 }
-
+            //2d array
+          List<Session>[,] arr2d = new List<Session>[NewSchedule.Working_days_count, noOfSlots];
             //Session slots
 
             int sessionCnt = 0;
@@ -349,38 +350,67 @@ namespace TimeTableManager
                 {
                     for (int j = 0; j < noOfSlots; j++)
                     {
-
-
                     if (sessionCnt < sessionList.Count())
                     {
-                        //dr = dt.NewRow();
-                        
-                        
-                        if(val > 1)
+                        // List<Session> sessionDisplay = new List<Session>();
+                        val = sessionList[sessionCnt].durationinHours / dura;
+                        if (val > 1)
                         {
-                            val--;
-                            dt.Rows[j][workingDays[i]] = sessionList[sessionCnt].SessionId + "\n"  + val;
-                            if (val == 1)
+                            for (int h = 0; h < val; h++)
                             {
-                                val = 0;
-                                sessionCnt++;
+                                if (sessionCnt < sessionList.Count() && j<noOfSlots)
+                                {
+                                    if (h == val - 1)
+                                    {
+                                        List<Session> sessionDisplay = new List<Session>();
+                                        sessionDisplay.Add(sessionList[sessionCnt]);
+                                        arr2d[i, j] = sessionDisplay;
+                                        // dt.Rows[j][workingDays[i]] = sessionList[sessionCnt];
+                                        dt.Rows[j][workingDays[i]] = arr2d[i, j][0].SessionId;
+                                    }
+                                    else 
+                                    {
+                                        
+                                        List<Session> sessionDisplay = new List<Session>();
+                                        sessionDisplay.Add(sessionList[sessionCnt]);
+                                        arr2d[i, j] = sessionDisplay;
+                                        //dt.Rows[j++][workingDays[i]] = sessionList[sessionCnt];
+                                        dt.Rows[j][workingDays[i]] = arr2d[i, j][0].SessionId;
+                                        j++;
+                                    }
+                                    
+                                }
+                                else
+                                {
+                                    break;
+                                }
+
                             }
                         }
-                        else if(val == 0)
-                        {
+                        sessionCnt++;
 
-                            val = sessionList[sessionCnt].durationinHours / dura;
-                            dt.Rows[j][workingDays[i]] = sessionList[sessionCnt].SessionId + "\n" + val;
-                            if (val == 0)
-                            {
-                                sessionCnt++;
-                            }
-                            
-                        }
-                        //dt.Rows.Add(dr);
+                       //     if (val > 1)
+                       //{
+                       //     val--;
+                       //     // dt.Rows[j][workingDays[i]] = sessionList[sessionCnt] + "\n"  + val;
+                       //     arr2d[i, j] = sessionList[sessionCnt].SessionId.ToString();
+                       //     if (val == 1)
+                       //     {
+                       //         val = 0;
+                       //         sessionCnt++;
+                       //     }
+                       //}
+                       //else if(val == 0)
+                       // { 
 
+                        //     //dt.Rows[j][workingDays[i]] = sessionList[sessionCnt] + "\n" + val;
+                        //     arr2d[i, j] = sessionList[sessionCnt].SessionId.ToString();
+                        //     if (val == 0)
+                        //     {
+                        //        sessionCnt++;
+                        //     }
 
-
+                        // }
                     }
                     else {
                         break;
@@ -391,17 +421,42 @@ namespace TimeTableManager
                     }
 
                 }
-            
-            
+
+            for (int i = 0; i < NewSchedule.Working_days_count; i++)
+            {
+                for (int j = 0; j < noOfSlots; j++)
+                {
+                    if (sessionCnt < sessionList.Count())
+                    {
+                        String session = "";
+                        //arr2d[i, j] = sessionList;
+                       
+                            
+                           
+                        
+                       
+                    }
+                    else
+                    {
+                       break;
+                   }
+
+
+
+                }
+
+            }
 
 
 
 
-            
-           
 
-            
-            
+
+
+
+
+
+
 
 
 
