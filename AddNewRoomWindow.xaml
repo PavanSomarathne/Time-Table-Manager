@@ -52,7 +52,7 @@
 
         
         <StackPanel  Grid.Column="4" Grid.Row="2" Grid.ColumnSpan="2" Orientation="Horizontal" Margin="0,234,0,0" Grid.RowSpan="2" >
-            <Button x:Name="BtnSaveChanges" Click="AddRoom" Content="Save Changes" HorizontalAlignment="Center" VerticalAlignment="Bottom" Height="40" Width="200" FontSize="20" Margin="20,0,0,20"/>
+            <Button x:Name="BtnSaveChanges" Click="SaveChanges" Content="Save Changes"  HorizontalAlignment="Center" VerticalAlignment="Bottom" Height="40" Width="200" FontSize="20" Margin="20,0,0,20"/>
             <Button Content="Close"  HorizontalAlignment="Center"  VerticalAlignment="Bottom" Height="40" Width="200" FontSize="20" Margin="10,0,0,20" Background="#FFFF1744" BorderBrush="{x:Null}" Click="CloseWindow"/>
 
         </StackPanel>
@@ -84,7 +84,7 @@
                     </StackPanel>
 
                 </StackPanel>
-                <Button x:Name="BtnSave" Click="AddRoom" Content="Save Room" HorizontalAlignment="Right" VerticalAlignment="Bottom" Height="40" Width="200" FontSize="20" Margin="90,0,0,20" Background="#FF1565C0" BorderBrush="{x:Null}"/>
+                <Button x:Name="BtnSave" Content="Save Room" HorizontalAlignment="Right" VerticalAlignment="Bottom" Height="40" Width="200" FontSize="20" Margin="90,0,0,20" Background="#FF1565C0" BorderBrush="{x:Null}"/>
 
             </StackPanel>
 
@@ -151,7 +151,7 @@
                 <materialDesign:PackIcon Kind="Plus" Height="24" Width="24" />
             </Button>
             <Button Click="DelSub"  Style="{StaticResource MaterialDesignFloatingActionMiniAccentButton}"
-                        ToolTip="MaterialDesignFloatingActionMiniLightButton" x:Name="BTNdelSub" Background="#FFFF1744">
+                    IsEnabled="False"    ToolTip="MaterialDesignFloatingActionMiniLightButton" x:Name="BTNdelSub" Background="#FFFF1744">
                 <materialDesign:PackIcon Kind="Delete" Height="24" Width="24"   />
             </Button>
         </StackPanel>

@@ -58,9 +58,9 @@ namespace TimeTableManager
             CBBuilding.SelectedItem = RoomToEdit.BuildingAS;
             CBType.Text = RoomToEdit.Type;
 
-            BtnSave.Content = "Update";
-            BtnSave.Click -= AddRoom;
-            BtnSave.Click += UpdateRoom;
+            BtnSave.Visibility = Visibility.Hidden;
+            BtnSaveChanges.Click -= SaveChanges;
+            BtnSaveChanges.Click += UpdateRoom;
 
             LoadLecturers();
             LoadSubjects();
@@ -79,11 +79,29 @@ namespace TimeTableManager
             BTNAddSubject.IsEnabled = false;
             BTNAddSession.IsEnabled = false;
 
-            warningMSG.Visibility = Visibility.Hidden;
-
-            BtnSave.Content = "Update";
             BtnSave.Click -= UpdateRoom;
             BtnSave.Click += AddRoom;
+            BtnSaveChanges.IsEnabled = false;
+
+
+        }
+
+        private void EnableAssignMode()
+        {
+            BTNAddGroups.IsEnabled = true;
+            BTNAddLectureres.IsEnabled = true;
+            BTNAddNAT.IsEnabled = true;
+            BTNAddSubject.IsEnabled = true;
+            BTNAddSession.IsEnabled = true;
+
+            warningMSG.Visibility = Visibility.Hidden;
+
+            BtnSave.IsEnabled = false;
+
+            BtnSaveChanges.Click -= AddRoom;
+            BtnSaveChanges.Click += SaveChanges;
+            BtnSaveChanges.IsEnabled = true;
+
 
         }
 
@@ -149,10 +167,13 @@ namespace TimeTableManager
                     dbContext1.SaveChanges();
                     new MessageBoxCustom("Successfully Added to the System !", MessageType.Success, MessageButtons.Ok).ShowDialog();
 
-                    TxtCapacity.Text = "";
-                    TxtRid.Text = "";
-                    CBBuilding.SelectedIndex = -1;
-                    CBType.SelectedIndex = -1;
+                    RoomToEdit = NewRoom;
+                    EnableAssignMode();
+                  
+                    //TxtCapacity.Text = "";
+                    //TxtRid.Text = "";
+                    //CBBuilding.SelectedIndex = -1;
+                    //CBType.SelectedIndex = -1;
 
 
                 }
@@ -251,6 +272,30 @@ namespace TimeTableManager
             }
         }
 
+        private void SaveChanges(Object s, RoutedEventArgs e)
+        {
+
+            TxtCapacity.Text = "";
+            TxtRid.Text = "";
+            CBBuilding.SelectedIndex = -1;
+            CBType.SelectedIndex = -1;
+
+            LVGroups.ItemsSource = null;
+            LVlecturer.ItemsSource = null;
+            LVNAT.ItemsSource = null;
+            LVSubjects.ItemsSource = null;
+            SessionDG.ItemsSource = null;
+
+            RoomToEdit = null;
+            BtnSaveChanges.IsEnabled = false;
+            BtnSave.IsEnabled = true;
+
+            BTNAddGroups.IsEnabled = false;
+            BTNAddLectureres.IsEnabled = false;
+            BTNAddNAT.IsEnabled = false;
+            BTNAddSubject.IsEnabled = false;
+            BTNAddSession.IsEnabled = false;
+        }
 
         private void AddNAT(Object s, RoutedEventArgs e)
         {
