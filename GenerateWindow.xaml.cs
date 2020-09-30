@@ -46,19 +46,19 @@ namespace TimeTableManager
             lecturerSP.Visibility = Visibility.Collapsed;
             roomSP.Visibility = Visibility.Collapsed;
 
-           
+
             // Program.DisplayMember = "Name";
             //comboBox1.ValueMember = "Name";
             // AddNewScheduleGrid.DataContext = NewSchedule;
         }
-       
-  
+
+
         private void GetSchedule()
         {
-           // ScheduleDG.ItemsSource = dbContext1.Schedules.ToList();
+            // ScheduleDG.ItemsSource = dbContext1.Schedules.ToList();
         }
 
-       
+
         private void myCheckBox_Checked(object sender, RoutedEventArgs e)
         {
             CheckBox cb = sender as CheckBox;
@@ -82,84 +82,84 @@ namespace TimeTableManager
             Boolean validator3 = true;
             Boolean validator4 = true;
             Boolean validator5 = true;
-                
-                SelectedSchedule.Working_days_count = val;
-               // SelectedSchedule.start_time = PresetTimePicker.Text.ToString();
-                SelectedSchedule.working_time_hrs = val1;
-                SelectedSchedule.Working_time_mins = val2;
 
-                //Checkbox manipulation
-                var checkString = "";
-                if (allChecked.Count == 0)
-                {
-                    validator1 = false;
-                    MessageBox.Show("No working days Checked !",
-                     "", MessageBoxButton.OK, MessageBoxImage.Warning);
-                }
-                else
-                {
-                    for (int i = 0; i < allChecked.Count; i++)
-                    {
-                        if (i == 0)
-                        {
-                            checkString = allChecked[i];
-                        }
-                        else
-                        {
-                            checkString = checkString + "," + allChecked[i];
-                        }
-                    }
+            SelectedSchedule.Working_days_count = val;
+            // SelectedSchedule.start_time = PresetTimePicker.Text.ToString();
+            SelectedSchedule.working_time_hrs = val1;
+            SelectedSchedule.Working_time_mins = val2;
 
-                }
-
-                //validations
-                if (DateTime.ParseExact(SelectedSchedule.start_time, "h:mm tt", CultureInfo.InvariantCulture) >
-                DateTime.ParseExact("04:00 PM", "hh:mm tt", CultureInfo.InvariantCulture))
-                {
-                    validator2 = false;
-                    MessageBox.Show("Too late for start time!",
-                   "", MessageBoxButton.OK, MessageBoxImage.Warning);
-
-                }
-                if (allChecked.Count != SelectedSchedule.Working_days_count)
-                {
-                    validator2 = false;
-                    MessageBox.Show("Please check the same number of days that you have entered in Working days per week count!",
-                   "", MessageBoxButton.OK, MessageBoxImage.Warning);
-
-                }
-                if (SelectedSchedule.working_time_hrs > 14 || SelectedSchedule.working_time_hrs < 1)
-                {
-                    validator3 = false;
-                    MessageBox.Show("Working hours out of range!",
-                  "", MessageBoxButton.OK, MessageBoxImage.Warning);
-                }
-                if (SelectedSchedule.Working_time_mins >= 60 || SelectedSchedule.Working_time_mins < 0)
-                {
-                    validator4 = false;
-                    MessageBox.Show("Working hours out of range!",
+            //Checkbox manipulation
+            var checkString = "";
+            if (allChecked.Count == 0)
+            {
+                validator1 = false;
+                MessageBox.Show("No working days Checked !",
                  "", MessageBoxButton.OK, MessageBoxImage.Warning);
-                }
-                if (SelectedSchedule.Working_duration == null)
+            }
+            else
+            {
+                for (int i = 0; i < allChecked.Count; i++)
                 {
-                    validator5 = false;
-                    MessageBox.Show("Please select a timeslot duration!",
-                                     "", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    if (i == 0)
+                    {
+                        checkString = allChecked[i];
+                    }
+                    else
+                    {
+                        checkString = checkString + "," + allChecked[i];
+                    }
                 }
 
-                if (validator1 && validator2 && validator3 && validator4 && validator5)
-                {
-                    SelectedSchedule.Working_days = checkString;
-                    
+            }
 
-                    dbContext1.Update(SelectedSchedule);
-                    dbContext1.SaveChanges();
-                    MessageBox.Show("Schedule Updated Successfully!",
-                                     "", MessageBoxButton.OK, MessageBoxImage.Information);
+            //validations
+            if (DateTime.ParseExact(SelectedSchedule.start_time, "h:mm tt", CultureInfo.InvariantCulture) >
+            DateTime.ParseExact("04:00 PM", "hh:mm tt", CultureInfo.InvariantCulture))
+            {
+                validator2 = false;
+                MessageBox.Show("Too late for start time!",
+               "", MessageBoxButton.OK, MessageBoxImage.Warning);
 
-                    ResetForm();
-                    GetSchedule();
-                }
+            }
+            if (allChecked.Count != SelectedSchedule.Working_days_count)
+            {
+                validator2 = false;
+                MessageBox.Show("Please check the same number of days that you have entered in Working days per week count!",
+               "", MessageBoxButton.OK, MessageBoxImage.Warning);
+
+            }
+            if (SelectedSchedule.working_time_hrs > 14 || SelectedSchedule.working_time_hrs < 1)
+            {
+                validator3 = false;
+                MessageBox.Show("Working hours out of range!",
+              "", MessageBoxButton.OK, MessageBoxImage.Warning);
+            }
+            if (SelectedSchedule.Working_time_mins >= 60 || SelectedSchedule.Working_time_mins < 0)
+            {
+                validator4 = false;
+                MessageBox.Show("Working hours out of range!",
+             "", MessageBoxButton.OK, MessageBoxImage.Warning);
+            }
+            if (SelectedSchedule.Working_duration == null)
+            {
+                validator5 = false;
+                MessageBox.Show("Please select a timeslot duration!",
+                                 "", MessageBoxButton.OK, MessageBoxImage.Warning);
+            }
+
+            if (validator1 && validator2 && validator3 && validator4 && validator5)
+            {
+                SelectedSchedule.Working_days = checkString;
+
+
+                dbContext1.Update(SelectedSchedule);
+                dbContext1.SaveChanges();
+                MessageBox.Show("Schedule Updated Successfully!",
+                                 "", MessageBoxButton.OK, MessageBoxImage.Information);
+
+                ResetForm();
+                GetSchedule();
+            }
         }
 
         private void DeleteSchedule(Object s, RoutedEventArgs e)
@@ -202,12 +202,12 @@ namespace TimeTableManager
         private void ResetForm()
         {
             AddNewScheduleGrid.DataContext = null;
-           
+
 
             AddNewScheduleGrid.DataContext = null;
         }
 
-       
+
 
         private StackPanel GetStudenSP()
         {
@@ -237,7 +237,7 @@ namespace TimeTableManager
 
         }
 
-        
+
 
         private void lecturer_load(object sender, RoutedEventArgs e)
         {
@@ -279,25 +279,26 @@ namespace TimeTableManager
 
             //new schedule object
             Schedule NewSchedule = new Schedule();
-            
+
             //Table initialization
             dt = new DataTable("emp");
-  
+
             //Time heading
             //tableName.Content = "Test";
             DataColumn dc1 = new DataColumn("Time", typeof(string));
             dt.Columns.Add(dc1);
 
-            NewSchedule =dbContext1.Schedules.Find(1);
+            NewSchedule = dbContext1.Schedules.Find(1);
             DateTime startTime = DateTime.ParseExact(NewSchedule.start_time, "h:mm tt", CultureInfo.InvariantCulture);
-            int worktimeHrs= NewSchedule.working_time_hrs;
+            int worktimeHrs = NewSchedule.working_time_hrs;
             int worktimeMins = NewSchedule.Working_time_mins;
             String duration = NewSchedule.Working_duration;
 
             //getting working days
             var workingDays = NewSchedule.Working_days.Split(',');
             //getting sessions
-            List<Session> sessionList = dbContext1.Sessions.ToList() ;
+            List<Session> sessionList = dbContext1.Sessions.ToList();
+            List<Session> sessionList_copy = dbContext1.Sessions.ToList();
 
             //colums
             foreach (var data in arr1)
@@ -314,133 +315,225 @@ namespace TimeTableManager
 
 
             //Time slots
-            DateTime endTime= startTime.AddHours(worktimeHrs);
+            DateTime endTime = startTime.AddHours(worktimeHrs);
             endTime = endTime.AddMinutes(worktimeMins);
 
-            DateTime timeVal=startTime;
+            DateTime timeVal = startTime;
 
             if (duration == "One Hour")
             {
                 dura = 60;
             }
 
-            else if (duration == "Thirty Minutes" )
+            else if (duration == "Thirty Minutes")
             {
                 dura = 30;
             }
 
-                while (timeVal.AddMinutes(dura) <= endTime)
-                {
+            while (timeVal.AddMinutes(dura) <= endTime)
+            {
                 noOfSlots++;
                 dr = dt.NewRow();
                 timeVal = timeVal.AddMinutes(dura);
                 dr["Time"] = timeVal.ToString("h:mm tt");
                 dt.Rows.Add(dr);
- 
-                }
+
+            }
             //2d array
-          List<Session>[,] arr2d = new List<Session>[NewSchedule.Working_days_count, noOfSlots];
+            List<Session>[,] arr2d = new List<Session>[NewSchedule.Working_days_count, noOfSlots];
+            //same sid array
+            List<Session> sameSidArr = new List<Session>();
             //Session slots
 
             int sessionCnt = 0;
-            decimal val = 0;
 
-
-                for (int i = 0; i < NewSchedule.Working_days_count; i++)
-                {
-                    for (int j = 0; j < noOfSlots; j++)
-                    {
-                    if (sessionCnt < sessionList.Count())
-                    {
-                        // List<Session> sessionDisplay = new List<Session>();
-                        val = sessionList[sessionCnt].durationinHours / dura;
-                        if (val > 1)
-                        {
-                            for (int h = 0; h < val; h++)
-                            {
-                                if (sessionCnt < sessionList.Count() && j<noOfSlots)
-                                {
-                                    if (h == val - 1)
-                                    {
-                                        List<Session> sessionDisplay = new List<Session>();
-                                        sessionDisplay.Add(sessionList[sessionCnt]);
-                                        arr2d[i, j] = sessionDisplay;
-                                        // dt.Rows[j][workingDays[i]] = sessionList[sessionCnt];
-                                        dt.Rows[j][workingDays[i]] = arr2d[i, j][0].SessionId;
-                                    }
-                                    else 
-                                    {
-                                        
-                                        List<Session> sessionDisplay = new List<Session>();
-                                        sessionDisplay.Add(sessionList[sessionCnt]);
-                                        arr2d[i, j] = sessionDisplay;
-                                        //dt.Rows[j++][workingDays[i]] = sessionList[sessionCnt];
-                                        dt.Rows[j][workingDays[i]] = arr2d[i, j][0].SessionId;
-                                        j++;
-                                    }
-                                    
-                                }
-                                else
-                                {
-                                    break;
-                                }
-
-                            }
-                        }
-                        sessionCnt++;
-
-                       //     if (val > 1)
-                       //{
-                       //     val--;
-                       //     // dt.Rows[j][workingDays[i]] = sessionList[sessionCnt] + "\n"  + val;
-                       //     arr2d[i, j] = sessionList[sessionCnt].SessionId.ToString();
-                       //     if (val == 1)
-                       //     {
-                       //         val = 0;
-                       //         sessionCnt++;
-                       //     }
-                       //}
-                       //else if(val == 0)
-                       // { 
-
-                        //     //dt.Rows[j][workingDays[i]] = sessionList[sessionCnt] + "\n" + val;
-                        //     arr2d[i, j] = sessionList[sessionCnt].SessionId.ToString();
-                        //     if (val == 0)
-                        //     {
-                        //        sessionCnt++;
-                        //     }
-
-                        // }
-                    }
-                    else {
-                        break;
-                    }
-                             
-                             
-                                
-                    }
-
-                }
+            int l = sessionList.Count();
+            int val = 0;
+            int value = 0;
 
             for (int i = 0; i < NewSchedule.Working_days_count; i++)
             {
                 for (int j = 0; j < noOfSlots; j++)
                 {
-                    if (sessionCnt < sessionList.Count())
-                    {
-                        String session = "";
-                        //arr2d[i, j] = sessionList;
-                       
-                            
-                           
-                        
-                       
-                    }
-                    else
-                    {
-                       break;
-                   }
 
+
+                    arr2d[i, j] = new List<Session>();
+
+                }
+
+            }
+
+
+            do
+            {
+                for (int i = 0; i < NewSchedule.Working_days_count; i++)
+                {
+
+                    for (int j = 0; j < noOfSlots; j++)
+                    {
+                        if (sessionCnt < sessionList.Count())
+                        {
+
+                            if (arr2d[i, j].Count() > 0)//checking aray has values
+                            {
+                                Boolean test = true;
+                                while (test)
+                                {
+                                    foreach (var item in arr2d[i, j])//chechking same element
+                                    {
+                                        if (sessionCnt < sessionList.Count() && item.GroupOrsubgroupForDisplay.Equals(sessionList[sessionCnt].GroupOrsubgroupForDisplay))
+                                        {
+                                            j++;
+                                        }
+                                        else
+                                        {
+                                            test = false;
+                                        }
+
+                                    }
+                                }
+                                if (sessionCnt < sessionList.Count())
+                                {
+
+                                    val = sessionList[sessionCnt].durationinHours / dura;
+                                    //for half sessions
+                                    Boolean test1 = true;
+                                    while (test1)
+                                    {
+
+                                        if ((j + val) > noOfSlots)
+                                        {
+                                            //date check for half sessions
+                                            if (i + 1 < NewSchedule.Working_days_count)
+                                            {
+                                                i++;
+                                            }
+
+                                            j = 0;
+                                        }
+                                        else
+                                        {
+                                            test1 = false;
+                                        }
+
+
+                                    }
+                                    //empty session copy
+                                    if (sessionList_copy.Contains(sessionList[sessionCnt]))
+                                    {
+                                        int index = sessionList_copy.IndexOf(sessionList[sessionCnt]);
+                                        sessionList_copy.RemoveAt(index);
+                                    }
+                                    for (int y = 0; y < val; y++)
+                                    {
+
+                                        if ((j + y) < noOfSlots)
+                                        {
+                                            arr2d[i, j + y].Add(sessionList[sessionCnt]);
+                                        }
+                                        else
+                                        {
+
+                                            break;
+                                        }
+
+
+                                    }
+                                    j = j + val - 1;
+
+
+                                    sessionCnt++;
+
+
+
+                                }
+
+                            }
+                            else
+                            {
+
+                                int val1 = 0;
+                                //empty session copy
+                                if (sessionList_copy.Contains(sessionList[sessionCnt]))
+                                {
+                                    int index = sessionList_copy.IndexOf(sessionList[sessionCnt]);
+                                    sessionList_copy.RemoveAt(index);
+                                }
+                                val1 = sessionList[sessionCnt].durationinHours / dura;
+                                //for half sessions
+                                Boolean test1 = true;
+                                while (test1)
+                                {
+
+                                    if ((j + val1) > noOfSlots)
+                                    {
+                                        //date check for half sessions
+                                        if (i + 1 < NewSchedule.Working_days_count)
+                                        {
+                                            i++;
+                                        }
+
+                                        j = 0;
+                                    }
+                                    else
+                                    {
+                                        test1 = false;
+                                    }
+
+
+                                }
+                                for (int y = 0; y < val1; y++)
+                                {
+
+
+                                    if ((j + y) < noOfSlots)
+                                    {
+                                        arr2d[i, j + y].Add(sessionList[sessionCnt]);
+                                    }
+
+
+
+                                }
+                                j = j + val1 - 1;
+
+                                sessionCnt++;
+
+                            }
+
+                        }
+                        else
+                        {
+                            break;
+                        }
+                    }
+
+                }
+
+
+
+            } while (sessionList_copy.Count() > 0);
+
+            l = value;
+
+
+            for (int i = 0; i < NewSchedule.Working_days_count; i++)
+            {
+                for (int j = 0; j < noOfSlots; j++)
+                {
+
+
+                    String session = "";
+
+                    foreach (var item in arr2d[i, j])
+                    {
+
+
+                        session = session + " " + item.SessionId;
+
+
+
+                    }
+                    dt.Rows[j][workingDays[i]] = session;
 
 
                 }
@@ -448,55 +541,17 @@ namespace TimeTableManager
             }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-            //TimeTableDG.ItemsSource = dt.DefaultView;
-
-            // dr = dt.NewRow();
-
-            // dr["Time"] = "Hello";
-            // dr["Time"] = "Hello";
-            // foreach (DataRow dr in dt.Rows)
-            // {
-            //   dr["Time"] = "Hello";
-            // }
-            //  dr[1] = "hello";
-            //dr[2] = "pavanpabs";
-            //   dr[3] = "Kurunegala";
-            //dr[4] = "hello";
-            // dr[5] = "pavanpabs";
-            // dr[6] = "Kurunegala";
-            // dr[7] = "pavanpabs";
-
-            // dt.Rows.Add(dr);
-            //TimeTableDG_print.ItemsSource = dt.DefaultView;
             TimeTableDG.ItemsSource = dt.DefaultView;
-            
-
 
         }
 
         private void program_load(object sender, EventArgs e)
         {
             String year = Year.Text;
-            
-            List<String> students = dbContext1.Students.Where(n => n.accYrSem == year).Select(n=>n.programme).ToList();
 
-            
+            List<String> students = dbContext1.Students.Where(n => n.accYrSem == year).Select(n => n.programme).ToList();
+
+
             Program.ItemsSource = students;
         }
 
@@ -519,7 +574,7 @@ namespace TimeTableManager
                 // sizing of the element.
                 tableArea.Measure(pageSize);
                 tableArea.Arrange(new Rect(5, 5, pageSize.Width, pageSize.Height));
-               
+
                 Printdlg.PrintVisual(tableArea, Title);
             }
 

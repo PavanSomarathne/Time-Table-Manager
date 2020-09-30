@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TimeTableManager" xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         mc:Ignorable="d"
-        Title="MainWindow" Height="768" Width="1366" Loaded="Table_loaded" >
+        Title="MainWindow" Height="768" Width="1366"  >
 
     <Border Padding="20">
         <StackPanel>
@@ -237,7 +237,7 @@
                         </StackPanel>
                         <StackPanel Grid.Row="1">
                             <StackPanel Margin="5">
-                                <Button x:Name="ViewButton" Content="View" Click="ResetSchedule" Padding="3" Margin="4"></Button>
+                                <Button x:Name="ViewButton" Content="View" Click="Table_loaded" Padding="3" Margin="4"></Button>
                                 <Button x:Name="PrintButton" Content="Print" Click="PrintTable" Padding="3" Margin="4"></Button>
 
                             </StackPanel>
