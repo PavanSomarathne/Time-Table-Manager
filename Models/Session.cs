@@ -35,7 +35,7 @@ namespace TimeTableManager.Models
 
         public override string ToString()
         {
-            return SessionId.ToString() + "\n "+ lecturesLstByConcadinating  + "\n " + GroupOrsubgroupForDisplay + "\n" + StdntCount + "(" + durationinHours + ")";
+            return lecturesLstByConcadinating + "\n " + subjectDSA.SubjectName + "(" + subjectDSA.SubjectCode + ")" + " \n " + tagDSA.tags + "\n " + GroupOrsubgroupForDisplay + "\n" + StdntCount + "(" + durationinHours + ")";
         }
 
         public static implicit operator string(Session v)
