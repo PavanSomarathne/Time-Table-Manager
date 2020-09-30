@@ -67,11 +67,11 @@
 
                         <materialDesign:Card  materialDesign:ShadowAssist.ShadowDepth="Depth3" materialDesign:ShadowAssist.ShadowEdges="Bottom,Right" Padding="12 1 2 5 " Margin="0,0,0,79" Grid.RowSpan="2">
                             <StackPanel Orientation="Horizontal">
-                                <ComboBox   Grid.Row="0" Grid.Column="1" Width="260" x:Name="cmb1"   VerticalAlignment="Top" Margin="0,10,0,0"/>
-                                <!--DisplayMemberPath="LecName"  materialDesign:HintAssist.HintOpacity=".26" IsEditable="True"-->
+                                <ComboBox ItemsSource="{Binding Path=LectureInformation}"  Grid.Row="0" Grid.Column="1" Width="233" x:Name="cmb1"   VerticalAlignment="Top" Margin="0,10,0,0" DisplayMemberPath="LecName"  materialDesign:HintAssist.HintOpacity=".26" IsEditable="True"/>
 
-                                <Button Style="{DynamicResource MaterialDesignRaisedButton}" Margin="10"  Content="Add parallel sessions" Background="#79b700">
 
+                                <Button    Style="{DynamicResource MaterialDesignRaisedButton}" Margin="10"  Content="Add parallel sessions" Background="#79b700" Click="AssignSessionItemTo">
+                                   
                                 </Button>
 
                                 <Button  x:Name="TrashlecBtn"  Style="{StaticResource MaterialDesignFloatingActionMiniAccentButton}"
@@ -85,7 +85,7 @@
 
                         <GroupBox Grid.Row="2"  Header="Selected parallel sessions" Style="{DynamicResource MaterialDesignCardGroupBox}" MaxHeight="120"
                 materialDesign:ColorZoneAssist.Mode="Custom" materialDesign:ColorZoneAssist.Background="#FF673AB7" materialDesign:ColorZoneAssist.Foreground="White" Margin="0,0,0,49" Grid.RowSpan="2"  >
-                            <ListView x:Name="LVlecturer" DisplayMemberPath="LecName"  />
+                            <ListView x:Name="LVlecturer"  DisplayMemberPath="lecturesLstByConcadinating" Height="80"  MaxHeight="100"/>
                             <!--SelectionChanged="SelectLectureRooww"-->
                         </GroupBox>
 
@@ -103,9 +103,9 @@
                         <ComboBox Name="cmb3" Grid.Row="3" Margin="0,34,44,0" Text="{}" Height="26" Grid.Column="1" VerticalAlignment="Top"/>-->
 
 
-                        <!--<Button Foreground="White" Background="#FF6839FF" Grid.Row="4" Content="Add" Margin="40,42,350,6" Click="AddSession"/>
-                        <Button Foreground="White" Background="#FF6839FF" Grid.Row="4" Content="Update" Margin="197,42,188,6" Click="UpdateSession"/>
-                        <Button Foreground="White" Background="#FF6839FF" Grid.Row="4" Content="Reset" Margin="358,42,34,6" Click="resetSessions"/>-->
+                        <Button Click="AddSessionDetails" Foreground="White" Background="#FF6839FF" Grid.Row="4" Content="Add" Margin="40,42,350,6" />
+                        <Button Foreground="White" Background="#FF6839FF" Grid.Row="4" Content="Update" Margin="197,42,188,6" />
+                        <Button Foreground="White" Background="#FF6839FF" Grid.Row="4" Content="Reset" Margin="358,42,34,6" />
 
                         <Label Grid.Row="5" Grid.Column="1" Content="*Please make sure that sessions in parallel sub groups are not overlapping with others" Margin="42,14,-42,39"/>
 
@@ -118,10 +118,10 @@
                 <DataGrid AutoGenerateColumns="False" Margin="9,9,9,11" Name="showDetailsGrid" IsReadOnly="True">
                     <DataGrid.Columns>
 
-                        <DataGridTextColumn Header="Session Name" />
-                        <DataGridTextColumn Header="1st Session" />
+                        <DataGridTextColumn Header="Sessions" />
+                        <!--<DataGridTextColumn Header="1st Session" />
                         <DataGridTextColumn Header="2nd Session" />
-                        <DataGridTextColumn Header="3rd Session" />
+                        <DataGridTextColumn Header="3rd Session" />-->
 
 
                         <DataGridTemplateColumn Header="Edit">

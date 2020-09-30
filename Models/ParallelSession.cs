@@ -8,9 +8,8 @@ namespace TimeTableManager.Models
     {
 
         public int Id { get; set; }
-        public String parallelId { get; set; }
-        public String firstSession { get; set; }
-        public String secondSession { get; set; }
-        public String thirdSession { get; set; }
+        //public IList<ParallelSessionList> ParallelSessionLists { get; set; }
+
+        public ICollection<Session> SessionsAS { get; set; }
     }
 }
