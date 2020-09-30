@@ -59,8 +59,8 @@ namespace TimeTableManager
             if (ValidateInput())
             {
                 //NewSession.consecutiveId = txtSessionName.Text;
-                NewSession.firstSession = cmb1.Text;
-                NewSession.secondSession = cmb2.Text;
+                NewSession.firstSession = (Session)cmb1.SelectedItem;
+                NewSession.secondSession = (Session)cmb2.SelectedItem;
                
                 dbContext1.ConsecutiveSessions.Add(NewSession);
                 dbContext1.SaveChanges();
@@ -89,8 +89,8 @@ namespace TimeTableManager
             selectedSession = (s as FrameworkElement).DataContext as ConsecutiveSession;
 
             //txtSessionName.Text = selectedSession.consecutiveId;
-            cmb1.Text = selectedSession.firstSession;
-            cmb2.Text = selectedSession.secondSession;
+            cmb1.SelectedItem = selectedSession.firstSession;
+            cmb2.SelectedItem = selectedSession.secondSession;
            
         }
 
@@ -101,8 +101,8 @@ namespace TimeTableManager
             if (ValidateInput())
             {
                 //selectedSession.consecutiveId = txtSessionName.Text;
-                selectedSession.firstSession = cmb1.Text;
-                selectedSession.secondSession = cmb2.Text;
+                selectedSession.firstSession = (Session)cmb1.SelectedItem;
+                selectedSession.secondSession = (Session)cmb2.SelectedItem;
                 dbContext1.Update(selectedSession);
                 dbContext1.SaveChanges();
 

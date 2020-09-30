@@ -8,7 +8,7 @@ namespace TimeTableManager.Models
     {
         public int Id { get; set; }
         //public String consecutiveId { get; set; }
-        public String firstSession { get; set; }
-        public String secondSession { get; set; }
+        public Session firstSession { get; set; }
+        public Session secondSession { get; set; }
     }
 }
