@@ -35,6 +35,10 @@ namespace TimeTableManager.Models
 
         public override string ToString()
         {
+            if (subjectDSA == null || tagDSA == null)
+            {
+                return SessionId.ToString() + "\n" + lecturesLstByConcadinating  + "\n" + GroupOrsubgroupForDisplay + "\n" + StdntCount + "(" + durationinHours + ")";
+            }
             return SessionId.ToString() + "\n"+ lecturesLstByConcadinating + "\n" + subjectDSA.SubjectName + "(" + subjectDSA.SubjectCode + ")" + "\n" + tagDSA.tags + "\n" + GroupOrsubgroupForDisplay + "\n" + StdntCount + "(" + durationinHours + ")";
         }
 
