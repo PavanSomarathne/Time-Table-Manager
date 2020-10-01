@@ -22,8 +22,8 @@ namespace TimeTableManager
     /// </summary>
     public partial class SessionWindow : Window
     {
-
-        Boolean Addseesion = true;
+        String chkkradiovall = "Lecturer";
+         Boolean Addseesion = true;
         Boolean settingEmptyValues = false;
         List<LecturerDetails> LeLISTT = new List<LecturerDetails>();
 
@@ -44,6 +44,7 @@ namespace TimeTableManager
             getlecturers();
             getTags();
             LoadSessions();
+        
 
         }
 
@@ -173,6 +174,63 @@ namespace TimeTableManager
         }
 
 
+        private void selectsubjectdrpp(Object s, RoutedEventArgs e)
+
+        {   // if (selectsubjects.Text.ToString().Equals(""))
+            // {
+            //      MessageBox.Show(selectsubjects.Text.ToString() + "when the subject drop down value empty");
+            //  }
+
+
+            //  if (!settingEmptyValues && !selectsubjects.Text.ToString().Equals(""))
+            //   {
+
+            //    SubjectDetails dt = (SubjectDetails)selectsubjects.SelectedItem;
+
+            //  MessageBox.Show(dt.SubjectCode);
+
+            //  MessageBox.Show(selectsubjects.Text.ToString().Equals("").ToString());
+
+            //   MessageBox.Show("when the subject drp down not empty " );
+
+
+            // }
+
+            //   String ContentOfItemOne = (selectsubjects.Items[selectsubjects.SelectedIndex] as ComboBoxItem).Content.ToString();
+
+
+
+            //   MessageBox.Show(selectsubjects.Text.ToString());
+
+
+            if (!settingEmptyValues)
+            {
+
+                 SubjectDetails dd = (SubjectDetails)selectsubjects.SelectedItem;
+                 if (dd != null)
+                {
+                    sucode.Content = dd.SubjectCode;
+                }
+                else
+                {
+                    sucode.Content = "";
+                }
+
+                dd = null;
+
+
+            }   
+
+        }
+
+
+
+
+
+
+
+
+
 
         private void NumberValidationForStudentCount(object sender, TextCompositionEventArgs e)
         {
@@ -190,128 +248,124 @@ namespace TimeTableManager
         private void AddSessionDetails(object s, RoutedEventArgs e)
 
         {
-
-            Addseesion = true;
-
-            Tag tgggg = (Tag)CBTagsNames.SelectedItem;
-            String tagname = tgggg.tags;
-
-
-            //concadinate lecturer names
-            newSessionDl.lecturesLstByConcadinating = null;
-            foreach (LecturerDetails LL in LeLISTT)
+            if (ValidateSessionInputs())
             {
 
-                newSessionDl.lecturesLstByConcadinating += LL.LecName;
-            }
+
+                //condition
+                if (dbContext1.Sessions.Any(b => b.subjectDSA.SubjectName == selectsubjects.Text.Trim() && b.tagDSA.tags == CBTagsNames.Text.Trim() && (b.GroupOrsubgroupForDisplay == selectMainGroup.Text.Trim() || b.GroupOrsubgroupForDisplay == selectSubgrp.Text.Trim())  ))
+                {
+                    new MessageBoxCustom("This Session is already in the System", MessageType.Error, MessageButtons.Ok).ShowDialog();
+                    return;
+                }
+
+
+                Addseesion = true;
+
+                Tag tgggg = (Tag)CBTagsNames.SelectedItem;
+                String tagname = tgggg.tags;
+
+
+                //concadinate lecturer names
+                newSessionDl.lecturesLstByConcadinating = null;
+                foreach (LecturerDetails LL in LeLISTT)
+                {
+
+                    newSessionDl.lecturesLstByConcadinating += LL.LecName + " ,";
+                }
 
 
 
 
 
 
-            newSessionDl.Year = CByearselect.Text;
-            newSessionDl.StdntCount = int.Parse(StdntCnt.Text);
-            newSessionDl.durationinHours = int.Parse(Duration.Text);
-            newSessionDl.tagDSA = (Tag)CBTagsNames.SelectedItem;
-            newSessionDl.subjectDSA = (SubjectDetails)selectsubjects.SelectedItem;
+                newSessionDl.Year = CByearselect.Text.Trim();
+                newSessionDl.StdntCount = int.Parse(StdntCnt.Text.Trim());
+                newSessionDl.durationinHours = int.Parse(Duration.Text.Trim());
+                newSessionDl.tagDSA = (Tag)CBTagsNames.SelectedItem;
+                newSessionDl.subjectDSA = (SubjectDetails)selectsubjects.SelectedItem;
 
 
 
-            Student getGrpsub;
+                Student getGrpsub;
 
-            if (tagname.Equals("Lecture") || tagname.Equals("Tutorial"))
-            {
+                if (tagname.Equals("Lecture") || tagname.Equals("Tutorial"))
+                {
 
-                newSessionDl.studentDSA = (Student)selectMainGroup.SelectedItem;
-                getGrpsub = (Student)selectMainGroup.SelectedItem;
-                newSessionDl.GroupOrsubgroupForDisplay = getGrpsub.groupId;
-                newSessionDl.GroupType = "Main Group";
+                    newSessionDl.studentDSA = (Student)selectMainGroup.SelectedItem;
+                    getGrpsub = (Student)selectMainGroup.SelectedItem;
+                    newSessionDl.GroupOrsubgroupForDisplay = getGrpsub.groupId;
+                    newSessionDl.GroupType = "Main Group";
+                }
+                else
+                {
+                    newSessionDl.studentDSA = (Student)selectSubgrp.SelectedItem;
+                    getGrpsub = (Student)selectSubgrp.SelectedItem;
+                    newSessionDl.GroupOrsubgroupForDisplay = getGrpsub.subGroupId;
+                    newSessionDl.GroupType = "Sub Group";
+                }
+
+
+                dbContext1.Sessions.Add(newSessionDl);
+
+                int condition = dbContext1.SaveChanges();
+
+                //  MessageBox.Show(condition.ToString());
+
+
+
+                //    if (condition > 0)
+                //    { }
+
+                foreach (LecturerDetails lec in LeLISTT)
+                {
+
+
+                    SessionLecturer sessionlc = new SessionLecturer
+                    {
+
+                        Ssssion = newSessionDl,
+                        Lecdetaiils = lec
+
+                    };
+
+                    dbContext1.SessionLecturers.Add(sessionlc);
+                    dbContext1.SaveChanges();
+
+
+                }
+
+                settingEmptyValues = true;
+
+                CByearselect.Text = " ";
+                LVlecturer.ItemsSource = null;
+                CBTagsNames.Text = "";
+                selectMainGroup.Text = "";
+                selectSubgrp.Text = "";
+                StdntCnt.Text = "";
+                Duration.Text = "";
+                LecturerDrpn.Text = "";
+                selectsubjects.Text = "";
+                sucode.Content = "";
+
+                newSessionDl = new Session();
+
+                LeLISTT = null;
+                LeLISTT = new List<LecturerDetails>();
+                getGrpsub = null;
+
+                settingEmptyValues = false;
+                LoadSessions();
+
+
+
+
+
             }
             else
             {
-                newSessionDl.studentDSA = (Student)selectSubgrp.SelectedItem;
-                getGrpsub = (Student)selectSubgrp.SelectedItem;
-                newSessionDl.GroupOrsubgroupForDisplay = getGrpsub.subGroupId;
-                newSessionDl.GroupType = "Sub Group";
+                new MessageBoxCustom("Please Complete  Session   Details correctly !", MessageType.Warning, MessageButtons.Ok).ShowDialog();
             }
-
-
-            dbContext1.Sessions.Add(newSessionDl);
-
-            int condition = dbContext1.SaveChanges();
-
-            //  MessageBox.Show(condition.ToString());
-
-
-
-            //    if (condition > 0)
-            //    { }
-
-            foreach (LecturerDetails lec in LeLISTT)
-            {
-
-
-                SessionLecturer sessionlc = new SessionLecturer
-                {
-
-                    Ssssion = newSessionDl,
-                    Lecdetaiils = lec
-
-                };
-
-                dbContext1.SessionLecturers.Add(sessionlc);
-                dbContext1.SaveChanges();
-
-
-            }
-
-            settingEmptyValues = true;
-
-            CByearselect.Text = " ";
-            LVlecturer.ItemsSource = null;
-            CBTagsNames.Text = "";
-            selectMainGroup.Text = "";
-            selectSubgrp.Text = "";
-            StdntCnt.Text = "";
-            Duration.Text = "";
-            LecturerDrpn.Text = "";
-            selectsubjects.Text = "";
-
-
-            newSessionDl = new Session();
-
-            LeLISTT = null;
-            LeLISTT = new List<LecturerDetails>();
-            getGrpsub = null;
-
-            settingEmptyValues = false;
-            LoadSessions();
-
-
-
-
-
-            // newSessionDl.studentDSA = (Student)selectsubjects.SelectedItem;
-
-            //  if((Tag)CBTagsNames.SelectedItem.)
-
-
-
-
-            //  NewLecDL.LecName = LecturerName.Text;
-            // NewLecDL.EmpId = LecIdName.Text;
-            //  NewLecDL.Faculty = LecturerFaculty.Text;
-            //  NewLecDL.Department = LecturerDepartment.Text;
-            //  NewLecDL.Center = LecturerCenter.Text;
-            // // NewLecDL.BuildinDSA = (Building)CBBuilding.SelectedItem;
-            // NewLecDL.EmpLevel = int.Parse(LecLevel.Text);
-            // NewLecDL.Rank = LecLevel.SelectedIndex + 1.ToString() + "." + LecIdName.Text.ToString();
-            // Addlecbtn.Content = "Add lecture";
-            // dbContext1.LectureInformation.Add(NewLecDL);
-            // NewLecDL = new LecturerDetails();
-
-
 
 
 
@@ -322,13 +376,7 @@ namespace TimeTableManager
 
 
 
-        //   private void SelectLectureritem(Object s, RoutedEventArgs e)
-
-        //  {                      
-
-
-
-        //  }
+    
 
 
 
@@ -356,12 +404,12 @@ namespace TimeTableManager
 
                       LeLISTT.Add(TrytoAddLecture);
 
-                            String test = null;
-                            foreach(LecturerDetails ll in LeLISTT)
-                            {
-                                test += ll.LecName + " ";
-                            }
-                            MessageBox.Show(test);
+                           // String test = null;
+                          //  foreach(LecturerDetails ll in LeLISTT)
+                           // {
+                            //    test += ll.LecName + " ";
+                           // }
+                          //  MessageBox.Show(test);
                             LVlecturer.ItemsSource = LeLISTT.ToList();
                             LecturerDrpn.SelectedIndex = -1;
                         
@@ -373,7 +421,7 @@ namespace TimeTableManager
                 else
                 {
                     LecturerDetails lectu = (LecturerDetails)LecturerDrpn.SelectedItem;
-                    MessageBox.Show(lectu.Id.ToString());
+                  //  MessageBox.Show(lectu.Id.ToString());
                     if (dbContext1.SessionLecturers.Any(r => r.SessionrId == UpdatingSession.SessionId && r.LecturerId == lectu.Id))
                      {
                         new MessageBoxCustom("This Lecture already assigned to this Session,Can't add again!", MessageType.Error, MessageButtons.Ok).ShowDialog();
@@ -460,6 +508,7 @@ namespace TimeTableManager
                 //update ekedi lectures la concat net karannaa and year eka concadidate karanna
                 CByearselect.Text = UpdatingSession.Year;
                 selectsubjects.Text = UpdatingSession.subjectDSA.SubjectName;
+                sucode.Content = UpdatingSession.subjectDSA.SubjectCode;
                 LoadLecturesGivenBySessionId(UpdatingSession.SessionId);
                 CBTagsNames.Text = UpdatingSession.tagDSA.tags;
 
@@ -502,7 +551,7 @@ namespace TimeTableManager
             }
 
         }
-
+        //remove lectures from list
         private void Delectlecturec(object s, RoutedEventArgs e)
         {
 
@@ -562,7 +611,7 @@ namespace TimeTableManager
             }
             else
             {
-                MessageBox.Show("please select lecture before clicking teh button  ");
+                MessageBox.Show("please select lecture before clicking the button  ");
             }
 
 
@@ -581,107 +630,127 @@ namespace TimeTableManager
             //    new MessageBoxCustom("Please Select session before the update !", MessageType.Warning, MessageButtons.Ok).ShowDialog();
             //  }
 
-
-
-
-            UpdatingSession.lecturesLstByConcadinating = null;
-            foreach (LecturerDetails LL in LeLISTT)
+            if (ValidateSessionInputs())
             {
+                bool estingSS = !(UpdatingSession.subjectDSA.SubjectName.Equals(selectsubjects.Text.ToString()) && UpdatingSession.tagDSA.tags.Equals(CBTagsNames.Text.ToString()) && (UpdatingSession.GroupOrsubgroupForDisplay.Equals(selectMainGroup.Text.ToString()) || UpdatingSession.GroupOrsubgroupForDisplay.Equals(selectSubgrp.Text.ToString())));
+            
 
-                UpdatingSession.lecturesLstByConcadinating += LL.LecName;
-            }
+                if (estingSS &&  dbContext1.Sessions.Any(b => b.subjectDSA.SubjectName == selectsubjects.Text.ToString() && b.tagDSA.tags == CBTagsNames.Text.ToString() && (b.GroupOrsubgroupForDisplay == selectMainGroup.Text.ToString() || b.GroupOrsubgroupForDisplay == selectSubgrp.Text.ToString())))
+                {
+                    new MessageBoxCustom("This session already In the system", MessageType.Error, MessageButtons.Ok).ShowDialog();
+                    return;
 
-
-
-            Tag updatingtg = (Tag)CBTagsNames.SelectedItem;
-            String updatingtagname = updatingtg.tags;
-
-
-            UpdatingSession.Year = CByearselect.Text;
-            UpdatingSession.StdntCount = int.Parse(StdntCnt.Text);
-            UpdatingSession.durationinHours = int.Parse(Duration.Text);
-            UpdatingSession.tagDSA = (Tag)CBTagsNames.SelectedItem;
-            UpdatingSession.subjectDSA = (SubjectDetails)selectsubjects.SelectedItem;
+                }
 
 
-            Student UpadtinggetGrpsubb;
-
-            if (updatingtagname.Equals("Lecture") || updatingtagname.Equals("Tutorial"))
-            {
-
-                UpdatingSession.studentDSA = (Student)selectMainGroup.SelectedItem;
-                UpadtinggetGrpsubb = (Student)selectMainGroup.SelectedItem;
-                UpdatingSession.GroupOrsubgroupForDisplay = UpadtinggetGrpsubb.groupId;
-                UpdatingSession.GroupType = "Main Group";
-            }
-            else
-            {
-                UpdatingSession.studentDSA = (Student)selectSubgrp.SelectedItem;
-                UpadtinggetGrpsubb = (Student)selectSubgrp.SelectedItem;
-                UpdatingSession.GroupOrsubgroupForDisplay = UpadtinggetGrpsubb.subGroupId;
-                UpdatingSession.GroupType = "Sub Group";
-            }
-
-
-
-
-
-            dbContext1.Update(UpdatingSession);
-            dbContext1.SaveChanges();
-
-
-
-            foreach (LecturerDetails lecdetl in LeLISTT)
-            {
-                MessageBox.Show("updating... outer");
-                if (dbContext1.SessionLecturers.Any(r => r.SessionrId == UpdatingSession.SessionId && r.LecturerId == lecdetl.Id))
-                    MessageBox.Show("upadaing ...inner");
+                UpdatingSession.lecturesLstByConcadinating = null;
+                foreach (LecturerDetails LL in LeLISTT)
                 {
 
-                    var SesLert = dbContext1.SessionLecturers.First(row => row.SessionrId == UpdatingSession.SessionId && row.LecturerId == lecdetl.Id);
-                    dbContext1.SessionLecturers.Update(SesLert);
-                    dbContext1.SaveChanges();
+                    UpdatingSession.lecturesLstByConcadinating += LL.LecName + " ,";
+                }
 
+
+
+                Tag updatingtg = (Tag)CBTagsNames.SelectedItem;
+                String updatingtagname = updatingtg.tags;
+
+
+                UpdatingSession.Year = CByearselect.Text.Trim();
+                UpdatingSession.StdntCount = int.Parse(StdntCnt.Text.Trim());
+                UpdatingSession.durationinHours = int.Parse(Duration.Text.Trim());
+                UpdatingSession.tagDSA = (Tag)CBTagsNames.SelectedItem;
+                UpdatingSession.subjectDSA = (SubjectDetails)selectsubjects.SelectedItem;
+
+
+                Student UpadtinggetGrpsubb;
+
+                if (updatingtagname.Equals("Lecture") || updatingtagname.Equals("Tutorial"))
+                {
+
+                    UpdatingSession.studentDSA = (Student)selectMainGroup.SelectedItem;
+                    UpadtinggetGrpsubb = (Student)selectMainGroup.SelectedItem;
+                    UpdatingSession.GroupOrsubgroupForDisplay = UpadtinggetGrpsubb.groupId;
+                    UpdatingSession.GroupType = "Main Group";
+                }
+                else
+                {
+                    UpdatingSession.studentDSA = (Student)selectSubgrp.SelectedItem;
+                    UpadtinggetGrpsubb = (Student)selectSubgrp.SelectedItem;
+                    UpdatingSession.GroupOrsubgroupForDisplay = UpadtinggetGrpsubb.subGroupId;
+                    UpdatingSession.GroupType = "Sub Group";
+                }
+
+
+
+
+
+                dbContext1.Update(UpdatingSession);
+                dbContext1.SaveChanges();
+
+
+
+                foreach (LecturerDetails lecdetl in LeLISTT)
+                {
+
+                    if (dbContext1.SessionLecturers.Any(r => r.SessionrId == UpdatingSession.SessionId && r.LecturerId == lecdetl.Id))
+
+                    {
+
+                        var SesLert = dbContext1.SessionLecturers.First(row => row.SessionrId == UpdatingSession.SessionId && row.LecturerId == lecdetl.Id);
+                        dbContext1.SessionLecturers.Update(SesLert);
+                        dbContext1.SaveChanges();
+
+
+
+                    }
 
 
                 }
 
 
+
+
+                settingEmptyValues = true;
+
+                CByearselect.Text = " ";
+                LVlecturer.ItemsSource = null;
+                CBTagsNames.Text = "";
+                selectMainGroup.Text = "";
+                selectSubgrp.Text = "";
+                StdntCnt.Text = "";
+                Duration.Text = "";
+                LecturerDrpn.Text = "";
+                selectsubjects.Text = "";
+                sucode.Content = "";
+
+
+                LeLISTT = null;
+                LeLISTT = new List<LecturerDetails>();
+                UpdatingSession = null;
+                UpdatingSession = new Session();
+
+                settingEmptyValues = false;
+                LoadSessions();
+
+                settingEmptyValues = false;
+
+                Addlecbtn.IsEnabled = true;
+                Sessionupdatebtn.IsEnabled = false;
+                Addseesion = true;
+                SessionDGg.SelectedItem = null;
+                LoadSessions();
+                //antima addsession eka true karann
+                // Addseesion = true; //meka true karanna kalin values empty kala yuthu wey,nattama waradi
+
+
             }
 
+            else
+            {
+                new MessageBoxCustom("Please Complete  Session   Details correctly !", MessageType.Warning, MessageButtons.Ok).ShowDialog();
+            }
 
-
-
-            settingEmptyValues = true;
-
-            CByearselect.Text = " ";
-            LVlecturer.ItemsSource = null;
-            CBTagsNames.Text = "";
-            selectMainGroup.Text = "";
-            selectSubgrp.Text = "";
-            StdntCnt.Text = "";
-            Duration.Text = "";
-            LecturerDrpn.Text = "";
-            selectsubjects.Text = "";
-
-
-            LeLISTT = null;
-            LeLISTT = new List<LecturerDetails>();
-            UpdatingSession = null;
-            UpdatingSession = new Session();
-
-            settingEmptyValues = false;
-            LoadSessions();
-
-            settingEmptyValues = false;
-
-            Addlecbtn.IsEnabled = true;
-            Sessionupdatebtn.IsEnabled = false;
-            Addseesion = true;
-            SessionDGg.SelectedItem = null;
-            LoadSessions();
-            //antima addsession eka true karann
-            // Addseesion = true; //meka true karanna kalin values empty kala yuthu wey,nattama waradi
         }
 
         public void LoadLecturesGivenBySessionId(int sesin)
@@ -695,13 +764,13 @@ namespace TimeTableManager
 
             LVlecturer.ItemsSource = LeLISTT;
 
-            String name = null;
-            foreach (LecturerDetails kk in LeLISTT)
-            {
-                name += kk.LecName + ",";
-            }
+           // String name = null;
+           // foreach (LecturerDetails kk in LeLISTT)
+           // {
+           //     name += kk.LecName + ",";
+           // }
 
-            MessageBox.Show(name);
+          //  MessageBox.Show(name);
 
 
 
@@ -740,6 +809,7 @@ namespace TimeTableManager
                 Duration.Text = "";
                 LecturerDrpn.Text = "";
                 selectsubjects.Text = "";
+                sucode.Content = "";
 
 
                 LeLISTT = null;
@@ -767,6 +837,202 @@ namespace TimeTableManager
 
         }
 
+        private void Lectueradiobtnclickingg(object sender, RoutedEventArgs e)
+        {
+
+            if (lecturechkbtn.IsChecked == true)
+            {
+                chkkradiovall = "Lecturer";
+            }
+
+            sessionserhh.Text = "";
+        }
+
+
+        private void groupcheckbtnclicking(object sender, RoutedEventArgs e)
+        {
+         
+
+            if(grpsupchkbtn.IsChecked==true)
+            {
+                chkkradiovall = "Group Or Sub Group";
+            }
+
+            sessionserhh.Text = "";
+        }
+
+
+        private void subjectcheckbtnclicking(object sender, RoutedEventArgs e)
+        {
+
+            if (subjectchkbtn.IsChecked == true)
+            {
+                chkkradiovall = "Subject";
+            }
+
+            sessionserhh.Text = "";
+        }
+
+       
+            private void Serchsessionvaluess(object sender, RoutedEventArgs e)
+            {      
+
+                   if(sessionserhh.Text.Trim().Equals("") )
+                   {
+                     LoadSessions();
+                   }
+      
+                   if( !sessionserhh.Text.Trim().Equals("") && !chkkradiovall.Equals(""))
+                  {
+                    //MessageBox.Show(sessionserhh.Text.ToLower() + chkkradiovall);
+
+                        if(chkkradiovall.Equals("Lecturer"))
+                      {
+                       advancedSearchlectures(sessionserhh.Text.ToString());
+
+                      }
+
+
+                       if (chkkradiovall.Equals("Group Or Sub Group"))
+                      {
+                         advancedgroupOrSubgrpSearch(sessionserhh.Text.ToString());
+
+                      }
+
+
+                       if(chkkradiovall.Equals("Subject"))
+                      {
+                        advancedSubjectSearch(sessionserhh.Text.ToString());
+
+                      }
+ 
+                  }
+
+
+           }
+
+
+        public void advancedSubjectSearch(String sujct)
+        {
+
+            SessionDGg.ItemsSource = dbContext1.Sessions.Where(d => d.subjectDSA.SubjectName .ToLower().StartsWith(sujct.ToLower())).ToList();
+
+        }
+
+        public void advancedgroupOrSubgrpSearch(String grp)
+        {
+
+            SessionDGg.ItemsSource = dbContext1.Sessions.Where(d => d.GroupOrsubgroupForDisplay.ToLower().StartsWith(grp.ToLower())).ToList();
+
+        }
+
+
+
+
+
+           public void advancedSearchlectures(String lec)
+        {
+
+
+
+            // var names = (from cust in dbContext1.Sessions
+            //  where cust.lecturesLstByConcadinating.IndexOf(lec, StringComparison.InvariantCultureIgnoreCase) >= 0
+            //  select cust).ToList();
+
+            //  String yy = null;
+
+            ///  foreach(Session ss in names)
+            //  {
+            //      yy += ss.Year + " ";
+            //   }
+
+            //  MessageBox.Show(yy);
+
+
+
+
+            //  SessionDGg.ItemsSource = dbContext1.SessionLecturers.Where(d => d.lecturesLstByConcadinating.ToLower().Contains(lec.ToLower())).ToList();
+
+            SessionDGg.ItemsSource = dbContext1.SessionLecturers.Where(d => d.Lecdetaiils.LecName.ToLower().StartsWith(lec.ToLower())).Select(s => s.Ssssion).ToList();
+
+
+
+
+
+        }
+
+
+
+     
+
+        //return value eka dannn/////////////////////////////////
+        private bool ValidateSessionInputs()
+        {
+            if (CByearselect.Text.Trim() == "")
+            {
+                CByearselect.Focus();
+                return false;
+            }
+
+
+
+
+            if (selectsubjects.SelectedIndex == -1)
+            {
+               // MessageBox.Show(selectsubjects.Text.ToString());
+                selectsubjects.Focus();
+                return false;
+            }
+
+            if (LeLISTT.Count == 0)
+            {
+              //  new MessageBoxCustom("Assign  Lecturer or lecturers before create the session", MessageType.Error, MessageButtons.Ok).ShowDialog();
+                return false;
+            }
+
+            if (CBTagsNames.SelectedIndex == -1)
+            {
+                CBTagsNames.Focus();
+                return false;
+            }
+
+
+
+            if (CBTagsNames.Text.ToString().Equals("Lecture") && selectMainGroup.SelectedIndex == -1)
+            {
+                selectMainGroup.Focus();
+                return false;
+            }
+
+            if (CBTagsNames.Text.ToString().Equals("Tutorial") && selectMainGroup.SelectedIndex == -1)
+            {
+                selectMainGroup.Focus();
+                return false;
+
+            }
+
+            if (CBTagsNames.Text.ToString().Equals("Practical") && selectSubgrp.SelectedIndex == -1)
+            {
+                selectSubgrp.Focus();
+                return false;
+
+            }
+
+            if (StdntCnt.Text.Trim() == "")
+            {
+                StdntCnt.Focus();
+                return false;
+            }
+
+            if (Duration.Text.Trim() == "")
+            {
+                Duration.Focus();
+                return false;
+            }
+
+             return true;
+         
+        }
 
 
 
