@@ -133,7 +133,7 @@ namespace TimeTableManager
 
 
                 //insert that object to database
-                if (!(RoomToEdit.Rid.Equals(TxtRid.Text.Trim())) && dbContext1.Rooms.Any(r => r.Rid == TxtRid.Text))
+                if (! (RoomToEdit.Rid.Equals(TxtRid.Text.Trim()) ) && dbContext1.Rooms.Any(r => r.Rid == TxtRid.Text))
                 {
                     new MessageBoxCustom("This ID Already In the System Use a Different ID", MessageType.Error, MessageButtons.Ok).ShowDialog();
 

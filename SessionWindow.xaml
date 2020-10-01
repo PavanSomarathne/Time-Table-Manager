@@ -14,7 +14,7 @@
         Background="{DynamicResource MaterialDesignPaper}"
         FontFamily="{DynamicResource MaterialDesignFont}"
         
-        Title=""  Height="780" Width="1366"  WindowStartupLocation="CenterScreen">
+        Title="" Height="775" Width="1366"  WindowStartupLocation="CenterScreen">
 
     <Border Padding="0 0  0 20">
         <Grid>
@@ -53,36 +53,33 @@
 
                     <StackPanel>
 
-                        <Border  Grid.Column="0" BorderBrush="Black" BorderThickness="1" Margin="0 15 0 0" MaxHeight="720" MinHeight="600">
+                        <Border  Grid.Column="0" BorderBrush="Black" BorderThickness="1" Margin="0 15 0 0"  >
 
                             <StackPanel>
 
                                 <Grid>
 
-                                <Grid.RowDefinitions>
+                                    <Grid.RowDefinitions>
 
-                                    <RowDefinition Height="180"/>
-                                    <RowDefinition Height="*"/>
+                                        <RowDefinition Height="170"/>
+                                        <RowDefinition Height="*"/>
 
-                                     </Grid.RowDefinitions>
+                                    </Grid.RowDefinitions>
 
                                     <StackPanel Grid.Row="0">
                                         <Grid>
                                             <Grid.RowDefinitions>
                                                 <RowDefinition Height="*"/>
                                                 <RowDefinition Height="*"/>
-                                                
+
                                             </Grid.RowDefinitions>
 
-                                            <StackPanel Grid.Row="0"  Margin="80 30 0 12 ">
+                                            <StackPanel Grid.Row="0"  Margin="80 10 0 12 ">
                                                 <StackPanel Orientation="Horizontal">
-                                                    <TextBlock Background="Wheat" FontSize="12" FontWeight="Bold" Width="450" Margin="5 5 21 0" Padding="15"  />
+                                                    <TextBox materialDesign:HintAssist.Hint="Search" x:Name="sessionserhh" Width="450" FontSize="22" FontWeight="Bold" BorderBrush="Black" Background="AntiqueWhite" Padding="2 3 3 3" TextChanged="Serchsessionvaluess"/>
 
-
-
-                                                    <Button x:Name="FBCButton" HorizontalAlignment="Right" Margin="0,8,13,4" Width="111" Content="Browse" Grid.Column="1" />
                                                 </StackPanel>
-                                                
+
 
                                             </StackPanel>
                                             <StackPanel Grid.Row="1">
@@ -92,16 +89,32 @@
                                                         <ColumnDefinition Width="*"/>
                                                     </Grid.ColumnDefinitions>
 
+
+                                                    <StackPanel Grid.Column="0">
+                                                        <StackPanel Orientation="Horizontal">
+                                                            <Label Content="Filter By" Padding="5" FontWeight="Bold" FontSize="14" Margin=" 35 12 28 22" Height="62"/>
+                                                            <materialDesign:Card materialDesign:ShadowAssist.ShadowDepth="Depth1" Padding="2 0 25 0" Margin="12 12 2 0" Height="56">
+                                                                <StackPanel Orientation="Horizontal" VerticalAlignment="Top">
+                                                                    <RadioButton x:Name="lecturechkbtn" Content="Lecturer" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="5" Click="Lectueradiobtnclickingg" IsChecked="True"/>
+                                                                    <RadioButton x:Name="grpsupchkbtn" Content="Group Or Sub Group" HorizontalAlignment="Left" VerticalAlignment="Top"  Margin="5"  Click="groupcheckbtnclicking"/>
+                                                                    <RadioButton  x:Name="subjectchkbtn" Content="Subject" HorizontalAlignment="Left" VerticalAlignment="Top"  Margin="5" Click="subjectcheckbtnclicking"/>
+                                                                </StackPanel>
+
+                                                            </materialDesign:Card>
+                                                        </StackPanel>
+
+                                                    </StackPanel>
+
                                                     <StackPanel Grid.Column="1">
                                                         <Button Content="Update" Margin="5" x:Name="Sessionupdatebtn" IsEnabled="False" Click="UpdateSessionDetails"></Button>
                                                         <Button Content="Delete" Margin="5" x:Name="SessionDeletebtn" Click="SessionDelete"></Button>
                                                     </StackPanel>
-                                                    
-                                                    
+
+
                                                 </Grid>
                                             </StackPanel>
-                                            
-                                            
+
+
                                         </Grid>
                                     </StackPanel>
 
@@ -109,73 +122,89 @@
                                     <StackPanel Grid.Row="1">
 
                                         <GroupBox Grid.Row="2"  Grid.Column="2"  Header="Session details" Style="{DynamicResource MaterialDesignCardGroupBox}"   materialDesign:ColorZoneAssist.Mode="Custom" materialDesign:ColorZoneAssist.Background="#FF673AB7" materialDesign:ColorZoneAssist.Foreground="White"  >
-                                            <ListView Name="SessionDGg" SelectionChanged="SelectSessionRow" MaxHeight="720">
-                                            <ListView.ItemTemplate>
-                                                <DataTemplate>
+                                            <ListView Name="SessionDGg" SelectionChanged="SelectSessionRow" MinHeight="350" MaxHeight="400"  >
+                                                <ListView.ItemTemplate>
+                                                    <DataTemplate>
 
-                                                    
-                                                        <StackPanel Margin="3" materialDesign:ShadowAssist.Darken="True" >
+                                                        
+                                                      
+                                                            <WrapPanel Margin="3" materialDesign:ShadowAssist.Darken="True" Orientation="Vertical">
+                                                        
+                                                            <TextBlock HorizontalAlignment="Stretch" VerticalAlignment="Center"  FontSize="18" FontWeight="Bold"   Text="{Binding lecturesLstByConcadinating}"/>
 
-
-                                                                <TextBlock HorizontalAlignment="Stretch" VerticalAlignment="Center"  FontSize="18" FontWeight="Bold"   Text="{Binding lecturesLstByConcadinating}"/>
-
-                                                            <StackPanel Orientation="Horizontal">
+                                                            <WrapPanel Orientation="Horizontal">
 
                                                                 <TextBlock  
                                                                      FontWeight="Bold" FontSize="14"  HorizontalAlignment="Stretch" VerticalAlignment="Center"  Text="{Binding subjectDSA.SubjectName}"/>
                                                                 <TextBlock  FontWeight="Bold" FontSize="14" >(</TextBlock>
                                                                 <TextBlock FontWeight="Bold" FontSize="14" Text="{Binding subjectDSA.SubjectCode}"></TextBlock>
                                                                 <TextBlock  FontWeight="Bold" FontSize="14" >)</TextBlock>
-                                                            </StackPanel>
-                                                               
+                                                            </WrapPanel>
+
 
                                                             <TextBlock   HorizontalAlignment="Stretch" VerticalAlignment="Center"    FontWeight="Bold" 
                                                                      Text="{Binding tagDSA.tags}" FontSize="14"  />
 
-                                                               
+
                                                             <TextBlock   HorizontalAlignment="Stretch" VerticalAlignment="Center"
                                                                       FontWeight="Bold" Text="{Binding GroupOrsubgroupForDisplay}" FontSize="14"/>
 
-                                                            <StackPanel Orientation="Horizontal">
+                                                            <WrapPanel Orientation="Horizontal">
                                                                 <TextBlock    HorizontalAlignment="Stretch" VerticalAlignment="Center" 
                                                                     Text="{Binding StdntCount}" FontSize="14" />
                                                                 <TextBlock  FontWeight="Bold" FontSize="14" >(</TextBlock>
                                                                 <TextBlock FontWeight="Bold" FontSize="14" Text="{Binding durationinHours}"></TextBlock>
                                                                 <TextBlock  FontWeight="Bold" FontSize="14" >)</TextBlock>
-                                                            </StackPanel>
-                                                         
-                                                        </StackPanel>
-                                                      
+                                                            </WrapPanel>
+                                                            </WrapPanel>
+                                                 
                                                     </DataTemplate>
-                                            </ListView.ItemTemplate>
+                                                </ListView.ItemTemplate>
 
                                             </ListView>
 
                                         </GroupBox>
                                     </StackPanel>
 
-                            
+
                                 </Grid>
-                                
+
                             </StackPanel>
-            
+
 
                         </Border>
 
                     </StackPanel>
-                    <StackPanel Grid.Column="1" Margin="4" x:Name="AddNewLecturedetails">
+                    <StackPanel Grid.Column="1" Margin="4 0 4 4" x:Name="AddNewLecturedetails">
 
-                        <Label HorizontalAlignment="Center" FontSize="20" Content="Session Management"></Label>
+                         <Label HorizontalAlignment="Center" FontSize="18" Content="Session Management" Margin="4 0 4 4"></Label>
+                      
                         <Label Content="Select Year" Margin="8 5 0 0"></Label>
-     
+
                         <ComboBox x:Name="CByearselect" Padding="2" Margin="8 0 0 0"   SelectionChanged="yeardropdwn" >
                             <ComboBoxItem>1st Year</ComboBoxItem>
                             <ComboBoxItem>2nd Year</ComboBoxItem>
                             <ComboBoxItem>3rd Year</ComboBoxItem>
                             <ComboBoxItem>4th Year</ComboBoxItem>
                         </ComboBox>
-                        <Label Content="Select subject" Margin="8 5 0 0"></Label>
-                        <ComboBox  Padding="2" Margin="8 0 0 0" x:Name="selectsubjects" ItemsSource="{Binding Path=SubjectInformation}"  DisplayMemberPath="SubjectName" />
+                       
+                            <Grid Margin="8 5 0 0">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                    
+                                </Grid.ColumnDefinitions>
+                           
+                            <Label Content="Select subject" Grid.Column="0"  Margin=" 4 0 0 0 "  VerticalAlignment="Center" ></Label>
+                            <StackPanel Orientation="Horizontal" Margin="0 0 0 0" Background="#ccc" Grid.Column="1" >
+                                <Label   Content="Subject Code"/>
+                                <Label x:Name="sucode"   HorizontalAlignment="Center" Padding="3 0 0 0" VerticalAlignment="Center"  />
+                            </StackPanel>
+                                
+                            </Grid>
+
+
+                        <ComboBox  Padding="2" Margin="8 0 0 0" x:Name="selectsubjects" ItemsSource="{Binding Path=SubjectInformation}"  DisplayMemberPath="SubjectName" SelectionChanged="selectsubjectdrpp" />
                         <Label Content="Select lecturer or Lecturers" Margin="8 5 0 0"></Label>
 
 
@@ -196,13 +225,13 @@
                             </StackPanel>
                         </materialDesign:Card>
 
-                      
+
                         <GroupBox Grid.Row="2"  Grid.Column="2"  Header="Selected lecturers" Style="{DynamicResource MaterialDesignCardGroupBox}" MaxHeight="120" Height="110"
                 materialDesign:ColorZoneAssist.Mode="Custom" materialDesign:ColorZoneAssist.Background="#FF673AB7" materialDesign:ColorZoneAssist.Foreground="White"  >
                             <ListView x:Name="LVlecturer" DisplayMemberPath="LecName" SelectionChanged="SelectLectureRooww" />
                         </GroupBox>
 
-                        
+
 
                         <Label Content="Tag Name" Margin="8 5 0 0"></Label>
                         <ComboBox  Padding="2" Margin="8 0 0 0" x:Name="CBTagsNames" ItemsSource="{Binding Path=Tags}"  DisplayMemberPath="tags" SelectionChanged="TagValueChanged"/>
@@ -217,15 +246,15 @@
 
 
                         <Label Content="Student Count" Margin="8 5 0 0"></Label>
-                        <TextBox x:Name="StdntCnt" Padding="2" PreviewTextInput="NumberValidationForStudentCount"  Margin="8 0 0 0" />
+                        <TextBox x:Name="StdntCnt" Padding="1" PreviewTextInput="NumberValidationForStudentCount"  Margin="8 0 0 0" />
 
                         <Label Content="Duration In Hours" Margin="8 5 0 0"></Label>
-                        <TextBox x:Name="Duration" Padding="2" PreviewTextInput="NumberValidationForDuration"  Margin="8 0 0 0" />
+                        <TextBox x:Name="Duration" Padding="1" PreviewTextInput="NumberValidationForDuration"  Margin="8 0 0 0" />
 
 
 
 
-                        <Button  x:Name="Addlecbtn" Content="Add Session" FontWeight="Bold" Margin="8 10 0 0" Padding="6" MinHeight="50" MaxHeight="60" Click="AddSessionDetails" IsEnabled="True"></Button>
+                        <Button  x:Name="Addlecbtn" Content="Add Session" FontWeight="Bold" Margin="8 6 0 0" Padding="0" MinHeight="50" MaxHeight="60" Click="AddSessionDetails" IsEnabled="True"></Button>
                     </StackPanel>
                 </Grid>
             </StackPanel>
