@@ -19,6 +19,7 @@ namespace TimeTableManager
     /// </summary>
     public partial class ParallelSessionsWindow : Window
     {
+
         List<Session> parall = new List<Session>();
         Boolean Addseesion = true;
         private MyDbContext dbContext1;
@@ -34,28 +35,30 @@ namespace TimeTableManager
         {
             this.dbContext1 = dbContext1;
             InitializeComponent();
-            //GetSessions();
+            GetSessions();
             Boolean Addseesion = true;
             addUpdateSessionDetailsGrid.DataContext = NewSession;
             getlecturers();
+            loadsessions();
             settingEmptyValues = false;
         }
 
-        //private void GetSessions()
-        //{
-        //    showDetailsGrid.ItemsSource = dbContext1.ParallelSessions.ToList();
-        //}
+        private void GetSessions()
+        {
+            showDetailsGrid.ItemsSource = dbContext1.ParallelSessions.ToList();
+        }
 
         private void clear()
         {
 
-            addUpdateSessionDetailsGrid.DataContext = null;
+            cmb1.Text = null;
+            LVlecturer.ItemsSource = null;
         }
 
-        //public void loadsessions()
-        //{
-        //    cmb1.ItemsSource = dbContext1.Sessions.ToList();
-        //}
+        public void loadsessions()
+        {
+            cmb1.ItemsSource = dbContext1.Sessions.ToList();
+        }
 
         public void getlecturers()
         {
@@ -64,156 +67,17 @@ namespace TimeTableManager
 
         }
 
-        private void sessions_load(object sender, RoutedEventArgs e)
-        {
-            List<String> sesString = new List<String>();
-            List<Session> sess = dbContext1.Sessions.ToList();
-
-            foreach (var item in sess)
-            {
-                sesString.Add(item.lecturesLstByConcadinating + "\n " + item.subjectDSA.SubjectName + "(" + item.subjectDSA.SubjectCode + ")" + " \n " + item.tagDSA.tags + "\n " + item.GroupOrsubgroupForDisplay + "\n" + item.StdntCount + "(" + item.durationinHours + ")");
-            }
-            cmb1.ItemsSource = sesString;
-        }
-
-        private void AddSessionDetails(object s, RoutedEventArgs e)
-
-        {
-
-            Addseesion = true;
-
-
-            //concadinate lecturer names
-            newSessionDl.lecturesLstByConcadinating = null;
-            foreach (LecturerDetails LL in LeLISTT)
-            {
-
-                newSessionDl.lecturesLstByConcadinating += LL.LecName;
-            }
-
-
-
-            dbContext1.Sessions.Add(newSessionDl);
-
-            int condition = dbContext1.SaveChanges();
-
-           
-
-            foreach (LecturerDetails lec in LeLISTT)
-            {
-
-
-                SessionLecturer sessionlc = new SessionLecturer
-                {
-
-                    Ssssion = newSessionDl,
-                    Lecdetaiils = lec
-
-                };
-
-                dbContext1.SessionLecturers.Add(sessionlc);
-                dbContext1.SaveChanges();
-
-
-            }
-
-            settingEmptyValues = true;
-
-            LVlecturer.ItemsSource = null;
-            cmb1.Text = "";
-          
-
-            newSessionDl = new Session();
-
-            LeLISTT = null;
-            LeLISTT = new List<LecturerDetails>();
-            
-
-            settingEmptyValues = false;
-            getlecturers();
-
-
-
-
-
-
-
-
-        }
+    
 
 
         private void AssignSessionItemTo(Object s, RoutedEventArgs e)
         {
 
-            if (!cmb1.Text.ToString().Equals(""))
+            if (cmb1.SelectedItem != null)
             {
 
-                if (Addseesion)
-                {
-                    LecturerDetails TrytoAddLecture = (LecturerDetails)cmb1.SelectedItem;
-
-                    foreach (LecturerDetails Lliss in LeLISTT)
-                    {
-                        if (Lliss.Id == TrytoAddLecture.Id)
-                        {
-                            cmb1.SelectedIndex = -1;
-                            new MessageBoxCustom("This Lecture already You assigned,Can't add again!", MessageType.Error, MessageButtons.Ok).ShowDialog();
-                            return;
-
-                        }
-
-                    }
-
-                    LeLISTT.Add(TrytoAddLecture);
-
-                    String test = null;
-                    foreach (LecturerDetails ll in LeLISTT)
-                    {
-                        test += ll.LecName + " ";
-                    }
-                    MessageBox.Show(test);
-                    LVlecturer.ItemsSource = LeLISTT.ToList();
-                    cmb1.SelectedIndex = -1;
-
-
-
-
-
-                }
-                else
-                {
-                    LecturerDetails lectu = (LecturerDetails)cmb1.SelectedItem;
-                    MessageBox.Show(lectu.Id.ToString());
-                    if (dbContext1.SessionLecturers.Any(r => r.SessionrId == UpdatingSession.SessionId && r.LecturerId == lectu.Id))
-                    {
-                        new MessageBoxCustom("This Lecture already assigned to this Session,Can't add again!", MessageType.Error, MessageButtons.Ok).ShowDialog();
-                        cmb1.SelectedIndex = -1;
-                    }
-                    else
-                    {
-
-
-
-                        SessionLecturer assgni = new SessionLecturer
-                        {
-
-                            Ssssion = UpdatingSession,
-                            Lecdetaiils = lectu
-
-                        };
-
-                        dbContext1.SessionLecturers.Add(assgni);
-                        dbContext1.SaveChanges();
-
-                        LeLISTT.Add(lectu);
-                        LVlecturer.ItemsSource = LeLISTT.ToList();
-                        cmb1.SelectedIndex = -1;
-
-                    }
-
-
-                }
-
+                parall.Add((Session)cmb1.SelectedItem);
+                LVlecturer.ItemsSource = parall.ToList();
 
 
             }
@@ -306,115 +170,59 @@ namespace TimeTableManager
 
         }
 
-        //private void AssignSessionItemTo(Object s, RoutedEventArgs e)
-        //{
-
-        //    if (!cmb1.Text.ToString().Equals(""))
-        //    {
 
 
+        private void AddSession(object s, RoutedEventArgs e)
+        {
+            if (ValidateInput())
+            {
+               
+                ParallelSession parallelSession = new ParallelSession();
 
-        //       Session TrytoAddSession = (Session)cmb1.SelectedItem;
-
-
-        //        parall.Add(TrytoAddSession);
-
-
-        //        LVlecturer.ItemsSource = parall;
-        //        cmb1.SelectedIndex = -1;
-        //    }
-        //}
-
-        //  SessionLIST.Add(TrytoAddSession);
-
-        //  String test = null;
-        // foreach (Session ll in SessionLIST)
-        //            {
-        //                test += ll.SessionId + " ";
-        //            }
-        //            MessageBox.Show(test);
-        //            LVlecturer.ItemsSource = SessionLIST.ToList();
-        //            cmb1.SelectedIndex = -1;
+                dbContext1.ParallelSessions.Add(NewSession);
+                dbContext1.SaveChanges();
 
 
+                var lastShowPieceId = dbContext1.ParallelSessions.Max(x => x.Id);
+                ParallelSession lastinserted = dbContext1.ParallelSessions.FirstOrDefault(x => x.Id == lastShowPieceId);
+
+                foreach (Session session1 in parall) {
+
+                    //dbContext1.Sessions.Update(session1);
+                    dbContext1.Sessions.Update(session1);
+                    dbContext1.SaveChanges();
+                  
+                } 
+
+                new MessageBoxCustom("Successfully added Parallel Session details !", MessageType.Success, MessageButtons.Ok).ShowDialog();
+
+                clear();
+                GetSessions();
+
+            }
+            else
+            {
+
+                new MessageBoxCustom("Please complete Parallel Session  details correctly !", MessageType.Warning, MessageButtons.Ok).ShowDialog();
+            }
 
 
-
-        //        }
-        //        else
-        //        {
-        //            Session lectu = (Session)cmb1.SelectedItem;
-        //            MessageBox.Show(lectu.SessionId.ToString());
-        //            if (dbContext1.SessionLecturers.Any(r => r.SessionrId == UpdatingSession.SessionId && r.LecturerId == lectu.SessionId))
-        //            {
-        //                new MessageBoxCustom("This Lecture already assigned to this Session,Can't add again!", MessageType.Error, MessageButtons.Ok).ShowDialog();
-        //                cmb1.SelectedIndex = -1;
-        //            }
-        //            else
-        //            {
+        }
 
 
+        private bool ValidateInput()
+        {
 
-        //                Session assgni = new Session
-        //                {
-
-        //                    Ssssion = UpdatingSession,
-        //                    Lecdetaiils = lectu
-
-        //                };
-
-        //                dbContext1.Sessions.Add(assgni);
-        //                dbContext1.SaveChanges();
-
-        //                SessionLIST.Add(lectu);
-        //                LVlecturer.ItemsSource = SessionLIST.ToList();
-        //                cmb1.SelectedIndex = -1;
-
-        //            }
+            if (string.IsNullOrEmpty(cmb1.Text))
+            {
+                cmb1.Focus();
+                return false;
+            }
 
 
-        //        }
+            return true;
+        }
 
-
-
-        //    }
-        //    else
-        //    {
-        //        new MessageBoxCustom("Please Select parallel sessions before to adding", MessageType.Warning, MessageButtons.Ok).ShowDialog();
-        //    }
-
-
-        //}
-
-        //private void AddSession(object s, RoutedEventArgs e)
-        //{
-        //    if (ValidateInput())
-        //    {
-        //        NewSession.parallelId = txtParallelSession.Text;
-        //        NewSession.firstSession = cmb1.Text;
-        //        NewSession.secondSession = cmb2.Text;
-        //        NewSession.thirdSession = cmb3.Text;
-
-        //        dbContext1.ParallelSessions.Add(NewSession);
-        //        dbContext1.SaveChanges();
-
-        //        NewSession = new ParallelSession();
-        //        addUpdateSessionDetailsGrid.DataContext = NewSession;
-
-        //        new MessageBoxCustom("Successfully added Parallel Session details !", MessageType.Success, MessageButtons.Ok).ShowDialog();
-
-        //        clear();
-        //        GetSessions();
-
-        //    }
-        //    else
-        //    {
-
-        //        new MessageBoxCustom("Please complete Parallel Session  details correctly !", MessageType.Warning, MessageButtons.Ok).ShowDialog();
-        //    }
-
-
-        //}
 
 
         //private void updateSessionsForEdit(object s, RoutedEventArgs e)
@@ -477,36 +285,85 @@ namespace TimeTableManager
         //    GetSessions();
         //}
 
-        //private bool ValidateInput()
+
+
+
+        //private void sessions_load(object sender, RoutedEventArgs e)
         //{
-        //    if (string.IsNullOrEmpty(txtParallelSession.Text))
+        //    List<String> sesString = new List<String>();
+        //    List<Session> sess = dbContext1.Sessions.ToList();
+
+        //    foreach (var item in sess)
         //    {
-        //        txtParallelSession.Focus();
-        //        return false;
+        //        sesString.Add(item.lecturesLstByConcadinating + "\n " + item.subjectDSA.SubjectName + "(" + item.subjectDSA.SubjectCode + ")" + " \n " + item.tagDSA.tags + "\n " + item.GroupOrsubgroupForDisplay + "\n" + item.StdntCount + "(" + item.durationinHours + ")");
         //    }
-
-        //    if (string.IsNullOrEmpty(cmb1.Text))
-        //    {
-        //        cmb1.Focus();
-        //        return false;
-        //    }
-
-        //    if (string.IsNullOrEmpty(cmb2.Text))
-        //    {
-        //        cmb2.Focus();
-        //        return false;
-        //    }
-
-        //    if (string.IsNullOrEmpty(cmb3.Text))
-        //    {
-        //        cmb3.Focus();
-        //        return false;
-        //    }
-
-
-        //    return true;
+        //    cmb1.ItemsSource = sesString;
         //}
 
+        //private void AddSessionDetails(object s, RoutedEventArgs e)
+
+        //{
+
+        //    Addseesion = true;
+
+
+        //    //concadinate lecturer names
+        //    newSessionDl.lecturesLstByConcadinating = null;
+        //    foreach (LecturerDetails LL in LeLISTT)
+        //    {
+
+        //        newSessionDl.lecturesLstByConcadinating += LL.LecName;
+        //    }
+
+
+
+        //    dbContext1.Sessions.Add(newSessionDl);
+
+        //    int condition = dbContext1.SaveChanges();
+
+
+
+        //    foreach (LecturerDetails lec in LeLISTT)
+        //    {
+
+
+        //        SessionLecturer sessionlc = new SessionLecturer
+        //        {
+
+        //            Ssssion = newSessionDl,
+        //            Lecdetaiils = lec
+
+        //        };
+
+        //        dbContext1.SessionLecturers.Add(sessionlc);
+        //        dbContext1.SaveChanges();
+
+
+        //    }
+
+        //    settingEmptyValues = true;
+
+        //    LVlecturer.ItemsSource = null;
+        //    cmb1.Text = "";
+
+
+        //    newSessionDl = new Session();
+
+        //    LeLISTT = null;
+        //    LeLISTT = new List<LecturerDetails>();
+
+
+        //    settingEmptyValues = false;
+        //    getlecturers();
+
+
+
+
+
+
+
+
+        //}
         private void GoBack(Object s, RoutedEventArgs e)
             {
                 MainWindow mainWindow = new MainWindow(dbContext1);

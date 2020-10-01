@@ -8,8 +8,8 @@ namespace TimeTableManager.Models
     {
 
         public int Id { get; set; }
-        //public IList<ParallelSessionList> ParallelSessionLists { get; set; }
 
+        //public Session prSession { get; set; }
         public ICollection<Session> SessionsAS { get; set; }
     }
 }

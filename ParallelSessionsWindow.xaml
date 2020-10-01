@@ -67,8 +67,8 @@
 
                         <materialDesign:Card  materialDesign:ShadowAssist.ShadowDepth="Depth3" materialDesign:ShadowAssist.ShadowEdges="Bottom,Right" Padding="12 1 2 5 " Margin="0,0,0,79" Grid.RowSpan="2">
                             <StackPanel Orientation="Horizontal">
-                                <ComboBox ItemsSource="{Binding Path=LectureInformation}"  Grid.Row="0" Grid.Column="1" Width="233" x:Name="cmb1"   VerticalAlignment="Top" Margin="0,10,0,0" DisplayMemberPath="LecName"  materialDesign:HintAssist.HintOpacity=".26" IsEditable="True"/>
-
+                                <ComboBox   Grid.Row="0" Grid.Column="1" Width="233" x:Name="cmb1"   VerticalAlignment="Top" Margin="0,10,0,0" />
+                                <!--DisplayMemberPath="LecName"  materialDesign:HintAssist.HintOpacity=".26" IsEditable="True"-->
 
                                 <Button    Style="{DynamicResource MaterialDesignRaisedButton}" Margin="10"  Content="Add parallel sessions" Background="#79b700" Click="AssignSessionItemTo">
                                    
@@ -103,7 +103,7 @@
                         <ComboBox Name="cmb3" Grid.Row="3" Margin="0,34,44,0" Text="{}" Height="26" Grid.Column="1" VerticalAlignment="Top"/>-->
 
 
-                        <Button Click="AddSessionDetails" Foreground="White" Background="#FF6839FF" Grid.Row="4" Content="Add" Margin="40,42,350,6" />
+                        <Button Click="AddSession" Foreground="White" Background="#FF6839FF" Grid.Row="4" Content="Add" Margin="40,42,350,6" />
                         <Button Foreground="White" Background="#FF6839FF" Grid.Row="4" Content="Update" Margin="197,42,188,6" />
                         <Button Foreground="White" Background="#FF6839FF" Grid.Row="4" Content="Reset" Margin="358,42,34,6" />
 
