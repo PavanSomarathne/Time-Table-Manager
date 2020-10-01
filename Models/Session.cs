@@ -19,6 +19,7 @@ namespace TimeTableManager.Models
         public Tag tagDSA { get; set; }
         public SubjectDetails subjectDSA { get; set; }
 
+        public Room Room { get; set; }
         //getting grpidas and subgrids
         public Student studentDSA { get; set; }
 
@@ -29,10 +30,17 @@ namespace TimeTableManager.Models
 
         public String GroupOrsubgroupForDisplay { get; set; }
 
+        public ParallelSession par { get; set; }
+
+
         public override string ToString()
         {
-            return lecturesLstByConcadinating + "\n " + subjectDSA.SubjectName + " \n " + tagDSA.tags + "\n " + GroupOrsubgroupForDisplay + "\n" + StdntCount + "(" + durationinHours + ")";
+            return SessionId.ToString() + "\n "+ lecturesLstByConcadinating + "\n " + subjectDSA.SubjectName + "(" + subjectDSA.SubjectCode + ")" + " \n " + tagDSA.tags + "\n " + GroupOrsubgroupForDisplay + "\n" + StdntCount + "(" + durationinHours + ")";
         }
 
+        public static implicit operator string(Session v)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

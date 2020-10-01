@@ -37,6 +37,10 @@ namespace TimeTableManager
 
                 EnableUpdateMode();
             }
+            else
+            {
+                EnableAddMode();
+            }
         }
 
         private void GetBuildings()
@@ -47,19 +51,58 @@ namespace TimeTableManager
 
         private void EnableUpdateMode()
         {
+
             TxtTitle.Content = "Change Room Details";
             TxtRid.Text = RoomToEdit.Rid;
             TxtCapacity.Text = RoomToEdit.Capacity.ToString();
             CBBuilding.SelectedItem = RoomToEdit.BuildingAS;
             CBType.Text = RoomToEdit.Type;
 
-            BtnSave.Content = "Update";
-            BtnSave.Click -= AddRoom;
-            BtnSave.Click += UpdateRoom;
+            BtnSave.Visibility = Visibility.Hidden;
+            BtnSaveChanges.Click -= SaveChanges;
+            BtnSaveChanges.Click += UpdateRoom;
 
             LoadLecturers();
             LoadSubjects();
             LoadNATS();
+            LoadSessions();
+            LoadGroups();
+        }
+
+
+        private void EnableAddMode()
+        {
+            TxtTitle.Content = "Add New Room";
+            BTNAddGroups.IsEnabled = false;
+            BTNAddLectureres.IsEnabled = false;
+            BTNAddNAT.IsEnabled = false;
+            BTNAddSubject.IsEnabled = false;
+            BTNAddSession.IsEnabled = false;
+
+            BtnSave.Click -= UpdateRoom;
+            BtnSave.Click += AddRoom;
+            BtnSaveChanges.IsEnabled = false;
+
+
+        }
+
+        private void EnableAssignMode()
+        {
+            BTNAddGroups.IsEnabled = true;
+            BTNAddLectureres.IsEnabled = true;
+            BTNAddNAT.IsEnabled = true;
+            BTNAddSubject.IsEnabled = true;
+            BTNAddSession.IsEnabled = true;
+
+            warningMSG.Visibility = Visibility.Hidden;
+
+            BtnSave.IsEnabled = false;
+
+            BtnSaveChanges.Click -= AddRoom;
+            BtnSaveChanges.Click += SaveChanges;
+            BtnSaveChanges.IsEnabled = true;
+
+
         }
 
         private void LoadLecturers()
@@ -80,10 +123,24 @@ namespace TimeTableManager
 
         private void LoadNATS()
         {
-            
+
             LVNAT.ItemsSource = dbContext1.RoomNATs
             .Where(r => r.room.Id == RoomToEdit.Id)
             .ToList();
+        }
+
+        private void LoadSessions()
+        {
+
+            SessionDG.ItemsSource = dbContext1.Sessions
+            .Where(p => p.Room.Id == RoomToEdit.Id).ToList();
+        }
+
+        private void LoadGroups()
+        {
+
+            LVGroups.ItemsSource = dbContext1.RoomGroups
+            .Where(p => p.room.Id == RoomToEdit.Id).ToList();
         }
 
         private void AddRoom(Object s, RoutedEventArgs e)
@@ -110,10 +167,13 @@ namespace TimeTableManager
                     dbContext1.SaveChanges();
                     new MessageBoxCustom("Successfully Added to the System !", MessageType.Success, MessageButtons.Ok).ShowDialog();
 
-                    TxtCapacity.Text = "";
-                    TxtRid.Text = "";
-                    CBBuilding.SelectedIndex = -1;
-                    CBType.SelectedIndex = -1;
+                    RoomToEdit = NewRoom;
+                    EnableAssignMode();
+                  
+                    //TxtCapacity.Text = "";
+                    //TxtRid.Text = "";
+                    //CBBuilding.SelectedIndex = -1;
+                    //CBType.SelectedIndex = -1;
 
 
                 }
@@ -212,6 +272,30 @@ namespace TimeTableManager
             }
         }
 
+        private void SaveChanges(Object s, RoutedEventArgs e)
+        {
+
+            TxtCapacity.Text = "";
+            TxtRid.Text = "";
+            CBBuilding.SelectedIndex = -1;
+            CBType.SelectedIndex = -1;
+
+            LVGroups.ItemsSource = null;
+            LVlecturer.ItemsSource = null;
+            LVNAT.ItemsSource = null;
+            LVSubjects.ItemsSource = null;
+            SessionDG.ItemsSource = null;
+
+            RoomToEdit = null;
+            BtnSaveChanges.IsEnabled = false;
+            BtnSave.IsEnabled = true;
+
+            BTNAddGroups.IsEnabled = false;
+            BTNAddLectureres.IsEnabled = false;
+            BTNAddNAT.IsEnabled = false;
+            BTNAddSubject.IsEnabled = false;
+            BTNAddSession.IsEnabled = false;
+        }
 
         private void AddNAT(Object s, RoutedEventArgs e)
         {
@@ -248,6 +332,44 @@ namespace TimeTableManager
             else
             {
                 BTNdelNAT.IsEnabled = false;
+            }
+        }
+
+        private void AddSession(Object s, RoutedEventArgs e)
+        {
+            PopupSearch popup = new PopupSearch(dbContext1, "ses", RoomToEdit);
+            popup.Closed += RefreshSes;
+            popup.ShowDialog();
+        }
+
+        private void DelSession(Object s, RoutedEventArgs e)
+        {
+            if (SessionDG.SelectedItem != null)
+            {
+                Session session = (Session)SessionDG.SelectedItem;
+
+                if (dbContext1.Sessions.Any(r => r.Room.Id == this.RoomToEdit.Id && r.SessionId == session.SessionId))
+                {
+                    //dbContext1.Entry(roomLecturer).State = EntityState.Detached;
+                    session.Room = null;
+                    dbContext1.Update(session);
+                    dbContext1.SaveChanges();
+
+                    SessionDG.SelectedIndex = -1;
+                    LoadSessions();
+                }
+            }
+        }
+
+        private void SeesionDelAct(Object s, RoutedEventArgs e)
+        {
+            if (SessionDG.SelectedItem != null)
+            {
+                BTNDelSession.IsEnabled = true;
+            }
+            else
+            {
+                BTNDelSession.IsEnabled = false;
             }
         }
 
@@ -291,6 +413,44 @@ namespace TimeTableManager
                     LVSubjects.SelectedIndex = -1;
                     LoadSubjects();
                 }
+            }
+        }
+
+        private void AddGRP(Object s, RoutedEventArgs e)
+        {
+            PopupSearch popup = new PopupSearch(dbContext1, "grp", RoomToEdit);
+            popup.Closed += RefreshGRP;
+            popup.ShowDialog();
+        }
+
+        private void DelGRP(Object s, RoutedEventArgs e)
+        {
+            if (LVGroups.SelectedItem != null)
+            {
+                RoomGroup roomGroup = (RoomGroup)LVGroups.SelectedItem;
+
+                if (dbContext1.RoomGroups.Any(r => r.room.Id == this.RoomToEdit.Id && r.Id == roomGroup.Id))
+                {
+                    //dbContext1.Entry(roomLecturer).State = EntityState.Detached;
+                    var rrn = dbContext1.RoomGroups.First(row => row.Id == roomGroup.Id);
+                    dbContext1.RoomGroups.Remove(rrn);
+                    dbContext1.SaveChanges();
+
+                    LVGroups.SelectedIndex = -1;
+                    LoadGroups();
+                }
+            }
+        }
+
+        private void GRPDelActive(Object s, RoutedEventArgs e)
+        {
+            if (LVGroups.SelectedItem != null)
+            {
+                BTNdelGRP.IsEnabled = true;
+            }
+            else
+            {
+                BTNdelGRP.IsEnabled = false;
             }
         }
 
@@ -342,7 +502,7 @@ namespace TimeTableManager
             //This gets fired off
             LVlecturer.ItemsSource = null;
             LoadLecturers();
-  
+
         }
 
         public void RefreshSub(object sender, System.EventArgs e)
@@ -358,6 +518,22 @@ namespace TimeTableManager
             //This gets fired off
             LVNAT.ItemsSource = null;
             LoadNATS();
+
+        }
+
+        public void RefreshSes(object sender, System.EventArgs e)
+        {
+            //This gets fired off
+            SessionDG.ItemsSource = null;
+            LoadSessions();
+
+        }
+
+        public void RefreshGRP(object sender, System.EventArgs e)
+        {
+            //This gets fired off
+            SessionDG.ItemsSource = null;
+            LoadGroups();
 
         }
     }
