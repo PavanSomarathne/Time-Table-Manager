@@ -746,6 +746,11 @@ namespace TimeTableManager
 
             }
 
+            else
+            {
+                new MessageBoxCustom("Please Complete  Session   Details correctly !", MessageType.Warning, MessageButtons.Ok).ShowDialog();
+            }
+
         }
 
         public void LoadLecturesGivenBySessionId(int sesin)
