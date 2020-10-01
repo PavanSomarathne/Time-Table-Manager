@@ -108,55 +108,6 @@ namespace TimeTableManager
         {
 
 
-            if (LVlecturer.SelectedItem != null)
-            {
-
-                LecturerDetails lecturer = (LecturerDetails)LVlecturer.SelectedItem;
-
-                if (Addseesion == true)
-                {
-
-
-                    var item = LeLISTT.Find(x => x.Id == lecturer.Id);
-                    LeLISTT.Remove(item);
-
-
-
-                    LVlecturer.ItemsSource = LeLISTT.ToList();
-
-                    LVlecturer.SelectedIndex = -1;
-                }
-
-                else
-                {
-
-
-
-                    LecturerDetails lecturerrty = (LecturerDetails)LVlecturer.SelectedItem;
-
-                    var item = LeLISTT.Find(x => x.Id == lecturerrty.Id);
-                    LeLISTT.Remove(item);
-
-
-                    if (dbContext1.SessionLecturers.Any(r => r.SessionrId == UpdatingSession.SessionId && r.LecturerId == lecturerrty.Id))
-                    {
-
-                        var SesLert = dbContext1.SessionLecturers.First(row => row.SessionrId == UpdatingSession.SessionId && row.LecturerId == lecturerrty.Id);
-                        dbContext1.SessionLecturers.Remove(SesLert);
-                        dbContext1.SaveChanges();
-
-
-                        // LoadLecturesGivenBySessionId(UpdatingSession.SessionId);
-                    }
-
-
-
-
-                    LVlecturer.ItemsSource = LeLISTT.ToList();
-                    LVlecturer.SelectedIndex = -1;
-
-
-
                 }
 
 
@@ -189,6 +140,8 @@ namespace TimeTableManager
                 foreach (Session session1 in parall) {
 
                     //dbContext1.Sessions.Update(session1);
+
+                    session1.par = lastinserted;
                     dbContext1.Sessions.Update(session1);
                     dbContext1.SaveChanges();
                   
