@@ -4,7 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TimeTableManager"
-       xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         TextElement.Foreground="{DynamicResource MaterialDesignBody}"
         TextElement.FontWeight="Regular"
         TextElement.FontSize="13"
@@ -14,7 +14,9 @@
         Background="{DynamicResource MaterialDesignPaper}"
         FontFamily="{DynamicResource MaterialDesignFont}"
         mc:Ignorable="d"
-        Title="Add New Room" Width="650" WindowStartupLocation="CenterScreen">
+        Title="Add New Room" Width="650" WindowStartupLocation="CenterScreen"
+        WindowStyle="None"
+        >
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="0.8*"/>
@@ -35,7 +37,7 @@
             <TextBox Text="xxx"    x:Name="TXT3" TextWrapping="Wrap" Width="120" HorizontalAlignment="Left" Margin="25,0,0,0"/>
             <StackPanel Orientation="Horizontal" Margin="20,50,0,0" >
             <Button Content="Assign" Grid.Column="2"  Click="AssignItem"/>
-            <Button Content="Close" Grid.Column="2" Margin="20,0,0,0" Background="#FFFF3333"/>
+            <Button Content="Close" Click="Close" Grid.Column="2" Margin="20,0,0,0" Background="#FFFF3333"/>
             </StackPanel>
         </StackPanel>
 

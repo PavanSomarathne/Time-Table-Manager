@@ -82,19 +82,11 @@
             </DataGrid.Columns>
 
         </DataGrid>
-        <GroupBox Grid.Row="2" Grid.Column="2"  Header="Assigned Sessions" Style="{DynamicResource MaterialDesignCardGroupBox}"
-                materialDesign:ColorZoneAssist.Mode="Custom" materialDesign:ColorZoneAssist.Background="#FF673AB7" materialDesign:ColorZoneAssist.Foreground="White" >
-            <StackPanel  >
-             
-                <DataGrid  x:Name="SessionDG" AutoGenerateColumns="False" SelectionChanged="UpdateSelection" ItemsSource="{Binding Items}">
-                    <DataGrid.Columns>
-                        <DataGridTextColumn Header="Tag" Binding="{Binding Rid}" />
-                        <DataGridTextColumn Header="Subject" Binding="{Binding BuildingAS.Name}" />
-                        <DataGridTextColumn Header="Student Amount" Binding="{Binding Type}" />
-                    </DataGrid.Columns>
-                </DataGrid>
+        <GroupBox Grid.Row="2" Grid.Column="2"  Header="Allocated Sessions" Style="{DynamicResource MaterialDesignCardGroupBox}"
+                materialDesign:ColorZoneAssist.Mode="Custom" materialDesign:ColorZoneAssist.Background="#FF673AB7" materialDesign:ColorZoneAssist.Foreground="White"  >
+            <ListView  x:Name="SessionDG" >
 
-            </StackPanel>
+            </ListView>
         </GroupBox>
         <StackPanel Width="300" Grid.Column="3" Grid.Row="1" Grid.RowSpan="3" materialDesign:ShadowAssist.ShadowDepth="Depth4" Margin="0,20,0,0" >
             <Label Content="Location Management"  FontWeight="Normal" FontSize="20" HorizontalAlignment="Center"/>
@@ -120,11 +112,20 @@
         <GroupBox Grid.Row="3"  Header="Prefferd Lecturers" Style="{DynamicResource MaterialDesignCardGroupBox}"
                 materialDesign:ColorZoneAssist.Mode="Custom" materialDesign:ColorZoneAssist.Background="#FF673AB7" materialDesign:ColorZoneAssist.Foreground="White" >
 
-            <ListView x:Name="LVlecturer">
-            </ListView>
-    
+            <ListView x:Name="LVlecturer" DisplayMemberPath="LecName" />
         </GroupBox>
-
+        <GroupBox Grid.Row="3"  Grid.Column="1"  Header="Prefferd Subjects" Style="{DynamicResource MaterialDesignCardGroupBox}"
+                materialDesign:ColorZoneAssist.Mode="Custom" materialDesign:ColorZoneAssist.Background="#FF673AB7" materialDesign:ColorZoneAssist.Foreground="White"  >
+            <ListView x:Name="LVSubjects" DisplayMemberPath="SubjectCode"/>
+        </GroupBox>
+        <GroupBox Grid.Row="3"  Grid.Column="3"  Header="Not Available Times" Style="{DynamicResource MaterialDesignCardGroupBox}"
+                materialDesign:ColorZoneAssist.Mode="Custom" materialDesign:ColorZoneAssist.Background="#FF673AB7" materialDesign:ColorZoneAssist.Foreground="White"   >
+            <ListView x:Name="LVNAT" />
+        </GroupBox>
+        <GroupBox Grid.Row="3"  Grid.Column="2"  Header="Prefferd Groups" Style="{DynamicResource MaterialDesignCardGroupBox}"
+                materialDesign:ColorZoneAssist.Mode="Custom" materialDesign:ColorZoneAssist.Background="#FF673AB7" materialDesign:ColorZoneAssist.Foreground="White"   >
+            <ListView x:Name="LVGroups" DisplayMemberPath="Group" />
+        </GroupBox>
 
     </Grid>
 </Window>

@@ -133,7 +133,7 @@ namespace TimeTableManager
         {
 
             SessionDG.ItemsSource = dbContext1.Sessions
-            .Where(p => p.Room.Id == RoomToEdit.Id).ToList();
+            .Where(p => p.Room.Id == RoomToEdit.Id).Include(r => r.subjectDSA).Include(r => r.tagDSA).ToList();
         }
 
         private void LoadGroups()
@@ -169,7 +169,7 @@ namespace TimeTableManager
 
                     RoomToEdit = NewRoom;
                     EnableAssignMode();
-                  
+
                     //TxtCapacity.Text = "";
                     //TxtRid.Text = "";
                     //CBBuilding.SelectedIndex = -1;
@@ -532,7 +532,7 @@ namespace TimeTableManager
         public void RefreshGRP(object sender, System.EventArgs e)
         {
             //This gets fired off
-            SessionDG.ItemsSource = null;
+            LVGroups.ItemsSource = null;
             LoadGroups();
 
         }

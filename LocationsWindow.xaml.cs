@@ -35,7 +35,7 @@ namespace TimeTableManager
             GetRooms();
             GetBuildings();
             LoadLecturers();
-           
+
 
         }
 
@@ -153,6 +153,33 @@ namespace TimeTableManager
                     TxtCapacity.Text = SelectedRoom.Capacity.ToString();
                     TxtRid.Text = SelectedRoom.Rid;
                     TxtType.Text = SelectedRoom.Type;
+
+                    //load lecturers
+                    LVlecturer.ItemsSource = dbContext1.Rooms
+                    .Where(p => p.Id == SelectedRoom.Id)
+                    .SelectMany(r => r.RoomLecturers)
+                    .Select(rl => rl.Lecturer).ToList();
+
+                    //load subjects
+                    LVSubjects.ItemsSource = dbContext1.Rooms
+                    .Where(p => p.Id == SelectedRoom.Id)
+                    .SelectMany(r => r.RoomSubjects)
+                    .Select(rl => rl.Subject).ToList();
+
+                    //load nats
+                    LVNAT.ItemsSource = dbContext1.RoomNATs
+                    .Where(r => r.room.Id == SelectedRoom.Id)
+                    .ToList();
+
+                    //load sessions
+                    SessionDG.ItemsSource = dbContext1.Sessions   
+                    .Where(p => p.Room.Id == SelectedRoom.Id)
+                    .Include(r => r.subjectDSA)
+                    .Include(r => r.tagDSA).ToList(); 
+
+                    //load groups
+                    LVGroups.ItemsSource = dbContext1.RoomGroups
+                    .Where(p => p.room.Id == SelectedRoom.Id).ToList();
                 }
                 catch (Exception ex)
                 {
