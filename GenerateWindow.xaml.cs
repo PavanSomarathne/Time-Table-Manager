@@ -1,10 +1,9 @@
-﻿using LiveCharts.Dtos;
-using Microsoft.EntityFrameworkCore.Migrations.Operations;
+﻿using Microsoft.EntityFrameworkCore.Migrations.Operations;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Data;
-using System.Data.Entity;
+using Microsoft.EntityFrameworkCore;
 using System.Globalization;
 using System.Linq;
 using System.Text;
@@ -45,7 +44,7 @@ namespace TimeTableManager
             studenSP.Visibility = Visibility.Collapsed;
             lecturerSP.Visibility = Visibility.Collapsed;
             roomSP.Visibility = Visibility.Collapsed;
-
+            List<Session> sessionList1 = dbContext1.Sessions.Include(s => s.subjectDSA).Include(s => s.tagDSA).ToList();
 
             // Program.DisplayMember = "Name";
             //comboBox1.ValueMember = "Name";
@@ -246,7 +245,7 @@ namespace TimeTableManager
 
             foreach (var item in lecturers)
             {
-                lecString.Add(item.Id + "-" + item.LecName);
+                lecString.Add(item.LecName);
             }
             Lecturer.ItemsSource = lecString;
         }
@@ -262,11 +261,12 @@ namespace TimeTableManager
         {
             String build = Building.Text;
             List<String> roomString = new List<String>();
+            
             List<Room> rooms = dbContext1.Rooms.Include("BuildingAS").Where(b => b.BuildingAS.Name == build).ToList();
 
             foreach (var item in rooms)
             {
-                roomString.Add(item.Id + "-" + item.Rid);
+                roomString.Add(item.Rid);
             }
             Room.ItemsSource = roomString;
         }
@@ -275,8 +275,24 @@ namespace TimeTableManager
         {
             int dura = 0;
             int noOfSlots = 0;
+            String type = sType.Text;
+            String searchVal = "";
+            String searchString= "";
             String[] arr1 = { "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday" };
+            if (type == "Student") {
+                searchVal = Group.Text;
+                searchString = "GroupOrsubgroupForDisplay";
+            } else if (type == "Lecturer") 
+            {
+                searchVal = Lecturer.Text;
+                searchString = "lecturesLstByConcadinating";
+            }
 
+            else
+            {
+                searchVal = Room.Text;
+                searchString = "RoomId";
+            }
             //new schedule object
             Schedule NewSchedule = new Schedule();
 
@@ -297,7 +313,8 @@ namespace TimeTableManager
             //getting working days
             var workingDays = NewSchedule.Working_days.Split(',');
             //getting sessions
-            List<Session> sessionList = dbContext1.Sessions.ToList();
+            
+            List<Session> sessionList = dbContext1.Sessions.Include(n=>n.Room).ToList();
             List<Session> sessionList_copy = dbContext1.Sessions.ToList();
 
             //colums
@@ -523,12 +540,34 @@ namespace TimeTableManager
 
 
                     String session = "";
-
+                    String[] valval;
                     foreach (var item in arr2d[i, j])
                     {
+                        valval = item.lecturesLstByConcadinating.Split(',');
+                       
+                       // dbContext1.Sessions.Include(b => b.studentDSA).ToList();
+                        if (type == "Student" && item.GroupOrsubgroupForDisplay == searchVal) 
+                        {
+
+                            session = session + " " + item.getSessionStu();
+                            MainTitle.Content = "Group Id- "+searchVal;
+                        }
+                        else if (type == "Lecturer" && valval.Contains(searchVal+" ") )
+                        {
+                            session = session + " " + item.getSessionLec();
+                            MainTitle.Content = "Mr/Mrs/Ms. " + searchVal;
+                        }
+                        else if (type == "Room" && item.Room != null )
+                        {
+                            if (item.Room.Rid == searchVal)
+                            {
+                                session = session + " " + item.getSessionRoom();
+                                MainTitle.Content = "Room Id- "+ searchVal;
+                            }
+                            
+                        }
 
 
-                        session = session + " " + item.SessionId;
 
 
 
