@@ -39,96 +39,77 @@
         <Label Grid.Row="1" FontSize="20" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center" Content="Parallel Sessions"/>
 
 
-
         <Grid Grid.Row="2">
-
             <Grid.ColumnDefinitions>
                 <ColumnDefinition/>
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
 
-            <Border Grid.Column="0" BorderBrush="Black" BorderThickness="1" Margin="10,5,154,5">
-                <StackPanel Margin="0,5,0,5" HorizontalAlignment="Center" Width="499">
 
-                    <Grid Margin="5" Name="addUpdateSessionDetailsGrid" Width="490" Height="477">
+            <Border Grid.Column="0" BorderBrush="Black" BorderThickness="1" Margin="10,5,214,5">
+                <StackPanel Margin="0,5,0,5" HorizontalAlignment="Center" Width="459">
+
+                    <Grid Margin="5" Name="addUpdateSessionDetailsGrid" Width="431" Height="477">
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition/>
-                            <ColumnDefinition Width="0*"/>
+                            <ColumnDefinition Width="228*"/>
+                            <ColumnDefinition Width="203*"/>
                         </Grid.ColumnDefinitions>
 
                         <Grid.RowDefinitions>
+                            <RowDefinition />
                             <RowDefinition/>
                             <RowDefinition/>
                             <RowDefinition/>
                             <RowDefinition/>
                             <RowDefinition/>
                             <RowDefinition/>
+
                         </Grid.RowDefinitions>
 
-                        <materialDesign:Card  materialDesign:ShadowAssist.ShadowDepth="Depth3" materialDesign:ShadowAssist.ShadowEdges="Bottom,Right" Padding="12 1 2 5 " Margin="0,0,0,79" Grid.RowSpan="2">
-                            <StackPanel Orientation="Horizontal">
-                                <ComboBox   Grid.Row="0" Grid.Column="1" Width="233" x:Name="cmb1"   VerticalAlignment="Top" Margin="0,10,0,0" />
-                                <!--DisplayMemberPath="LecName"  materialDesign:HintAssist.HintOpacity=".26" IsEditable="True"-->
+                        <!--<Label Grid.Row="0" Content="Enter a consecutive session name" Margin="0,42,10,1"/>-->
+                        <Label Content="Select 1st session" Margin="0,33,92,7" Grid.Row="1"/>
+                        <Label Grid.Row="2" Content="Select 2nd session" Margin="0,34,57,6"/>
+                        <!--<Label Grid.Row="3" Content="Day" Margin="0,34,57,6"/>
+                        <Label Grid.Row="4" Content="Start At" Margin="0,34,57,6"/>
+                        <Label Grid.Row="5" Content="Duration" Margin="0,34,57,6"/>-->
 
-                                <Button    Style="{DynamicResource MaterialDesignRaisedButton}" Margin="10"  Content="Add parallel sessions" Background="#79b700" Click="AssignSessionItemTo">
-                                   
-                                </Button>
+                        <!--<TextBox materialDesign:HintAssist.HelperText="Ex:CON-IT2030-Y1.S1.1" Name="txtSessionName" Grid.Row="0" Margin="0,43,0,0" Text="{}" Grid.Column="1" Height="24" VerticalAlignment="Top"/>-->
 
-                                <Button  x:Name="TrashlecBtn"  Style="{StaticResource MaterialDesignFloatingActionMiniAccentButton}"
-                                ToolTip="MaterialDesignFloatingActionMiniLightButton" Background="#FFFF1744" IsEnabled="False" >
-                                    <materialDesign:PackIcon  Kind="Delete" Height="24" Width="24"  />
-                                </Button>
+                        <ComboBox  Name="p1" Grid.Column="1" Margin="0,34,0,0"  Height="28" VerticalAlignment="Top" Grid.Row="1"/>
 
-                            </StackPanel>
-                        </materialDesign:Card>
+                        <ComboBox  Name="p2" Grid.Row="2" Margin="0,28,0,0"  Height="34" VerticalAlignment="Top" Grid.Column="1"/>
 
+                        <!--<ComboBox Name="cmb3" Grid.Column="1" Grid.Row="3" Margin="0,35,0,0" Height="27" VerticalAlignment="Top">
+                            <ComboBoxItem>Sunday</ComboBoxItem>
+                            <ComboBoxItem>Monday</ComboBoxItem>
+                            <ComboBoxItem>Tuesday</ComboBoxItem>
+                            <ComboBoxItem>Wednesday</ComboBoxItem>
+                            <ComboBoxItem>Thursday</ComboBoxItem>
+                            <ComboBoxItem>Friday</ComboBoxItem>
+                            <ComboBoxItem>Saturday</ComboBoxItem>
+                        </ComboBox>-->
 
-                        <GroupBox Grid.Row="2"  Header="Selected parallel sessions" Style="{DynamicResource MaterialDesignCardGroupBox}" MaxHeight="120"
-                materialDesign:ColorZoneAssist.Mode="Custom" materialDesign:ColorZoneAssist.Background="#FF673AB7" materialDesign:ColorZoneAssist.Foreground="White" Margin="0,0,0,49" Grid.RowSpan="2"  >
-                            <ListView x:Name="SESSION"  DisplayMemberPath="lecturesLstByConcadinating" Height="80"  MaxHeight="100"/>
-                            <!--SelectionChanged="SelectLectureRooww"-->
-                        </GroupBox>
-
-                        <!--<Label Grid.Row="0" Content="Name for parallel session" Height="26" Margin="10,27,85,26"/>
-                        <Label Content="Select 1st session" Height="26"  Width="150" Margin="10,26,85,27" Grid.Row="1"/>
-                        <Label Grid.Row="2" Content="Select 2nd session" Height="26"  Width="150" Margin="10,24,85,30"/>
-                        <Label Grid.Row="3" Content="Select 3rd session" Height="26" Margin="7,34,82,20"/>
-
-                        <TextBox materialDesign:HintAssist.HelperText="Ex:PRL-IT2030" Name="txtParallelSession" Grid.Row="0" Margin="4,27,44,26" Height="26" Text="{}" Grid.Column="1"/>
-
-                        <ComboBox Name="cmb1" Grid.Column="1" Margin="0,0,44,0" Text="{}" Height="26" Grid.Row="1"/>
-
-                        <ComboBox Name="cmb2" Grid.Row="2" Margin="0,24,44,0" Text="{}" Height="26" Grid.Column="1" VerticalAlignment="Top"/>
-
-                        <ComboBox Name="cmb3" Grid.Row="3" Margin="0,34,44,0" Text="{}" Height="26" Grid.Column="1" VerticalAlignment="Top"/>-->
-
-
-                        <Button Click="AddSession" Foreground="White" Background="#FF6839FF" Grid.Row="4" Content="Add" Margin="40,42,350,6" />
-                        <Button Foreground="White" Background="#FF6839FF" Grid.Row="4" Content="Update" Margin="197,42,188,6" />
-                        <Button Foreground="White" Background="#FF6839FF" Grid.Row="4" Content="Reset" Margin="358,42,34,6" Click="resetSessions"/>
-
-                        <Label Grid.Row="5" Grid.Column="1" Content="*Please make sure that sessions in parallel sub groups are not overlapping with others" Margin="42,14,-42,39"/>
-
+                        <Button Foreground="White" Background="#FF6839FF" Grid.Row="3" Grid.Column="0" Content="Add" Margin="0,19,104,18" Click="AddSession"/>
+                        <Button Foreground="White" Background="#FF6839FF" Grid.Row="3" Content="Update" Margin="152,19,153,18" Click="UpdateSession" Grid.ColumnSpan="2"/>
+                        <Button Foreground="White" Background="#FF6839FF" Grid.Row="3" Grid.Column="1" Content="Reset" Margin="81,19,0,18" Click="resetSessions"/>
                     </Grid>
 
                 </StackPanel>
             </Border>
 
-            <Border BorderBrush="Black" BorderThickness="1" Margin="534,5,10,5" Grid.ColumnSpan="2">
-                <DataGrid AutoGenerateColumns="False" Margin="9,9,9,11" Name="showDetailsGrid" IsReadOnly="True">
+            <Border BorderBrush="Black" BorderThickness="1" Margin="474,5,10,5" Grid.ColumnSpan="2">
+                <DataGrid AutoGenerateColumns="False" Margin="9,9,9,11" Name="show" IsReadOnly="True">
                     <DataGrid.Columns>
 
-                        <DataGridTextColumn Header="Sessions" />
-                        <!--<DataGridTextColumn Header="1st Session" />
-                        <DataGridTextColumn Header="2nd Session" />
-                        <DataGridTextColumn Header="3rd Session" />-->
+                        <!--<DataGridTextColumn Header="Session Name" Binding="{Binding accYrSem}" />-->
+                        <DataGridTextColumn Header="1st Session" Binding="{Binding first}"/>
+                        <DataGridTextColumn Header="2nd Session" Binding="{Binding second}" />
 
 
                         <DataGridTemplateColumn Header="Edit">
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
-                                    <Button Background="#FF6839FF" Content="Edit"  />
-                                    <!--Click="updateSessionsForEdit"-->
+                                    <Button Background="#FF6839FF" Content="Edit" Click="updateSessionsForEdit" />
                                 </DataTemplate>
                             </DataGridTemplateColumn.CellTemplate>
                         </DataGridTemplateColumn>
@@ -136,8 +117,7 @@
                         <DataGridTemplateColumn Header="Delete">
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
-                                    <Button Background="#FFFFA000" Content="Delete" />
-                                    <!--Click="deleteSession"-->
+                                    <Button Background="#FFFFA000" Content="Delete" Click="deleteSession"/>
                                 </DataTemplate>
                             </DataGridTemplateColumn.CellTemplate>
                         </DataGridTemplateColumn>
@@ -149,6 +129,7 @@
                 </DataGrid>
 
             </Border>
+
         </Grid>
     </Grid>
 </Window>
