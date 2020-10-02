@@ -9,7 +9,7 @@ namespace TimeTableManager.Models
 
         public int Id { get; set; }
 
-        //public Session prSession { get; set; }
-        public ICollection<Session> SessionsAS { get; set; }
+        public Session first { get; set; }
+        public Session second { get; set; }
     }
 }
