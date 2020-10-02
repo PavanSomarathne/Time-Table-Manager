@@ -60,9 +60,24 @@ namespace TimeTableManager
 
         private void LoadOthers()
         {
-           CBSearchSes.ItemsSource = dbContext1.Sessions
-                    .Include(r => r.subjectDSA)
-                    .Include(r => r.tagDSA).ToList();
+            CBSearchSes.ItemsSource = dbContext1.Sessions
+                     .Include(r => r.subjectDSA)
+                     .Include(r => r.tagDSA)
+                     .Include(r => r.Room).ToList();
+
+            CBSearchLect.ItemsSource = dbContext1.LectureInformation.ToList();
+
+            CBSearchSub.ItemsSource = dbContext1.SubjectInformation.ToList();
+
+            List<String> data1 = dbContext1.Students.Select(r => r.groupId).Distinct().ToList();
+            List<String> data = dbContext1.Students.Select(r => r.subGroupId).Distinct().ToList();
+
+            foreach (String s in data)
+            {
+                data1.Add(s);
+            }
+
+            CBSearchGRP.ItemsSource = data1;
         }
 
         public void AddNewRoom(Object s, RoutedEventArgs e)
@@ -171,10 +186,10 @@ namespace TimeTableManager
                     .ToList();
 
                     //load sessions
-                    SessionDG.ItemsSource = dbContext1.Sessions   
+                    SessionDG.ItemsSource = dbContext1.Sessions
                     .Where(p => p.Room.Id == SelectedRoom.Id)
                     .Include(r => r.subjectDSA)
-                    .Include(r => r.tagDSA).ToList(); 
+                    .Include(r => r.tagDSA).ToList();
 
                     //load groups
                     LVGroups.ItemsSource = dbContext1.RoomGroups
@@ -191,6 +206,12 @@ namespace TimeTableManager
                 TxtCapacity.Text = "";
                 TxtRid.Text = "";
                 TxtType.Text = "";
+
+                LVGroups.ItemsSource = null;
+                LVlecturer.ItemsSource = null;
+                LVNAT.ItemsSource = null;
+                LVSubjects.ItemsSource = null;
+                SessionDG.ItemsSource = null;
             }
 
 
@@ -278,13 +299,54 @@ namespace TimeTableManager
         private void SearchBySession(Object s, RoutedEventArgs e)
 
         {
-            if (CBSearchBuilding.SelectedItem != null)
+            if (CBSearchSes.SelectedItem != null)
             {
+                Session selectedSession = (Session)CBSearchSes.SelectedItem;
+                CBSearchLect.SelectedItem = null;
+
+                try
+                {
+                    RoomsDG.Items.Clear();
+
+                    if (selectedSession.Room != null)
+                    {
+                        RoomsDG.Items.Add(selectedSession.Room);
+                        RoomsDG.Items.Refresh();
+                    }
+
+                }
+                catch (Exception ex)
+                {
+                    RoomsDG.ItemsSource = null;
+                }
+            }
+            else
+            {
+                RoomsDG.Items.Clear();
+                RoomsDG.ItemsSource = Rooms;
+            }
 
 
-                RoomsDG.ItemsSource = dbContext1.Sessions
-                 .Where(p => p.Room.Id == SelectedRoom.Id)
-                 .Select(r => r.Room).ToList();
+        }
+
+
+        private void SearchByLecturer(Object s, RoutedEventArgs e)
+        {
+            if (CBSearchLect.SelectedItem != null)
+            {
+                CBSearchSub.SelectedItem = null;
+                CBSearchSes.SelectedItem = null;
+                CBSearchGRP.SelectedItem = null;
+               
+                LecturerDetails selectedLec = (LecturerDetails)CBSearchLect.SelectedItem;
+
+
+                RoomsDG.ItemsSource = dbContext1.RoomLecturers
+                    .Where(r => r.Lecturer.Id == selectedLec.Id).Include(r => r.Room)
+                    .Select(r => r.Room).ToList();
+
+
+
             }
             else
             {
@@ -293,6 +355,61 @@ namespace TimeTableManager
 
 
         }
+
+        private void SearchBySubject(Object s, RoutedEventArgs e)
+        {
+            if (CBSearchSub.SelectedItem != null)
+            {
+                CBSearchGRP.SelectedItem = null;
+                CBSearchSes.SelectedItem = null;
+                CBSearchLect.SelectedItem = null;
+
+                SubjectDetails selectedSub = (SubjectDetails)CBSearchSub.SelectedItem;
+
+
+                RoomsDG.ItemsSource = dbContext1.RoomSubjects
+                    .Where(r => r.Subject.Id == selectedSub.Id)
+                    .Include(r => r.Room)
+                    .Select(r => r.Room).ToList();
+
+
+
+            }
+            else
+            {
+                RoomsDG.ItemsSource = Rooms;
+            }
+
+
+        }
+
+        private void SearchByGRP(Object s, RoutedEventArgs e)
+        {
+            if (CBSearchGRP.SelectedItem != null)
+            {
+                CBSearchSub.SelectedItem = null;
+                CBSearchSes.SelectedItem = null;
+                CBSearchLect.SelectedItem = null;
+
+                String selectedGRP = CBSearchGRP.Text;
+
+
+                RoomsDG.ItemsSource = dbContext1.RoomGroups
+                    .Where(r => r.Group.Equals(selectedGRP.ToString()))
+                    .Include(r => r.room)
+                    .Select(r => r.room).ToList();
+
+
+
+            }
+            else
+            {
+                RoomsDG.ItemsSource = Rooms;
+            }
+
+
+        }
+
 
 
     }

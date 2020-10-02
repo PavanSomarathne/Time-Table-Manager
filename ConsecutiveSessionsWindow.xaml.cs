@@ -184,8 +184,6 @@ namespace TimeTableManager
                 return false;
             }
 
-
-
             return true;
         }
 

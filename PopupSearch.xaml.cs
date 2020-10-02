@@ -81,7 +81,32 @@ namespace TimeTableManager
             LBL3.Content = "Tag";
 
             lbl0.Content = "Select Session";
-            CB1.ItemsSource = dbContext1.Sessions.Include(s => s.subjectDSA).Include(s => s.tagDSA).ToList();
+            warningMSG.Visibility = Visibility.Visible;
+
+            if (room.Type.Equals("LectureRoom"))
+            {
+                CB1.ItemsSource = dbContext1.Sessions
+                    .Where(r => r.tagDSA.tags.Equals("Lecture") || r.tagDSA.tags.Equals("Tutorial"))
+                    .Include(s => s.subjectDSA)
+                    .Include(s => s.tagDSA)
+                    .Include(s => s.Room)
+                    .ToList();
+
+                warningTxt.Text = "Selected Room is a Lecture Hall Showing only Lectures and Tutorial Sessions !";
+            }
+            else
+            {
+                CB1.ItemsSource = dbContext1.Sessions
+                .Where(r => r.tagDSA.tags.Equals("Practical"))
+                .Include(s => s.subjectDSA)
+                .Include(s => s.tagDSA)
+                .Include(s => s.Room)
+                .ToList();
+
+                warningTxt.Text = "Selected Room is a Lab Showing only Practical and Evaluation Sessions !";
+            }
+
+
 
         }
 
@@ -201,7 +226,20 @@ namespace TimeTableManager
 
                     if (!(dbContext1.Sessions.Any(r => r.Room.Id == this.room.Id && r.SessionId == session.SessionId)))
                     {
-                        ConsecutiveSession conSession;
+
+                        if (session.Room != null)
+                        {
+                            bool? Result = new MessageBoxCustom("This Session is Already Assigned to Room "+session.Room.Rid
+                                +", Do you want to continue? ",
+                            MessageType.Confirmation, MessageButtons.YesNo).ShowDialog();
+
+                            if (!Result.Value)
+                            {
+                                return;
+                            }
+                        }
+
+                            ConsecutiveSession conSession;
                         Session secondSession;
                         if (dbContext1.ConsecutiveSessions.Any(r => r.firstSession.SessionId == session.SessionId
                         || r.secondSession.SessionId == session.SessionId))
@@ -219,7 +257,7 @@ namespace TimeTableManager
                                 secondSession = conSession.firstSession;
                             }
 
-                            new MessageBoxCustom("Found A Consecative Session ! \n" + secondSession.ToString(), MessageType.Warning, MessageButtons.Ok).ShowDialog();
+                            new MessageBoxCustom("Found A Consecutive Session ! \n" + secondSession.ToString(), MessageType.Warning, MessageButtons.Ok).ShowDialog();
 
                             session.Room = this.room;
                             dbContext1.Sessions.Update(session);
@@ -229,7 +267,7 @@ namespace TimeTableManager
 
                             dbContext1.SaveChanges();
 
-                            new MessageBoxCustom("Both Sessions Assigned to "+this.room.Rid+" Successfully !", MessageType.Success, MessageButtons.Ok).ShowDialog();
+                            new MessageBoxCustom("Both Sessions Assigned to " + this.room.Rid + " Successfully !", MessageType.Success, MessageButtons.Ok).ShowDialog();
 
                         }
                         else

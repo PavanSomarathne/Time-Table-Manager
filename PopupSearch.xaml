@@ -24,8 +24,13 @@
             <ColumnDefinition Width="1.2*"/>
         </Grid.ColumnDefinitions>
 
-
-        <Label Grid.Row="0" Grid.Column="0"   x:Name="lbl0" Width="150" FontSize="16" FontWeight="Bold" Content="Select a Lecturer" VerticalAlignment="Top" Margin="0,20,0,0" />
+        <StackPanel Grid.Row="0" Grid.Column="0" >
+        <Label   x:Name="lbl0" Width="150" FontSize="16" FontWeight="Bold" Content="Select a Lecturer" VerticalAlignment="Top" Margin="0,20,0,0" />
+            <StackPanel Orientation="Horizontal"  x:Name="warningMSG" Margin="10,10" Visibility="Hidden">
+                <materialDesign:PackIcon  Kind="InfoCircle" Height="20" Width="20" Foreground="#FF1565C0"  />
+                <TextBlock x:Name="warningTxt" Text="" TextWrapping="Wrap"  Width="130" Margin="5,0,0,0" IsEnabled="False"/>
+            </StackPanel>
+        </StackPanel>
         <ComboBox  SelectionChanged="SelectItem" Grid.Row="0" Grid.Column="1" Width="160" x:Name="CB1"   materialDesign:HintAssist.HintOpacity=".26" IsEditable="True"  VerticalAlignment="Top" Margin="0,20,0,0"/>
 
         <StackPanel Grid.Column="2" HorizontalAlignment="Stretch" Margin="10,20,10,20" Background="White">
