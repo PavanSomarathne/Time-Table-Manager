@@ -106,72 +106,63 @@ namespace TimeTableManager
 
 
 
-        private void AddSession(object s, RoutedEventArgs e)
-        {
-            if (ValidateInput())
+            if (LVlecturer.SelectedItem != null)
             {
-               
-                ParallelSession parallelSession = new ParallelSession();
 
-                dbContext1.ParallelSessions.Add(NewSession);
-                dbContext1.SaveChanges();
+                LecturerDetails lecturer = (LecturerDetails)LVlecturer.SelectedItem;
+
+                if (Addseesion == true)
+                {
 
 
-                var lastShowPieceId = dbContext1.ParallelSessions.Max(x => x.Id);
-                ParallelSession lastinserted = dbContext1.ParallelSessions.FirstOrDefault(x => x.Id == lastShowPieceId);
+                    var item = LeLISTT.Find(x => x.Id == lecturer.Id);
+                    LeLISTT.Remove(item);
 
-                foreach (Session session1 in parall) {
 
-                    //dbContext1.Sessions.Update(session1);
-                    dbContext1.Sessions.Update(session1);
-                    dbContext1.SaveChanges();
-                  
-                } 
 
-                new MessageBoxCustom("Successfully added Parallel Session details !", MessageType.Success, MessageButtons.Ok).ShowDialog();
+                    LVlecturer.ItemsSource = LeLISTT.ToList();
 
-                clear();
-                GetSessions();
+                    LVlecturer.SelectedIndex = -1;
+                }
+
+                else
+                {
+
+
+
+                    LecturerDetails lecturerrty = (LecturerDetails)LVlecturer.SelectedItem;
+
+                    var item = LeLISTT.Find(x => x.Id == lecturerrty.Id);
+                    LeLISTT.Remove(item);
+
+
+                    if (dbContext1.SessionLecturers.Any(r => r.SessionrId == UpdatingSession.SessionId && r.LecturerId == lecturerrty.Id))
+                    {
+
+                        var SesLert = dbContext1.SessionLecturers.First(row => row.SessionrId == UpdatingSession.SessionId && row.LecturerId == lecturerrty.Id);
+                        dbContext1.SessionLecturers.Remove(SesLert);
+                        dbContext1.SaveChanges();
+
+
+                        // LoadLecturesGivenBySessionId(UpdatingSession.SessionId);
+                    }
+
+
+
+
+                    LVlecturer.ItemsSource = LeLISTT.ToList();
+                    LVlecturer.SelectedIndex = -1;
+
+
+
+                }
+
 
             }
             else
             {
-
-                new MessageBoxCustom("Please complete Parallel Session  details correctly !", MessageType.Warning, MessageButtons.Ok).ShowDialog();
+                MessageBox.Show("please select lecture before clicking teh button  ");
             }
-
-
-        }
-
-
-        private bool ValidateInput()
-        {
-
-            if (string.IsNullOrEmpty(cmb1.Text))
-            {
-                cmb1.Focus();
-                return false;
-            }
-
-
-            return true;
-        }
-
-
-
-
-
-        //private void deleteselectedsessions(object s, RoutedEventArgs e)
-        //{
-
-
-        //    if (LVlecturer.SelectedItem != null)
-        //    {
-
-        //        ParallelSession session = (ParallelSession)LVlecturer.SelectedItem;
-
-        //        if (Addseesion == true)
-        //        {
 
 
         //            var item = LeLISTT.Find(x => x.Id == .Id);
@@ -209,9 +200,11 @@ namespace TimeTableManager
 
 
 
-        //            LVlecturer.ItemsSource = LeLISTT.ToList();
-        //            LVlecturer.SelectedIndex = -1;
-
+                    //dbContext1.Sessions.Update(session1);
+                    dbContext1.Sessions.Update(session1);
+                    dbContext1.SaveChanges();
+                  
+                } 
 
 
         //        }
