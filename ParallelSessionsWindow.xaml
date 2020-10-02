@@ -105,7 +105,7 @@
 
                         <Button Click="AddSession" Foreground="White" Background="#FF6839FF" Grid.Row="4" Content="Add" Margin="40,42,350,6" />
                         <Button Foreground="White" Background="#FF6839FF" Grid.Row="4" Content="Update" Margin="197,42,188,6" />
-                        <Button Foreground="White" Background="#FF6839FF" Grid.Row="4" Content="Reset" Margin="358,42,34,6" />
+                        <Button Foreground="White" Background="#FF6839FF" Grid.Row="4" Content="Reset" Margin="358,42,34,6" Click="resetSessions"/>
 
                         <Label Grid.Row="5" Grid.Column="1" Content="*Please make sure that sessions in parallel sub groups are not overlapping with others" Margin="42,14,-42,39"/>
 
