@@ -30,7 +30,7 @@ namespace TimeTableManager.Models
 
         public String GroupOrsubgroupForDisplay { get; set; }
 
-        public ParallelSession par { get; set; }
+        
 
         public String getSessionStu() 
         {

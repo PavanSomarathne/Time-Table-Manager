@@ -363,6 +363,8 @@ namespace TimeTableManager
                 getGrpsub = null;
 
                 settingEmptyValues = false;
+
+                new MessageBoxCustom("Successfully Added Session  details !", MessageType.Success, MessageButtons.Ok).ShowDialog();
                 LoadSessions();
 
 
@@ -792,6 +794,8 @@ namespace TimeTableManager
                 Sessionupdatebtn.IsEnabled = false;
                 Addseesion = true;
                 SessionDGg.SelectedItem = null;
+
+                new MessageBoxCustom("Successfully Updated Session details !", MessageType.Success, MessageButtons.Ok).ShowDialog();
                 LoadSessions();
                 //antima addsession eka true karann
                 // Addseesion = true; //meka true karanna kalin values empty kala yuthu wey,nattama waradi
