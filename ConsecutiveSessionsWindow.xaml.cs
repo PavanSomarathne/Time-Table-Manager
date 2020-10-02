@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data.Entity;
+using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Text;
 using System.Windows;
@@ -69,6 +69,29 @@ namespace TimeTableManager
                 NewSession.firstSession = (Session)cmb1.SelectedItem;
                 NewSession.secondSession = (Session)cmb2.SelectedItem;
 
+
+                    if ((Session)cmb1.SelectedItem == (Session)cmb2.SelectedItem)
+                    {
+                        new MessageBoxCustom("Can't add same session, Please select consecutive sessions!", MessageType.Error, MessageButtons.Ok).ShowDialog();
+                        return;
+
+                    }
+
+                
+                if (NewSession.firstSession.tagDSA.tags == NewSession.secondSession.tagDSA.tags)
+                {
+                    new MessageBoxCustom("Those are not consecutive, Both of the selections can't have same tag!", MessageType.Error, MessageButtons.Ok).ShowDialog();
+                    return;
+                }
+
+                if (NewSession.firstSession.subjectDSA.SubjectCode != NewSession.secondSession.subjectDSA.SubjectCode)
+                {
+                    new MessageBoxCustom("Those are not consecutive, Please use same subject code to create consecutive sessions!", MessageType.Error, MessageButtons.Ok).ShowDialog();
+                    return;
+                }
+
+
+
                 dbContext1.ConsecutiveSessions.Add(NewSession);
                 dbContext1.SaveChanges();
 
@@ -110,6 +133,27 @@ namespace TimeTableManager
                 //selectedSession.consecutiveId = txtSessionName.Text;
                 selectedSession.firstSession = (Session)cmb1.SelectedItem;
                 selectedSession.secondSession = (Session)cmb2.SelectedItem;
+
+                if ((Session)cmb1.SelectedItem == (Session)cmb2.SelectedItem)
+                {
+                    new MessageBoxCustom("Can't add same session, Please select consecutive sessions!", MessageType.Error, MessageButtons.Ok).ShowDialog();
+                    return;
+
+                }
+
+
+                if (selectedSession.firstSession.tagDSA.tags == selectedSession.secondSession.tagDSA.tags)
+                {
+                    new MessageBoxCustom("Those are not consecutive, Both of the selections can't have same tag!", MessageType.Error, MessageButtons.Ok).ShowDialog();
+                    return;
+                }
+
+                if (selectedSession.firstSession.subjectDSA.SubjectCode != selectedSession.secondSession.subjectDSA.SubjectCode)
+                {
+                    new MessageBoxCustom("Those are not consecutive, Please use same subject code to create consecutive sessions!", MessageType.Error, MessageButtons.Ok).ShowDialog();
+                    return;
+                }
+
                 dbContext1.Update(selectedSession);
                 dbContext1.SaveChanges();
 
