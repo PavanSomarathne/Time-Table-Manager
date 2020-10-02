@@ -124,6 +124,7 @@ namespace TimeTableManager
                 {
 
                     //dbContext1.Sessions.Update(session1);
+                    session1.par = lastinserted;
                     dbContext1.Sessions.Update(session1);
                     dbContext1.SaveChanges();
 
@@ -162,71 +163,7 @@ namespace TimeTableManager
 
 
 
-        //private void deleteselectedsessions(object s, RoutedEventArgs e)
-        //{
-
-
-        //    if (LVlecturer.SelectedItem != null)
-        //    {
-
-        //        ParallelSession session = (ParallelSession)LVlecturer.SelectedItem;
-
-        //        if (Addseesion == true)
-        //        {
-
-
-        //            var item = LeLISTT.Find(x => x.Id == .Id);
-        //            LeLISTT.Remove(item);
-
-
-
-        //            LVlecturer.ItemsSource = LeLISTT.ToList();
-
-        //            LVlecturer.SelectedIndex = -1;
-        //        }
-
-        //        else
-        //        {
-
-
-
-        //            LecturerDetails lecturerrty = (LecturerDetails)LVlecturer.SelectedItem;
-
-        //            var item = LeLISTT.Find(x => x.Id == lecturerrty.Id);
-        //            LeLISTT.Remove(item);
-
-
-        //            if (dbContext1.SessionLecturers.Any(r => r.SessionrId == UpdatingSession.SessionId && r.LecturerId == lecturerrty.Id))
-        //            {
-
-        //                var SesLert = dbContext1.SessionLecturers.First(row => row.SessionrId == UpdatingSession.SessionId && row.LecturerId == lecturerrty.Id);
-        //                dbContext1.SessionLecturers.Remove(SesLert);
-        //                dbContext1.SaveChanges();
-
-
-        //                // LoadLecturesGivenBySessionId(UpdatingSession.SessionId);
-        //            }
-
-
-
-
-        //            LVlecturer.ItemsSource = LeLISTT.ToList();
-        //            LVlecturer.SelectedIndex = -1;
-
-
-
-        //        }
-
-
-        //    }
-        //    else
-        //    {
-        //        MessageBox.Show("please select lecture before clicking the button  ");
-        //    }
-
-
-
-        //}
+       
 
 
         private void resetSessions(object s, RoutedEventArgs e)
@@ -245,132 +182,7 @@ namespace TimeTableManager
         }
 
 
-        //private void updateSessionsForEdit(object s, RoutedEventArgs e)
-        //{
-        //    selectedSession = (s as FrameworkElement).DataContext as ParallelSession;
-
-        //    txtParallelSession.Text = selectedSession.parallelId;
-        //    cmb1.Text = selectedSession.firstSession;
-        //    cmb2.Text = selectedSession.secondSession;
-        //    cmb3.Text = selectedSession.thirdSession;
-
-        //}
-
-
-
-        //private void UpdateSession(object s, RoutedEventArgs e)
-        //{
-        //    if (ValidateInput())
-        //    {
-        //        selectedSession.parallelId = txtParallelSession.Text;
-        //        selectedSession.firstSession = cmb1.Text;
-        //        selectedSession.secondSession = cmb2.Text;
-        //        selectedSession.thirdSession = cmb3.Text;
-        //        dbContext1.Update(selectedSession);
-        //        dbContext1.SaveChanges();
-
-        //        new MessageBoxCustom("Successfully updated Parallel Session details !", MessageType.Success, MessageButtons.Ok).ShowDialog();
-        //        clear();
-        //        GetSessions();
-        //    }
-        //    else
-        //    {
-
-        //        new MessageBoxCustom("Please complete Parallel Session details correctly  !", MessageType.Warning, MessageButtons.Ok).ShowDialog();
-        //    }
-
-        //}
-
-        //private void deleteSession(object s, RoutedEventArgs e)
-        //{
-        //    bool? Result = new MessageBoxCustom("Are you sure, you want to delete this session detail ? ",
-        //     MessageType.Confirmation, MessageButtons.YesNo).ShowDialog();
-
-        //    if (Result.Value)
-        //    {
-
-        //        var sessionToBeDeleted = (s as FrameworkElement).DataContext as ParallelSession;
-        //        dbContext1.ParallelSessions.Remove(sessionToBeDeleted);
-        //        dbContext1.SaveChanges();
-        //        GetSessions();
-        //    }
-
-        //}
-
-
-
-
-
-
-        //private void sessions_load(object sender, RoutedEventArgs e)
-        //{
-        //    List<String> sesString = new List<String>();
-        //    List<Session> sess = dbContext1.Sessions.ToList();
-
-        //    foreach (var item in sess)
-        //    {
-        //        sesString.Add(item.lecturesLstByConcadinating + "\n " + item.subjectDSA.SubjectName + "(" + item.subjectDSA.SubjectCode + ")" + " \n " + item.tagDSA.tags + "\n " + item.GroupOrsubgroupForDisplay + "\n" + item.StdntCount + "(" + item.durationinHours + ")");
-        //    }
-        //    cmb1.ItemsSource = sesString;
-        //}
-
-        //private void AddSessionDetails(object s, RoutedEventArgs e)
-
-        //{
-
-        //    Addseesion = true;
-
-
-        //    //concadinate lecturer names
-        //    newSessionDl.lecturesLstByConcadinating = null;
-        //    foreach (LecturerDetails LL in LeLISTT)
-        //    {
-
-        //        newSessionDl.lecturesLstByConcadinating += LL.LecName;
-        //    }
-
-
-
-        //    dbContext1.Sessions.Add(newSessionDl);
-
-        //    int condition = dbContext1.SaveChanges();
-
-
-
-        //    foreach (LecturerDetails lec in LeLISTT)
-        //    {
-
-
-        //        SessionLecturer sessionlc = new SessionLecturer
-        //        {
-
-        //            Ssssion = newSessionDl,
-        //            Lecdetaiils = lec
-
-        //        };
-
-        //        dbContext1.SessionLecturers.Add(sessionlc);
-        //        dbContext1.SaveChanges();
-
-
-        //    }
-
-        //    settingEmptyValues = true;
-
-        //    LVlecturer.ItemsSource = null;
-        //    cmb1.Text = "";
-
-
-        //    newSessionDl = new Session();
-
-        //    LeLISTT = null;
-        //    LeLISTT = new List<LecturerDetails>();
-
-
-        //    settingEmptyValues = false;
-        //    getlecturers();
-
-        //}
+      
 
     }
 }
