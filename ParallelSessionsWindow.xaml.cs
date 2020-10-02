@@ -108,16 +108,6 @@ namespace TimeTableManager
         {
 
 
-                }
-
-
-            }
-            else
-            {
-                MessageBox.Show("please select lecture before clicking teh button  ");
-            }
-
-
 
         }
 
