@@ -205,6 +205,11 @@ namespace TimeTableManager
 
             if (!settingEmptyValues)
             {
+               // if(CByearselect.Text.Trim() == "")
+              //  {
+               //     new MessageBoxCustom("Please Select Yaer Before select the subject", MessageType.Warning, MessageButtons.Ok).ShowDialog();
+                  //  return;
+             //   }   
 
                  SubjectDetails dd = (SubjectDetails)selectsubjects.SelectedItem;
                  if (dd != null)
@@ -212,8 +217,10 @@ namespace TimeTableManager
                     sucode.Content = dd.SubjectCode;
                 }
                 else
-                {
+                {  
+
                     sucode.Content = "";
+
                 }
 
                 dd = null;
@@ -251,9 +258,10 @@ namespace TimeTableManager
             if (ValidateSessionInputs())
             {
 
-
+               String SCdd =  ((SubjectDetails)selectsubjects.SelectedItem).SubjectCode;
+                
                 //condition
-                if (dbContext1.Sessions.Any(b => b.subjectDSA.SubjectName == selectsubjects.Text.Trim() && b.tagDSA.tags == CBTagsNames.Text.Trim() && (b.GroupOrsubgroupForDisplay == selectMainGroup.Text.Trim() || b.GroupOrsubgroupForDisplay == selectSubgrp.Text.Trim())  ))
+                if (dbContext1.Sessions.Any(b => b.subjectDSA.SubjectCode == SCdd && b.tagDSA.tags == CBTagsNames.Text.Trim() && (b.GroupOrsubgroupForDisplay == selectMainGroup.Text.Trim() || b.GroupOrsubgroupForDisplay == selectSubgrp.Text.Trim())  ))
                 {
                     new MessageBoxCustom("This Session is already in the System", MessageType.Error, MessageButtons.Ok).ShowDialog();
                     return;
@@ -445,7 +453,31 @@ namespace TimeTableManager
 
                         LeLISTT.Add(lectu);
                         LVlecturer.ItemsSource = LeLISTT.ToList();
+
+
+
+
+                        UpdatingSession.lecturesLstByConcadinating = null;
+                        foreach (LecturerDetails LOP in LeLISTT)
+                        {
+
+                            UpdatingSession.lecturesLstByConcadinating += LOP.LecName + " ,";
+                        }
+
+
+
+
+                        dbContext1.Update(UpdatingSession);
+                        dbContext1.SaveChanges();
+
+
+
+
+
                         LecturerDrpn.SelectedIndex = -1;
+
+
+
 
                       }
 
@@ -600,6 +632,25 @@ namespace TimeTableManager
 
 
 
+                    UpdatingSession.lecturesLstByConcadinating = null;
+                    foreach (LecturerDetails Ldd in LeLISTT)
+                    {
+
+                        UpdatingSession.lecturesLstByConcadinating += Ldd.LecName + " ,";
+                    }
+
+
+
+
+                    dbContext1.Update(UpdatingSession);
+                    dbContext1.SaveChanges();
+
+
+
+
+
+
+
                     LVlecturer.ItemsSource = LeLISTT.ToList();
                     LVlecturer.SelectedIndex = -1;
                  
@@ -632,10 +683,12 @@ namespace TimeTableManager
 
             if (ValidateSessionInputs())
             {
-                bool estingSS = !(UpdatingSession.subjectDSA.SubjectName.Equals(selectsubjects.Text.ToString()) && UpdatingSession.tagDSA.tags.Equals(CBTagsNames.Text.ToString()) && (UpdatingSession.GroupOrsubgroupForDisplay.Equals(selectMainGroup.Text.ToString()) || UpdatingSession.GroupOrsubgroupForDisplay.Equals(selectSubgrp.Text.ToString())));
+
+                String SSCdttte = ((SubjectDetails)selectsubjects.SelectedItem).SubjectCode;
+                bool estingSS = !(UpdatingSession.subjectDSA.SubjectCode.Equals(SSCdttte) && UpdatingSession.tagDSA.tags.Equals(CBTagsNames.Text.ToString()) && (UpdatingSession.GroupOrsubgroupForDisplay.Equals(selectMainGroup.Text.ToString()) || UpdatingSession.GroupOrsubgroupForDisplay.Equals(selectSubgrp.Text.ToString())));
             
 
-                if (estingSS &&  dbContext1.Sessions.Any(b => b.subjectDSA.SubjectName == selectsubjects.Text.ToString() && b.tagDSA.tags == CBTagsNames.Text.ToString() && (b.GroupOrsubgroupForDisplay == selectMainGroup.Text.ToString() || b.GroupOrsubgroupForDisplay == selectSubgrp.Text.ToString())))
+                if (estingSS &&  dbContext1.Sessions.Any(b => b.subjectDSA.SubjectCode == SSCdttte && b.tagDSA.tags == CBTagsNames.Text.ToString() && (b.GroupOrsubgroupForDisplay == selectMainGroup.Text.ToString() || b.GroupOrsubgroupForDisplay == selectSubgrp.Text.ToString())))
                 {
                     new MessageBoxCustom("This session already In the system", MessageType.Error, MessageButtons.Ok).ShowDialog();
                     return;
@@ -830,6 +883,10 @@ namespace TimeTableManager
 
 
 
+            }
+            else
+            {
+                new MessageBoxCustom("Please Select the Session Before Delete", MessageType.Error, MessageButtons.Ok).ShowDialog();
             }
 
 
