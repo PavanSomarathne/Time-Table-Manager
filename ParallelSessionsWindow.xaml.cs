@@ -241,7 +241,7 @@ namespace TimeTableManager
 
             foreach (var item in sess)
             {
-                sesString.Add(item.first);
+                sesString.Add(item.first.ToString());
             }
             p1.ItemsSource = sesString;
         }
@@ -254,7 +254,7 @@ namespace TimeTableManager
 
             foreach (var item in sessS)
             {
-                sesStrings.Add(item.second);
+                sesStrings.Add(item.second.ToString());
             }
             p2.ItemsSource = sesStrings;
         }
