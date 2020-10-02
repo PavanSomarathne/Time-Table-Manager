@@ -51,14 +51,22 @@ namespace TimeTableManager
                 if (ValidateInput())
                 {
 
-                    selectedSubject.SubjectName = SubName.Text;
-                    selectedSubject.SubjectCode = SubCoDe.Text;
-                    selectedSubject.OfferedYear = SubOfferYrr.Text;
-                    selectedSubject.OfferedSemester = SubOfferSemmm.Text;
-                    selectedSubject.LecHours = int.Parse( LecHrForSub.Text);
-                    selectedSubject.TutorialHours = int.Parse(TuteHrForSub.Text);
-                    selectedSubject.LabHours = int.Parse(LabHrForSub.Text);
-                    selectedSubject.EvalHours =int.Parse(EvalHrForSub.Text);
+                    if (!(selectedSubject.SubjectCode.Equals(SubCoDe.Text.Trim())) && dbContext1.SubjectInformation.Any(r => r.SubjectCode == SubCoDe.Text.Trim()))
+                    {
+                        new MessageBoxCustom("This Subject code is Already In the System Use a Different Subject Code", MessageType.Error, MessageButtons.Ok).ShowDialog();
+                        return;
+
+                    }
+
+
+                    selectedSubject.SubjectName = SubName.Text.Trim();
+                    selectedSubject.SubjectCode = SubCoDe.Text.Trim();
+                    selectedSubject.OfferedYear = SubOfferYrr.Text.Trim();
+                    selectedSubject.OfferedSemester = SubOfferSemmm.Text.Trim();
+                    selectedSubject.LecHours = int.Parse( LecHrForSub.Text.Trim());
+                    selectedSubject.TutorialHours = int.Parse(TuteHrForSub.Text.Trim());
+                    selectedSubject.LabHours = int.Parse(LabHrForSub.Text.Trim());
+                    selectedSubject.EvalHours =int.Parse(EvalHrForSub.Text.Trim());
 
 
 
@@ -100,15 +108,21 @@ namespace TimeTableManager
 
                 if (ValidateInput())
                 {
+                    if (dbContext1.SubjectInformation.Any(b => b.SubjectCode == SubCoDe.Text.Trim()))
+                    {
+                        new MessageBoxCustom("This Subject code is Already In the System Use a Different Subject Code", MessageType.Error, MessageButtons.Ok).ShowDialog();
+                        return;
+                    }
 
-                    NewSubDL.SubjectName = SubName.Text;
-                    NewSubDL.SubjectCode = SubCoDe.Text;
-                    NewSubDL.OfferedYear = SubOfferYrr.Text; 
-                    NewSubDL.OfferedSemester = SubOfferSemmm.Text;
-                    NewSubDL.LecHours = int.Parse(LecHrForSub.Text);
-                    NewSubDL.TutorialHours = int.Parse(TuteHrForSub.Text);
-                    NewSubDL.LabHours = int.Parse(LabHrForSub.Text);
-                    NewSubDL.EvalHours = int.Parse(EvalHrForSub.Text);
+
+                    NewSubDL.SubjectName = SubName.Text.Trim();
+                    NewSubDL.SubjectCode = SubCoDe.Text.Trim();
+                    NewSubDL.OfferedYear = SubOfferYrr.Text.Trim(); 
+                    NewSubDL.OfferedSemester = SubOfferSemmm.Text.Trim();
+                    NewSubDL.LecHours = int.Parse(LecHrForSub.Text.Trim());
+                    NewSubDL.TutorialHours = int.Parse(TuteHrForSub.Text.Trim());
+                    NewSubDL.LabHours = int.Parse(LabHrForSub.Text.Trim());
+                    NewSubDL.EvalHours = int.Parse(EvalHrForSub.Text.Trim());
                     ADbuttn.Content = "Add Subject";
                     dbContext1.SubjectInformation.Add(NewSubDL);
                     NewSubDL = new SubjectDetails();
@@ -187,8 +201,15 @@ namespace TimeTableManager
 
             if (Result.Value)
             {
+              
+             var subjectToBeDeleted = (s as FrameworkElement).DataContext as SubjectDetails;
 
-                var subjectToBeDeleted = (s as FrameworkElement).DataContext as SubjectDetails;
+               if( checksessionhasSubject(subjectToBeDeleted))
+                {
+                    new MessageBoxCustom("This subject Is already assigned Session,Before Delete Subject,delete the session", MessageType.Error, MessageButtons.Ok).ShowDialog();
+                    return;
+                }
+
                 dbContext1.SubjectInformation.Remove(subjectToBeDeleted);
                 dbContext1.SaveChanges();
                 GetSubjectdetail();
@@ -294,6 +315,14 @@ namespace TimeTableManager
             mainWindow.Show();
             this.Close();
 
+        }
+
+
+        private bool checksessionhasSubject(SubjectDetails SuBBb)
+        {
+            bool ty = dbContext1.Sessions.Any(r => r.subjectDSA.Id== SuBBb.Id);
+
+            return ty;
         }
 
     }

@@ -91,7 +91,10 @@
         <StackPanel Grid.Row="2" Grid.Column="1" Background="#FFE6E2FF" Width="200" HorizontalAlignment="Right">
             <Label Content="Filter By " FontWeight="Bold" FontSize="16" Margin="10,10,0,0" Height="33" />
             <ComboBox Width="182" x:Name="CBSearchSes"   materialDesign:HintAssist.Hint="Session" materialDesign:HintAssist.HintOpacity=".26" IsEditable="True" SelectionChanged="SearchBySession" FontSize="16" Margin="0,10,0,0" HorizontalAlignment="Center"/>
-            <ComboBox Width="182" x:Name="CBSearchLect"  DisplayMemberPath="Name" materialDesign:HintAssist.Hint="Preffered Lecturer" materialDesign:HintAssist.HintOpacity=".26" IsEditable="True" SelectionChanged="SearchByBuilding" FontSize="16" Margin="0,10,0,0" HorizontalAlignment="Center"/>
+            <ComboBox Width="182" x:Name="CBSearchLect"  DisplayMemberPath="LecName" materialDesign:HintAssist.Hint="Preffered Lecturer" materialDesign:HintAssist.HintOpacity=".26" IsEditable="True" SelectionChanged="SearchByLecturer" FontSize="16" Margin="0,10,0,0" HorizontalAlignment="Center"/>
+            <ComboBox Width="182" x:Name="CBSearchSub"  DisplayMemberPath="SubjectCode" materialDesign:HintAssist.Hint="Preffered Subject" materialDesign:HintAssist.HintOpacity=".26" IsEditable="True" SelectionChanged="SearchBySubject" FontSize="16" Margin="0,10,0,0" HorizontalAlignment="Center"/>
+            <ComboBox Width="182" x:Name="CBSearchGRP"  materialDesign:HintAssist.Hint="Preffered Group/Sub Group" materialDesign:HintAssist.HintOpacity=".26" IsEditable="True" SelectionChanged="SearchByGRP" FontSize="13" Margin="0,10,0,0" HorizontalAlignment="Center"/>
+
         </StackPanel>
         <StackPanel Width="300" Grid.Column="3" Grid.Row="1" Grid.RowSpan="3" materialDesign:ShadowAssist.ShadowDepth="Depth4" Margin="0,20,0,0" >
             <Label Content="Location Management"  FontWeight="Normal" FontSize="20" HorizontalAlignment="Center"/>

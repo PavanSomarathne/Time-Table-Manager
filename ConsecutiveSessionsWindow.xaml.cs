@@ -30,7 +30,7 @@ namespace TimeTableManager
         {
             this.dbContext1 = dbContext1;
             InitializeComponent();
-           
+
             loadsessions();
             GetSessions();
 
@@ -228,8 +228,6 @@ namespace TimeTableManager
                 return false;
             }
 
-
-
             return true;
         }
 
@@ -241,7 +239,7 @@ namespace TimeTableManager
 
             foreach (var item in sess)
             {
-                sesString.Add(item.firstSession);
+                sesString.Add(item.firstSession.ToString());
             }
             cmb1.ItemsSource = sesString;
         }
@@ -254,7 +252,7 @@ namespace TimeTableManager
 
             foreach (var item in sessS)
             {
-                sesStrings.Add(item.secondSession);
+                sesStrings.Add(item.secondSession.ToString());
             }
             cmb2.ItemsSource = sesStrings;
         }
