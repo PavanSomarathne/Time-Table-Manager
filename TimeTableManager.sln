@@ -5,6 +5,8 @@ VisualStudioVersion = 16.0.30320.27
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TimeTableManager", "TimeTableManager.csproj", "{B3438C38-4899-4486-BE38-8EEC4B7E41E9}"
 EndProject
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "Setup1", "..\Setup1\Setup1.vdproj", "{61893AF7-A234-4718-A8DD-4715B983A1C9}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,8 @@ Global
 		{B3438C38-4899-4486-BE38-8EEC4B7E41E9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B3438C38-4899-4486-BE38-8EEC4B7E41E9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B3438C38-4899-4486-BE38-8EEC4B7E41E9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{61893AF7-A234-4718-A8DD-4715B983A1C9}.Debug|Any CPU.ActiveCfg = Debug
+		{61893AF7-A234-4718-A8DD-4715B983A1C9}.Release|Any CPU.ActiveCfg = Release
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

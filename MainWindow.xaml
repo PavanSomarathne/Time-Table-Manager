@@ -81,7 +81,7 @@
 
         <Button  Grid.Row="2" Grid.Column="0" FontSize="24" Height="120" Width="200" Click="Sessionmanagement">
             <StackPanel>
-                <materialDesign:PackIcon Kind="NoteMultipleOutline" Width="50" Height="50" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                <materialDesign:PackIcon Kind="Note" Width="50" Height="50" HorizontalAlignment="Center" VerticalAlignment="Center" />
                 <Label Content="    Session&#xa;Management" Foreground="#DDFFFFFF" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20"/>
             </StackPanel>
         </Button>
@@ -103,6 +103,8 @@
         <Button  Grid.Row="3" Grid.Column="1" FontSize="24" Height="120" Width="200" Click="LaunchNotAvailableTime">
             <StackPanel>
                 <!--<materialDesign:PackIcon Kind="CalendarText" Width="50" Height="50" HorizontalAlignment="Center" VerticalAlignment="Center" />-->
+                <materialDesign:PackIcon Kind="AlarmOff" Width="50" Height="50" HorizontalAlignment="Center" VerticalAlignment="Center" />
+
                 <Label Content="Not Available&#xa;       Time" Foreground="#DDFFFFFF" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20"/>
             </StackPanel>
         </Button>
@@ -110,6 +112,8 @@
         <Button  Grid.Row="3" Grid.Column="2" FontSize="24" Height="120" Width="200" Click="LaunchConsecutiveSessions">
             <StackPanel>
                 <!--<materialDesign:PackIcon Kind="CalendarText" Width="50" Height="50" HorizontalAlignment="Center" VerticalAlignment="Center" />-->
+                <materialDesign:PackIcon Kind="NoteMultiple" Width="50" Height="50" HorizontalAlignment="Center" VerticalAlignment="Center" />
+
                 <Label Content="Consecutive&#xa;   Sessions" Foreground="#DDFFFFFF" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20"/>
             </StackPanel>
         </Button>
@@ -117,12 +121,14 @@
         <Button  Grid.Row="3" Grid.Column="3" FontSize="24" Height="120" Width="200" Click="LaunchParallelSessions">
             <StackPanel>
                 <!--<materialDesign:PackIcon Kind="CalendarText" Width="50" Height="50" HorizontalAlignment="Center" VerticalAlignment="Center" />-->
+                <materialDesign:PackIcon Kind="CompareHorizontal" Width="50" Height="50" HorizontalAlignment="Center" VerticalAlignment="Center" />
+
                 <Label Content=" Parallel&#xa;Sessions" Foreground="#DDFFFFFF" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20"/>
             </StackPanel>
         </Button>
         <StackPanel Grid.Column="3" Grid.Row="4" Grid.ColumnSpan="2">
             <Label Content="Developed By Hackslash™" FontWeight="Bold" FontSize="16"/>
-            <Label Content="SLIIT SE 3rd Year 2020"  FontSize="14" Margin="0,0,0,10" Height="25"/>
+            <Label Content="SLIIT SE 3rd Year 2020"  FontSize="14" Margin="0,0,0,5" Height="25"/>
         </StackPanel>
 
     </Grid>
