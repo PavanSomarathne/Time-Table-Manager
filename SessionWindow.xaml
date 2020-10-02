@@ -77,7 +77,12 @@
                                             <StackPanel Grid.Row="0"  Margin="80 10 0 12 ">
                                                 <StackPanel Orientation="Horizontal">
                                                     <TextBox materialDesign:HintAssist.Hint="Search" x:Name="sessionserhh" Width="450" FontSize="22" FontWeight="Bold" BorderBrush="Black" Background="AntiqueWhite" Padding="2 3 3 3" TextChanged="Serchsessionvaluess"/>
+                                                    <StackPanel Orientation="Horizontal" Margin="10 4 0 0">
+                                                        <materialDesign:PackIcon  Kind="InfoCircle"   Foreground="#FF1565C0"  />
+                                                        <Label Content=" click the  session from the list to update or delete"/>
 
+
+                                                    </StackPanel>
                                                 </StackPanel>
 
 
