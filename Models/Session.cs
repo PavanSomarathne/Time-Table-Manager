@@ -32,15 +32,47 @@ namespace TimeTableManager.Models
 
         public ParallelSession par { get; set; }
 
+        public String getSessionStu() 
+        {
+            if (Room != null)
+            {
+
+                return lecturesLstByConcadinating + "\n" + subjectDSA.SubjectName + "(" + subjectDSA.SubjectCode + ")" + "\n" + tagDSA.tags + "\n" + GroupOrsubgroupForDisplay + "\n" + Room.Rid;
+            }else
+             {
+
+                return lecturesLstByConcadinating + "\n" + subjectDSA.SubjectName + "(" + subjectDSA.SubjectCode + ")" + "\n" + tagDSA.tags + "\n" + GroupOrsubgroupForDisplay + "\n" + "-";
+            }
+        }
+        public String getSessionLec()
+        {
+            if (Room != null)
+            {
+
+                return lecturesLstByConcadinating + "\n" + subjectDSA.SubjectName + "(" + subjectDSA.SubjectCode + ")" + "\n" + tagDSA.tags + "\n" + GroupOrsubgroupForDisplay + "\n" + Room.Rid;
+            }
+            else
+            {
+
+                return subjectDSA.SubjectName + "(" + subjectDSA.SubjectCode + ")" + "\n" + tagDSA.tags + "\n" + GroupOrsubgroupForDisplay + "\n" + "-";
+            }
+        }
+        public String getSessionRoom()
+        {
+            return lecturesLstByConcadinating + "\n" + subjectDSA.SubjectName + "(" + subjectDSA.SubjectCode + ")" + "\n" + tagDSA.tags + "\n" + GroupOrsubgroupForDisplay;
+
+        }
+
 
         public override string ToString()
         {
-            return SessionId.ToString() + "\n "+ lecturesLstByConcadinating + "\n " + subjectDSA.SubjectName + "(" + subjectDSA.SubjectCode + ")" + " \n " + tagDSA.tags + "\n " + GroupOrsubgroupForDisplay + "\n" + StdntCount + "(" + durationinHours + ")";
+            if (subjectDSA == null || tagDSA == null)
+            {
+                return SessionId.ToString() + "\n" + lecturesLstByConcadinating  + "\n" + GroupOrsubgroupForDisplay + "\n" + StdntCount + "(" + durationinHours + ")";
+            }
+            return SessionId.ToString() + "\n"+ lecturesLstByConcadinating + "\n" + subjectDSA.SubjectName + "(" + subjectDSA.SubjectCode + ")" + "\n" + tagDSA.tags + "\n" + GroupOrsubgroupForDisplay + "\n" + StdntCount + "(" + durationinHours + ")";
         }
 
-        public static implicit operator string(Session v)
-        {
-            throw new NotImplementedException();
-        }
+        
     }
 }

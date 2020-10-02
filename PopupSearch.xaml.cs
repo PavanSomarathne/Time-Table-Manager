@@ -82,7 +82,7 @@ namespace TimeTableManager
 
             lbl0.Content = "Select Session";
             CB1.ItemsSource = dbContext1.Sessions.Include(s => s.subjectDSA).Include(s => s.tagDSA).ToList();
-          
+
         }
 
 
@@ -128,6 +128,11 @@ namespace TimeTableManager
                     TXT3.Text = session.tagDSA.tags;
                 }
             }
+        }
+
+        private void Close(Object s, RoutedEventArgs e)
+        {
+            this.Close();
         }
 
         private void AssignItem(Object s, RoutedEventArgs e)
@@ -193,13 +198,48 @@ namespace TimeTableManager
                     //LecturerDetails lc1 = this.dbContext1.LectureInformation.FirstOrDefault(s => s.Id == 2);
                     Session session = (Session)CB1.SelectedItem;
 
+
                     if (!(dbContext1.Sessions.Any(r => r.Room.Id == this.room.Id && r.SessionId == session.SessionId)))
                     {
-                        session.Room = this.room;
-                        dbContext1.Sessions.Update(session);
-                        dbContext1.SaveChanges();
+                        ConsecutiveSession conSession;
+                        Session secondSession;
+                        if (dbContext1.ConsecutiveSessions.Any(r => r.firstSession.SessionId == session.SessionId
+                        || r.secondSession.SessionId == session.SessionId))
+                        {
+                            conSession = dbContext1.ConsecutiveSessions
+                            .Where(j => j.firstSession.SessionId == session.SessionId || j.secondSession.SessionId == session.SessionId)
+                            .FirstOrDefault();
 
-                        new MessageBoxCustom("Session Assigned Successfully !", MessageType.Success, MessageButtons.Ok).ShowDialog();
+                            if (conSession.firstSession.SessionId == session.SessionId)
+                            {
+                                secondSession = conSession.secondSession;
+                            }
+                            else
+                            {
+                                secondSession = conSession.firstSession;
+                            }
+
+                            new MessageBoxCustom("Found A Consecative Session ! \n" + secondSession.ToString(), MessageType.Warning, MessageButtons.Ok).ShowDialog();
+
+                            session.Room = this.room;
+                            dbContext1.Sessions.Update(session);
+
+                            secondSession.Room = this.room;
+                            dbContext1.Sessions.Update(secondSession);
+
+                            dbContext1.SaveChanges();
+
+                            new MessageBoxCustom("Both Sessions Assigned to "+this.room.Rid+" Successfully !", MessageType.Success, MessageButtons.Ok).ShowDialog();
+
+                        }
+                        else
+                        {
+                            session.Room = this.room;
+                            dbContext1.Sessions.Update(session);
+                            dbContext1.SaveChanges();
+
+                            new MessageBoxCustom("Session Assigned Successfully !", MessageType.Success, MessageButtons.Ok).ShowDialog();
+                        }
                     }
                     else
                     {

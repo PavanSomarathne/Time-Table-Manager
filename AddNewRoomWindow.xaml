@@ -158,14 +158,9 @@
 
         <GroupBox Grid.Row="2" Grid.RowSpan="2" Grid.Column="0"  Header="Allocated Sessions" Style="{DynamicResource MaterialDesignCardGroupBox}"
                 materialDesign:ColorZoneAssist.Mode="Custom" materialDesign:ColorZoneAssist.Background="#FF673AB7" materialDesign:ColorZoneAssist.Foreground="White"  Margin="10,0,0,10"  >
-            <DataGrid  x:Name="SessionDG" AutoGenerateColumns="False"  ItemsSource="{Binding Items}" SelectionChanged="SeesionDelAct">
-                <DataGrid.Columns>
-                    <DataGridTextColumn  Header="ID" Binding="{Binding SessionId}" />
-                    <DataGridTextColumn  Header="Tag" Binding="{Binding tagDSA.tags}" />
-                    <DataGridTextColumn Header="Subject" Binding="{Binding subjectDSA.SubjectCode}" />
-                    <DataGridTextColumn Header="Student Amount" Binding="{Binding StdntCount}" />
-                </DataGrid.Columns>
-            </DataGrid>
+            <ListView  x:Name="SessionDG" SelectionChanged="SeesionDelAct">
+            
+            </ListView>
         </GroupBox>
         <StackPanel Grid.Row="2" Grid.RowSpan="2" Grid.Column="1"  VerticalAlignment="Bottom" Margin="0,0,0,20">
             <Button  Style="{StaticResource MaterialDesignFloatingActionMiniAccentButton}"

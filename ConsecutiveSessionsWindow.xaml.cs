@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Text;
 using System.Windows;
@@ -23,27 +24,33 @@ namespace TimeTableManager
 
         ConsecutiveSession NewSession = new ConsecutiveSession();
         ConsecutiveSession selectedSession = new ConsecutiveSession();
-       
+
 
         public ConsecutiveSessionsWindow(MyDbContext dbContext1)
         {
             this.dbContext1 = dbContext1;
             InitializeComponent();
-            GetSessions();
+
             loadsessions();
+            GetSessions();
 
             addUpdateSessionDetailsGrid.DataContext = NewSession;
         }
 
         public void loadsessions()
         {
-            cmb1.ItemsSource = dbContext1.Sessions.ToList();
-            cmb2.ItemsSource = dbContext1.Sessions.ToList();
+            cmb1.ItemsSource = dbContext1.Sessions.Include(s => s.subjectDSA).Include(s => s.tagDSA).ToList();
+            cmb2.ItemsSource = dbContext1.Sessions.Include(s => s.subjectDSA).Include(s => s.tagDSA).ToList();
+
+
         }
 
         private void GetSessions()
         {
-            showDetailsGrid.ItemsSource = dbContext1.ConsecutiveSessions.ToList();
+            showDetailsGrid.ItemsSource = dbContext1.ConsecutiveSessions
+                .Include(r => r.firstSession)
+                .Include(r => r.secondSession)
+                .ToList();
         }
 
         private void clear()
@@ -61,7 +68,30 @@ namespace TimeTableManager
                 //NewSession.consecutiveId = txtSessionName.Text;
                 NewSession.firstSession = (Session)cmb1.SelectedItem;
                 NewSession.secondSession = (Session)cmb2.SelectedItem;
-               
+
+
+                    if ((Session)cmb1.SelectedItem == (Session)cmb2.SelectedItem)
+                    {
+                        new MessageBoxCustom("Can't add same session, Please select consecutive sessions!", MessageType.Error, MessageButtons.Ok).ShowDialog();
+                        return;
+
+                    }
+
+                
+                if (NewSession.firstSession.tagDSA.tags == NewSession.secondSession.tagDSA.tags)
+                {
+                    new MessageBoxCustom("Those are not consecutive, Both of the selections can't have same tag!", MessageType.Error, MessageButtons.Ok).ShowDialog();
+                    return;
+                }
+
+                if (NewSession.firstSession.subjectDSA.SubjectCode != NewSession.secondSession.subjectDSA.SubjectCode)
+                {
+                    new MessageBoxCustom("Those are not consecutive, Please use same subject code to create consecutive sessions!", MessageType.Error, MessageButtons.Ok).ShowDialog();
+                    return;
+                }
+
+
+
                 dbContext1.ConsecutiveSessions.Add(NewSession);
                 dbContext1.SaveChanges();
 
@@ -91,7 +121,7 @@ namespace TimeTableManager
             //txtSessionName.Text = selectedSession.consecutiveId;
             cmb1.SelectedItem = selectedSession.firstSession;
             cmb2.SelectedItem = selectedSession.secondSession;
-           
+
         }
 
 
@@ -103,6 +133,27 @@ namespace TimeTableManager
                 //selectedSession.consecutiveId = txtSessionName.Text;
                 selectedSession.firstSession = (Session)cmb1.SelectedItem;
                 selectedSession.secondSession = (Session)cmb2.SelectedItem;
+
+                if ((Session)cmb1.SelectedItem == (Session)cmb2.SelectedItem)
+                {
+                    new MessageBoxCustom("Can't add same session, Please select consecutive sessions!", MessageType.Error, MessageButtons.Ok).ShowDialog();
+                    return;
+
+                }
+
+
+                if (selectedSession.firstSession.tagDSA.tags == selectedSession.secondSession.tagDSA.tags)
+                {
+                    new MessageBoxCustom("Those are not consecutive, Both of the selections can't have same tag!", MessageType.Error, MessageButtons.Ok).ShowDialog();
+                    return;
+                }
+
+                if (selectedSession.firstSession.subjectDSA.SubjectCode != selectedSession.secondSession.subjectDSA.SubjectCode)
+                {
+                    new MessageBoxCustom("Those are not consecutive, Please use same subject code to create consecutive sessions!", MessageType.Error, MessageButtons.Ok).ShowDialog();
+                    return;
+                }
+
                 dbContext1.Update(selectedSession);
                 dbContext1.SaveChanges();
 
@@ -145,8 +196,10 @@ namespace TimeTableManager
         private void sessions_load(object sender, RoutedEventArgs e)
         {
             List<String> sesString = new List<String>();
-            List<Session> sess = dbContext1.Sessions.ToList();
-
+            List<Session> sess = dbContext1.Sessions
+                    .Where(r => r.SessionId != -1)
+                    .Include(r => r.subjectDSA)
+                    .Include(r => r.tagDSA).ToList();
             foreach (var item in sess)
             {
                 sesString.Add(item.lecturesLstByConcadinating + "\n " + item.subjectDSA.SubjectName + "(" + item.subjectDSA.SubjectCode + ")" + " \n " + item.tagDSA.tags + "\n " + item.GroupOrsubgroupForDisplay + "\n" + item.StdntCount + "(" + item.durationinHours + ")");
@@ -183,11 +236,12 @@ namespace TimeTableManager
         private void load_consecfirst(object sender, RoutedEventArgs e)
         {
             List<String> sesString = new List<String>();
-            List<ConsecutiveSession> sess = dbContext1.ConsecutiveSessions.ToList();
+            List<ConsecutiveSession> sess = dbContext1.ConsecutiveSessions.Include(r => r.firstSession)
+                .Include(r => r.secondSession).ToList();
 
             foreach (var item in sess)
             {
-                sesString.Add(item.firstSession);
+                sesString.Add(item.firstSession.ToString());
             }
             cmb1.ItemsSource = sesString;
         }
@@ -195,11 +249,12 @@ namespace TimeTableManager
         private void load_consecsecond(object sender, RoutedEventArgs e)
         {
             List<String> sesStrings = new List<String>();
-            List<ConsecutiveSession> sessS = dbContext1.ConsecutiveSessions.ToList();
+            List<ConsecutiveSession> sessS = dbContext1.ConsecutiveSessions.Include(r => r.firstSession)
+                .Include(r => r.secondSession).ToList();
 
             foreach (var item in sessS)
             {
-                sesStrings.Add(item.secondSession);
+                sesStrings.Add(item.secondSession.ToString());
             }
             cmb2.ItemsSource = sesStrings;
         }

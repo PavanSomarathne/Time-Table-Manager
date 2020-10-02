@@ -34,8 +34,8 @@ namespace TimeTableManager
             this.dbContext1 = dbContext;
             GetRooms();
             GetBuildings();
-            LoadLecturers();
-           
+            LoadOthers();
+
 
         }
 
@@ -58,12 +58,11 @@ namespace TimeTableManager
         }
 
 
-        private void LoadLecturers()
+        private void LoadOthers()
         {
-            LVlecturer.ItemsSource = dbContext1.Rooms
-            .Where(p => p.Id == 1)
-            .SelectMany(r => r.RoomLecturers)
-            .Select(rl => rl.Lecturer).ToList();
+           CBSearchSes.ItemsSource = dbContext1.Sessions
+                    .Include(r => r.subjectDSA)
+                    .Include(r => r.tagDSA).ToList();
         }
 
         public void AddNewRoom(Object s, RoutedEventArgs e)
@@ -153,6 +152,33 @@ namespace TimeTableManager
                     TxtCapacity.Text = SelectedRoom.Capacity.ToString();
                     TxtRid.Text = SelectedRoom.Rid;
                     TxtType.Text = SelectedRoom.Type;
+
+                    //load lecturers
+                    LVlecturer.ItemsSource = dbContext1.Rooms
+                    .Where(p => p.Id == SelectedRoom.Id)
+                    .SelectMany(r => r.RoomLecturers)
+                    .Select(rl => rl.Lecturer).ToList();
+
+                    //load subjects
+                    LVSubjects.ItemsSource = dbContext1.Rooms
+                    .Where(p => p.Id == SelectedRoom.Id)
+                    .SelectMany(r => r.RoomSubjects)
+                    .Select(rl => rl.Subject).ToList();
+
+                    //load nats
+                    LVNAT.ItemsSource = dbContext1.RoomNATs
+                    .Where(r => r.room.Id == SelectedRoom.Id)
+                    .ToList();
+
+                    //load sessions
+                    SessionDG.ItemsSource = dbContext1.Sessions   
+                    .Where(p => p.Room.Id == SelectedRoom.Id)
+                    .Include(r => r.subjectDSA)
+                    .Include(r => r.tagDSA).ToList(); 
+
+                    //load groups
+                    LVGroups.ItemsSource = dbContext1.RoomGroups
+                    .Where(p => p.room.Id == SelectedRoom.Id).ToList();
                 }
                 catch (Exception ex)
                 {
@@ -176,7 +202,6 @@ namespace TimeTableManager
             //This gets fired off
             GetRooms();
             GetBuildings();
-            LoadLecturers();
 
         }
 
@@ -241,6 +266,25 @@ namespace TimeTableManager
                 Itemlist.Filter = yourCostumFilter;
 
                 RoomsDG.ItemsSource = Itemlist;
+            }
+            else
+            {
+                RoomsDG.ItemsSource = Rooms;
+            }
+
+
+        }
+
+        private void SearchBySession(Object s, RoutedEventArgs e)
+
+        {
+            if (CBSearchBuilding.SelectedItem != null)
+            {
+
+
+                RoomsDG.ItemsSource = dbContext1.Sessions
+                 .Where(p => p.Room.Id == SelectedRoom.Id)
+                 .Select(r => r.Room).ToList();
             }
             else
             {
