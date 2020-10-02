@@ -104,72 +104,6 @@ namespace TimeTableManager
 
         }
 
-        private void Delectlecturec(object s, RoutedEventArgs e)
-        {
-
-
-            if (LVlecturer.SelectedItem != null)
-            {
-
-                LecturerDetails lecturer = (LecturerDetails)LVlecturer.SelectedItem;
-
-                if (Addseesion == true)
-                {
-
-
-                    var item = LeLISTT.Find(x => x.Id == lecturer.Id);
-                    LeLISTT.Remove(item);
-
-
-
-                    LVlecturer.ItemsSource = LeLISTT.ToList();
-
-                    LVlecturer.SelectedIndex = -1;
-                }
-
-                else
-                {
-
-
-
-                    LecturerDetails lecturerrty = (LecturerDetails)LVlecturer.SelectedItem;
-
-                    var item = LeLISTT.Find(x => x.Id == lecturerrty.Id);
-                    LeLISTT.Remove(item);
-
-
-                    if (dbContext1.SessionLecturers.Any(r => r.SessionrId == UpdatingSession.SessionId && r.LecturerId == lecturerrty.Id))
-                    {
-
-                        var SesLert = dbContext1.SessionLecturers.First(row => row.SessionrId == UpdatingSession.SessionId && row.LecturerId == lecturerrty.Id);
-                        dbContext1.SessionLecturers.Remove(SesLert);
-                        dbContext1.SaveChanges();
-
-
-                        // LoadLecturesGivenBySessionId(UpdatingSession.SessionId);
-                    }
-
-
-
-
-                    LVlecturer.ItemsSource = LeLISTT.ToList();
-                    LVlecturer.SelectedIndex = -1;
-
-
-
-                }
-
-
-            }
-            else
-            {
-                MessageBox.Show("please select lecture before clicking teh button  ");
-            }
-
-
-
-        }
-
 
 
         private void AddSession(object s, RoutedEventArgs e)
@@ -225,7 +159,92 @@ namespace TimeTableManager
 
 
 
-        //private void updateSessionsForEdit(object s, RoutedEventArgs e)
+
+
+        //private void deleteselectedsessions(object s, RoutedEventArgs e)
+        //{
+
+
+        //    if (LVlecturer.SelectedItem != null)
+        //    {
+
+        //        ParallelSession session = (ParallelSession)LVlecturer.SelectedItem;
+
+        //        if (Addseesion == true)
+        //        {
+
+
+        //            var item = LeLISTT.Find(x => x.Id == .Id);
+        //            LeLISTT.Remove(item);
+
+
+
+        //            LVlecturer.ItemsSource = LeLISTT.ToList();
+
+        //            LVlecturer.SelectedIndex = -1;
+        //        }
+
+        //        else
+        //        {
+
+
+
+        //            LecturerDetails lecturerrty = (LecturerDetails)LVlecturer.SelectedItem;
+
+        //            var item = LeLISTT.Find(x => x.Id == lecturerrty.Id);
+        //            LeLISTT.Remove(item);
+
+
+        //            if (dbContext1.SessionLecturers.Any(r => r.SessionrId == UpdatingSession.SessionId && r.LecturerId == lecturerrty.Id))
+        //            {
+
+        //                var SesLert = dbContext1.SessionLecturers.First(row => row.SessionrId == UpdatingSession.SessionId && row.LecturerId == lecturerrty.Id);
+        //                dbContext1.SessionLecturers.Remove(SesLert);
+        //                dbContext1.SaveChanges();
+
+
+        //                // LoadLecturesGivenBySessionId(UpdatingSession.SessionId);
+        //            }
+
+
+
+
+        //            LVlecturer.ItemsSource = LeLISTT.ToList();
+        //            LVlecturer.SelectedIndex = -1;
+
+
+
+        //        }
+
+
+        //    }
+        //    else
+        //    {
+        //        MessageBox.Show("please select lecture before clicking the button  ");
+        //    }
+
+
+
+        //}
+
+
+        private void resetSessions(object s, RoutedEventArgs e)
+        {
+            clear();
+            ParallelSession NewSession = new ParallelSession();
+            GetSessions();
+        }
+
+        private void GoBack(Object s, RoutedEventArgs e)
+            {
+                MainWindow mainWindow = new MainWindow(dbContext1);
+                mainWindow.Show();
+                this.Close();
+
+            }
+
+
+         //private void updateSessionsForEdit(object s, RoutedEventArgs e)
         //{
         //    selectedSession = (s as FrameworkElement).DataContext as ParallelSession;
 
@@ -277,13 +296,7 @@ namespace TimeTableManager
 
         //}
 
-        //private void resetSessions(object s, RoutedEventArgs e)
-        //{
-        //    clear();
-        //    ParallelSession NewSession = new ParallelSession();
-        //    addUpdateSessionDetailsGrid.DataContext = NewSession;
-        //    GetSessions();
-        //}
+
 
 
 
@@ -356,22 +369,7 @@ namespace TimeTableManager
         //    settingEmptyValues = false;
         //    getlecturers();
 
-
-
-
-
-
-
-
         //}
-        private void GoBack(Object s, RoutedEventArgs e)
-            {
-                MainWindow mainWindow = new MainWindow(dbContext1);
-                mainWindow.Show();
-                this.Close();
-
-            }
-
 
         }
     }
