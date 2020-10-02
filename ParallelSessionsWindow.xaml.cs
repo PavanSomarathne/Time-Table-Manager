@@ -28,7 +28,7 @@ namespace TimeTableManager
         ParallelSession selectedSession = new ParallelSession();
         List<Session> SessionLIST = new List<Session>();
         Session newSessionDl = new Session();
-        List<LecturerDetails> LeLISTT = new List<LecturerDetails>();
+        //List<LecturerDetails> LeLISTT = new List<LecturerDetails>();
         Boolean settingEmptyValues = false;
 
         public ParallelSessionsWindow(MyDbContext dbContext1)
@@ -52,7 +52,7 @@ namespace TimeTableManager
         {
 
             cmb1.Text = null;
-            LVlecturer.ItemsSource = null;
+            SESSION.ItemsSource = null;
         }
 
         public void loadsessions()
@@ -76,14 +76,30 @@ namespace TimeTableManager
             if (cmb1.SelectedItem != null)
             {
 
+                Session TrytoAddSession = (Session)cmb1.SelectedItem;
+
+                System.Collections.IList list = parall;
+                for (int i = 0; i < list.Count; i++)
+                {
+                    Session Lliss = (Session)list[i];
+                    if (Lliss.SessionId == TrytoAddSession.SessionId)
+                    {
+                        cmb1.SelectedIndex = -1;
+                        new MessageBoxCustom("This Session already You assigned,Can't add again!", MessageType.Error, MessageButtons.Ok).ShowDialog();
+                        return;
+
+                    }
+                   
+                }
+
                 parall.Add((Session)cmb1.SelectedItem);
-                LVlecturer.ItemsSource = parall.ToList();
+                SESSION.ItemsSource = parall.ToList();
 
 
             }
             else
             {
-                new MessageBoxCustom("Please Select the lecture before to assign", MessageType.Warning, MessageButtons.Ok).ShowDialog();
+                new MessageBoxCustom("Please Select Sessions before adding", MessageType.Warning, MessageButtons.Ok).ShowDialog();
             }
 
 
@@ -93,7 +109,7 @@ namespace TimeTableManager
         private void SelectLectureRooww(object s, RoutedEventArgs e)
         {
 
-            if (LVlecturer.SelectedItem != null)
+            if (SESSION.SelectedItem != null)
             {
                 TrashlecBtn.IsEnabled = true;
             }

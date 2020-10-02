@@ -85,7 +85,7 @@
 
                         <GroupBox Grid.Row="2"  Header="Selected parallel sessions" Style="{DynamicResource MaterialDesignCardGroupBox}" MaxHeight="120"
                 materialDesign:ColorZoneAssist.Mode="Custom" materialDesign:ColorZoneAssist.Background="#FF673AB7" materialDesign:ColorZoneAssist.Foreground="White" Margin="0,0,0,49" Grid.RowSpan="2"  >
-                            <ListView x:Name="LVlecturer"  DisplayMemberPath="lecturesLstByConcadinating" Height="80"  MaxHeight="100"/>
+                            <ListView x:Name="SESSION"  DisplayMemberPath="lecturesLstByConcadinating" Height="80"  MaxHeight="100"/>
                             <!--SelectionChanged="SelectLectureRooww"-->
                         </GroupBox>
 

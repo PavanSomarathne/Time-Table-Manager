@@ -100,23 +100,33 @@
                         <Label Content="Lecture Name" Margin="8 10 0 0"></Label>
                         <TextBox x:Name="LecturerName" Padding="2" Margin="8 0 0 0" Text="{Binding LecName}" />
                         <Label Content="Lecture ID" Margin="8 10 0 0"></Label>
-                        <TextBox  Padding="2" Margin="8 0 0 0" Text="{Binding EmpId}" x:Name="LecIdName" TextChanged="LecIdSelectChnged" />
+                        <TextBox  Padding="2" Margin="8 0 0 0" Text="{Binding EmpId}" x:Name="LecIdName" TextChanged="LecIdSelectChnged"  PreviewTextInput="NumberValidationLectureIdd" />
                         <Label Content="Faculty" Margin="8 10 0 0"></Label>
-                        <ComboBox  x:Name="LecturerFaculty"  Padding="2" Margin="8 0 0 0" Text="{Binding Faculty}">
+                        <ComboBox  x:Name="LecturerFaculty"  Padding="2" Margin="8 0 0 0" Text="{Binding Faculty}"  materialDesign:HintAssist.Hint="Select Faculty" materialDesign:HintAssist.HintOpacity=".26" IsEditable="True" >
                             <ComboBoxItem>Faculty of Computing</ComboBoxItem>
                             <ComboBoxItem>Faculty of Engineering</ComboBoxItem>
                             <ComboBoxItem>Faculty of Business</ComboBoxItem>
                             <ComboBoxItem>Faculty of Humanities and Sciences</ComboBoxItem>
-                           
+                            <ComboBoxItem>Graduate Studies and Research</ComboBoxItem>
+                            <ComboBoxItem>Faculty of Architecture</ComboBoxItem>
+                            <ComboBoxItem>Hospitality and Culinary</ComboBoxItem>
                         </ComboBox>
 
                         <Label Content="Department" Margin="8 10 0 0"></Label>
-                        <ComboBox  x:Name="LecturerDepartment" Padding="2" Margin="8 0 0 0" Text="{Binding Department}">
+                        <ComboBox  x:Name="LecturerDepartment" Padding="2" Margin="8 0 0 0" Text="{Binding Department}"  materialDesign:HintAssist.Hint="Select Department" materialDesign:HintAssist.HintOpacity=".26" IsEditable="True" >
                             <ComboBoxItem>Information Technology</ComboBoxItem>
-                            <ComboBoxItem>Software Engineering</ComboBoxItem>
-                            <ComboBoxItem>Networking</ComboBoxItem>
-                            <ComboBoxItem>Electrical</ComboBoxItem>
-                            <ComboBoxItem>Mechatronics</ComboBoxItem>
+                            <ComboBoxItem>Computer Science and Software Engineering</ComboBoxItem>
+                            <ComboBoxItem>Computer Systems Engineering</ComboBoxItem>
+                            <ComboBoxItem>Electrical and Electronic Engineering</ComboBoxItem>
+                            <ComboBoxItem>Mechanical Engineering</ComboBoxItem>
+                            <ComboBoxItem>Materials Engineering</ComboBoxItem>
+                            <ComboBoxItem>Civil Engineering</ComboBoxItem>
+                            <ComboBoxItem>Quantity Surveying</ComboBoxItem>
+                            <ComboBoxItem>Department of Business</ComboBoxItem>
+                            <ComboBoxItem>Department of Huminities</ComboBoxItem>
+                            <ComboBoxItem>Department of graduate studies and results</ComboBoxItem>
+                            <ComboBoxItem>Department of Architecture</ComboBoxItem>
+                            <ComboBoxItem>Department of Hospitality</ComboBoxItem>
                             <ComboBoxItem>Cyber security</ComboBoxItem>
                             <ComboBoxItem>Interactive Media</ComboBoxItem>
                             <ComboBoxItem>Data Science</ComboBoxItem>

@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -58,25 +59,30 @@ namespace TimeTableManager
         {
 
 
-
-
             if (updatebtnclicked)
             {
 
                 if (ValidateInput())
                 {
 
+                    if (!(selectedLecturedtls.EmpId.Equals(LecIdName.Text.Trim())) && dbContext1.LectureInformation.Any(r => r.EmpId == LecIdName.Text.Trim()))
+                    {
+                        new MessageBoxCustom("This Lecture ID Already In the System Use a Different ID", MessageType.Error, MessageButtons.Ok).ShowDialog();
+                        return;
 
-                    selectedLecturedtls.LecName = LecturerName.Text;
-                    selectedLecturedtls.EmpId = LecIdName.Text;
-                    selectedLecturedtls.Faculty = LecturerFaculty.Text;
-                    selectedLecturedtls.Department = LecturerDepartment.Text;
-                    selectedLecturedtls.Center = LecturerCenter.Text;
+                    }
+
+
+
+                    selectedLecturedtls.LecName = LecturerName.Text.Trim();
+
+                    selectedLecturedtls.EmpId = LecIdName.Text.Trim();
+                    selectedLecturedtls.Faculty = LecturerFaculty.Text.Trim();
+                    selectedLecturedtls.Department = LecturerDepartment.Text.Trim();
+                    selectedLecturedtls.Center = LecturerCenter.Text.Trim();
                     selectedLecturedtls.BuildinDSA = (Building)CBBuilding.SelectedItem;
                     selectedLecturedtls.EmpLevel = int.Parse(LecLevel.Text);
-                    selectedLecturedtls.Rank = LecLevel.SelectedIndex + 1.ToString() + "." + LecIdName.Text.ToString();
-
-
+                    selectedLecturedtls.Rank = LecLevel.SelectedIndex + 1.ToString() + "." + LecIdName.Text.Trim();
 
 
 
@@ -85,6 +91,17 @@ namespace TimeTableManager
                     dbContext1.SaveChanges();
 
                     getLectureDetai();
+
+
+                    if (checksessionhaslectutre(selectedLecturedtls))
+                    {
+                       
+                        sessionConcadingUpdt(selectedLecturedtls.Id, selectedLecturedtls.LecName, LecturerName.Text.Trim());
+
+                    }
+
+
+
                     new MessageBoxCustom("Successfully Updated Lecturer details !", MessageType.Success, MessageButtons.Ok).ShowDialog();
 
                     Addlecbtn.Content = "Add Lecture";
@@ -115,24 +132,37 @@ namespace TimeTableManager
                 if (ValidateInput())
                 {
 
-                    NewLecDL.LecName = LecturerName.Text;
-                    NewLecDL.EmpId = LecIdName.Text;
-                    NewLecDL.Faculty = LecturerFaculty.Text;
-                    NewLecDL.Department = LecturerDepartment.Text;
-                    NewLecDL.Center = LecturerCenter.Text;
+
+                    //check duplicate lectures
+                    if (dbContext1.LectureInformation.Any(b => b.EmpId == LecIdName.Text.Trim()))
+                    {
+                        new MessageBoxCustom("This Lecture ID Already In the System Use a Different ID", MessageType.Error, MessageButtons.Ok).ShowDialog();
+                        return;
+                    }
+
+
+                    NewLecDL.LecName = LecturerName.Text.Trim();
+                    NewLecDL.EmpId = LecIdName.Text.Trim();
+                    NewLecDL.Faculty = LecturerFaculty.Text.Trim();
+                    NewLecDL.Department = LecturerDepartment.Text.Trim();
+                    NewLecDL.Center = LecturerCenter.Text.Trim();
                     NewLecDL.BuildinDSA = (Building)CBBuilding.SelectedItem;
-                    NewLecDL.EmpLevel = int.Parse(LecLevel.Text);
-                    NewLecDL.Rank = LecLevel.SelectedIndex + 1.ToString() + "." + LecIdName.Text.ToString();
+                    NewLecDL.EmpLevel = int.Parse(LecLevel.Text.Trim());
+                    NewLecDL.Rank = LecLevel.SelectedIndex + 1.ToString() + "." + LecIdName.Text.Trim();
                     Addlecbtn.Content = "Add lecture";
                     dbContext1.LectureInformation.Add(NewLecDL);
                     NewLecDL = new LecturerDetails();
 
 
-
-
                     dbContext1.SaveChanges();
 
                     getLectureDetai();
+
+
+
+
+
+
 
                     new MessageBoxCustom("Successfully Added Lecturer details !", MessageType.Success, MessageButtons.Ok).ShowDialog();
 
@@ -225,13 +255,22 @@ namespace TimeTableManager
 
             if (Result.Value)
             {
+
+
                 var lectureTobeDeleted = (s as FrameworkElement).DataContext as LecturerDetails;
+
+                if (checksessionhaslectutre(lectureTobeDeleted))
+                {
+                    new MessageBoxCustom("This Lecture Is already assigned Session,Before Delete Lecturer,delete the session", MessageType.Error, MessageButtons.Ok).ShowDialog();
+                    return;
+                }
+
                 dbContext1.LectureInformation.Remove(lectureTobeDeleted);
                 dbContext1.SaveChanges();
                 getLectureDetai();
             }
 
-           
+
         }
 
 
@@ -249,7 +288,12 @@ namespace TimeTableManager
                 LecIdName.Focus();
                 return false;
             }
-
+            if (LecIdName.Text.Trim().Length != 6)
+            {
+                new MessageBoxCustom("Lecture Id Length should be Six !", MessageType.Warning, MessageButtons.Ok).ShowDialog();
+                LecIdName.Focus();
+                return false;
+            }
 
             if (string.IsNullOrEmpty(LecturerFaculty.Text))
             {
@@ -294,7 +338,54 @@ namespace TimeTableManager
 
         }
 
+
+        private void NumberValidationLectureIdd(object sender, TextCompositionEventArgs e)
+        {
+            Regex regex = new Regex("[^0-9]+");
+            e.Handled = regex.IsMatch(e.Text);
+        }
+
+
+        private bool checksessionhaslectutre(LecturerDetails LL)
+        {
+            bool ty = dbContext1.SessionLecturers.Any(r => r.LecturerId == LL.Id);
+
+            return ty;
+        }
+
+
+        public void sessionConcadingUpdt(int lec,String oldname,String nNAme)
+        {
+            List<Session> sennconcading = dbContext1.SessionLecturers.Where(d => d.Lecdetaiils.Id==lec).Select(s => s.Ssssion).ToList();
+
+            foreach(Session ss in sennconcading)
+            {
+                // MessageBox.Show("old value" + oldname);
+                //  MessageBox.Show("new value" + nNAme); 
+
+                // MessageBox.Show(ss.lecturesLstByConcadinating);
+                // str.Replace('e', ' ');
+                // MessageBox.Show( ss.lecturesLstByConcadinating.Replace(oldname, nNAme));
+
+                List<LecturerDetails> updtiLects= dbContext1.Sessions .Where(p => p.SessionId == ss.SessionId)
+       .SelectMany(r => r.SessionLecturers)
+      .Select(rl => rl.Lecdetaiils).ToList();
+
+                ss.lecturesLstByConcadinating = null;
+                foreach (LecturerDetails uplec in updtiLects)
+                {
+                    ss.lecturesLstByConcadinating += uplec.LecName + " ,";
+
+                }
+
+                dbContext1.Update(ss);
+
+                dbContext1.SaveChanges();
+
+            }
+
+        }
+
+
     }
-
-
 }

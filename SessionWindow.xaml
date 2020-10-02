@@ -177,9 +177,18 @@
                     </StackPanel>
                     <StackPanel Grid.Column="1" Margin="4 0 4 4" x:Name="AddNewLecturedetails">
 
-                         <Label HorizontalAlignment="Center" FontSize="18" Content="Session Management" Margin="4 0 4 4"></Label>
-                      
-                        <Label Content="Select Year" Margin="8 5 0 0"></Label>
+                         <Label HorizontalAlignment="Center" FontSize="15" Content="Session Management" Margin="4 0 4 4"></Label>
+
+
+                        <StackPanel Orientation="Horizontal">
+                            <Label Content="Select Year" Margin="1"></Label>
+                            <StackPanel Orientation="Horizontal" Margin="8 4 0 0">
+                <materialDesign:PackIcon  Kind="InfoCircle"   Foreground="#FF1565C0"  />
+                                <Label Content="You Have to select Year before fill the form "/>
+                               
+
+                            </StackPanel>
+                        </StackPanel>
 
                         <ComboBox x:Name="CByearselect" Padding="2" Margin="8 0 0 0"   SelectionChanged="yeardropdwn" >
                             <ComboBoxItem>1st Year</ComboBoxItem>
@@ -248,7 +257,7 @@
                         <Label Content="Student Count" Margin="8 5 0 0"></Label>
                         <TextBox x:Name="StdntCnt" Padding="1" PreviewTextInput="NumberValidationForStudentCount"  Margin="8 0 0 0" />
 
-                        <Label Content="Duration In Hours" Margin="8 5 0 0"></Label>
+                        <Label Content="Duration In Minutes" Margin="8 5 0 0"></Label>
                         <TextBox x:Name="Duration" Padding="1" PreviewTextInput="NumberValidationForDuration"  Margin="8 0 0 0" />
 
 
