@@ -67,7 +67,7 @@ namespace TimeTableManager
 
         }
 
-    
+
 
 
         private void AssignSessionItemTo(Object s, RoutedEventArgs e)
@@ -106,63 +106,73 @@ namespace TimeTableManager
 
 
 
-            if (LVlecturer.SelectedItem != null)
+        private void AddSession(object s, RoutedEventArgs e)
+        {
+            if (ValidateInput())
             {
 
-                LecturerDetails lecturer = (LecturerDetails)LVlecturer.SelectedItem;
+                ParallelSession parallelSession = new ParallelSession();
 
-                if (Addseesion == true)
+                dbContext1.ParallelSessions.Add(NewSession);
+                dbContext1.SaveChanges();
+
+
+                var lastShowPieceId = dbContext1.ParallelSessions.Max(x => x.Id);
+                ParallelSession lastinserted = dbContext1.ParallelSessions.FirstOrDefault(x => x.Id == lastShowPieceId);
+
+                foreach (Session session1 in parall)
                 {
 
-
-                    var item = LeLISTT.Find(x => x.Id == lecturer.Id);
-                    LeLISTT.Remove(item);
-
-
-
-                    LVlecturer.ItemsSource = LeLISTT.ToList();
-
-                    LVlecturer.SelectedIndex = -1;
-                }
-
-                else
-                {
-
-
-
-                    LecturerDetails lecturerrty = (LecturerDetails)LVlecturer.SelectedItem;
-
-                    var item = LeLISTT.Find(x => x.Id == lecturerrty.Id);
-                    LeLISTT.Remove(item);
-
-
-                    if (dbContext1.SessionLecturers.Any(r => r.SessionrId == UpdatingSession.SessionId && r.LecturerId == lecturerrty.Id))
-                    {
-
-                        var SesLert = dbContext1.SessionLecturers.First(row => row.SessionrId == UpdatingSession.SessionId && row.LecturerId == lecturerrty.Id);
-                        dbContext1.SessionLecturers.Remove(SesLert);
-                        dbContext1.SaveChanges();
-
-
-                        // LoadLecturesGivenBySessionId(UpdatingSession.SessionId);
-                    }
-
-
-
-
-                    LVlecturer.ItemsSource = LeLISTT.ToList();
-                    LVlecturer.SelectedIndex = -1;
-
-
+                    //dbContext1.Sessions.Update(session1);
+                    dbContext1.Sessions.Update(session1);
+                    dbContext1.SaveChanges();
 
                 }
 
+                new MessageBoxCustom("Successfully added Parallel Session details !", MessageType.Success, MessageButtons.Ok).ShowDialog();
+
+                clear();
+                GetSessions();
 
             }
             else
             {
-                MessageBox.Show("please select lecture before clicking teh button  ");
+
+                new MessageBoxCustom("Please complete Parallel Session  details correctly !", MessageType.Warning, MessageButtons.Ok).ShowDialog();
             }
+
+
+        }
+
+
+        private bool ValidateInput()
+        {
+
+            if (string.IsNullOrEmpty(cmb1.Text))
+            {
+                cmb1.Focus();
+                return false;
+            }
+
+
+            return true;
+        }
+
+
+
+
+
+        //private void deleteselectedsessions(object s, RoutedEventArgs e)
+        //{
+
+
+        //    if (LVlecturer.SelectedItem != null)
+        //    {
+
+        //        ParallelSession session = (ParallelSession)LVlecturer.SelectedItem;
+
+        //        if (Addseesion == true)
+        //        {
 
 
         //            var item = LeLISTT.Find(x => x.Id == .Id);
@@ -200,11 +210,9 @@ namespace TimeTableManager
 
 
 
-                    //dbContext1.Sessions.Update(session1);
-                    dbContext1.Sessions.Update(session1);
-                    dbContext1.SaveChanges();
-                  
-                } 
+        //            LVlecturer.ItemsSource = LeLISTT.ToList();
+        //            LVlecturer.SelectedIndex = -1;
+
 
 
         //        }
@@ -229,15 +237,15 @@ namespace TimeTableManager
         }
 
         private void GoBack(Object s, RoutedEventArgs e)
-            {
-                MainWindow mainWindow = new MainWindow(dbContext1);
-                mainWindow.Show();
-                this.Close();
+        {
+            MainWindow mainWindow = new MainWindow(dbContext1);
+            mainWindow.Show();
+            this.Close();
 
-            }
+        }
 
 
-         //private void updateSessionsForEdit(object s, RoutedEventArgs e)
+        //private void updateSessionsForEdit(object s, RoutedEventArgs e)
         //{
         //    selectedSession = (s as FrameworkElement).DataContext as ParallelSession;
 
@@ -364,5 +372,5 @@ namespace TimeTableManager
 
         //}
 
-        }
     }
+}
