@@ -83,7 +83,7 @@
                 <StackPanel Grid.Column="1" Margin="3" Background="SeaShell">
                     <Grid x:Name="AddNewScheduleGrid">
                         <Grid.RowDefinitions>
-                            <RowDefinition Height="500" />
+                            <RowDefinition Height="450" />
                             <RowDefinition Height="*"/>
                         </Grid.RowDefinitions>
 

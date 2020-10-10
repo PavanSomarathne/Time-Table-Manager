@@ -48,25 +48,22 @@
                             <ScrollViewer MaxHeight="400" MinHeight="400" Focusable="True">
                     <StackPanel  Name="tableArea">
 
-
-
-
-
-
-                        <Label Content="" Name="MainTitle" HorizontalAlignment="Center" FontWeight="Bold" FontSize="20" />
+                                                <Label Content="" Name="MainTitle" HorizontalAlignment="Center" FontWeight="Bold" FontSize="20" />
 
 
                         <DataGrid  AutoGenerateColumns="True" x:Name="TimeTableDG" IsReadOnly="True" VerticalScrollBarVisibility="Visible"  HorizontalAlignment="Stretch"  />
 
-
-                      
-                           
-                            
-
-
                     </StackPanel>
                             </ScrollViewer>
                         </StackPanel>
+                        <Border  Grid.Column="0" BorderBrush="Olive" BorderThickness="1" Margin="0 15 0 0" MaxHeight="200" MinHeight="200">
+                            <StackPanel Grid.Column="1" >
+                                
+                                <ScrollViewer MaxHeight="200" MinHeight="200" Focusable="True">
+                                <DataGrid  AutoGenerateColumns="True" x:Name="ConflictDG" IsReadOnly="True" VerticalScrollBarVisibility="Visible"  HorizontalAlignment="Stretch"  />
+                                </ScrollViewer>
+                            </StackPanel>
+                        </Border>
                     </StackPanel>
                 </Border>
 
@@ -148,7 +145,7 @@
                                                 </Style.Triggers>
                                             </Style>
                                         </TextBlock.Style>
-                                    </TextBlock>
+                                    </TextBlock> 
                                 </Grid>
                                 <TextBlock Text="Group" FontWeight="SemiBold" Margin="0 20 0 0"/>
                                 <Grid>

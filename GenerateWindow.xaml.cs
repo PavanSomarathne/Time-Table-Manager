@@ -35,6 +35,7 @@ namespace TimeTableManager
         Schedule SelectedSchedule = new Schedule();
         List<string> allChecked = new List<string>();
         DataTable dt;
+        DataTable dt1;
 
         public GenerateWindow(MyDbContext dbContext)
         {
@@ -313,8 +314,71 @@ namespace TimeTableManager
             //getting working days
             var workingDays = NewSchedule.Working_days.Split(',');
             //getting sessions
+            //Session list re arrange for the consecutive
+
+            //sessions1 copy
+           List<ConsecutiveSession> consecutives= dbContext1.ConsecutiveSessions
+                .Include(r => r.firstSession)
+                .Include(r => r.secondSession)
+                .ToList();
             
-            List<Session> sessionList = dbContext1.Sessions.Include(n=>n.Room).ToList();
+            var sessions1 = dbContext1.Sessions.Include(n => n.Room).Include(y=>y.studentDSA).ToList(); ;
+           
+            var existingIndex1 = 0;
+            var existingIndex2 = 0;
+            if (consecutives.Count() > 0)
+            {
+
+                foreach (var con in consecutives)
+                {
+                    foreach (var session in sessions1)
+                    {
+                        if ( con.firstSession.SessionId == session.SessionId)
+                        {
+                            existingIndex1 = sessions1.IndexOf(session);
+
+                        }
+                    }
+                    foreach (var session in sessions1)
+                    {
+                        if (con.secondSession.SessionId == session.SessionId && session!=null)
+                        {
+                            existingIndex2 = sessions1.IndexOf(session);
+                        }
+                    }
+                    
+
+                    //getting the next value after the first variable
+                    
+
+                        if (existingIndex1 - 1 > 0)
+                        {
+                            if (existingIndex1 + 1 != existingIndex2)
+                            {
+                                Session ses1 = sessions1[existingIndex1];
+                                sessions1.RemoveAt(existingIndex1);
+                                Session ses = sessions1[existingIndex1 - 1];
+                                sessions1.RemoveAt(existingIndex1 - 1);
+                                Session ses2 = sessions1[existingIndex2];
+                                sessions1.RemoveAt(existingIndex2);
+
+                                sessions1[existingIndex1 - 1] = ses1;
+                                sessions1[existingIndex1] = ses2;
+                                sessions1[existingIndex2] = ses;
+                            }
+                        }
+                        else {
+
+                           
+
+                        }
+
+                    
+                }
+                
+
+            }
+            List<Session> sessionList = sessions1;
             List<Session> sessionList_copy = dbContext1.Sessions.ToList();
 
             //colums
@@ -366,6 +430,7 @@ namespace TimeTableManager
 
             int l = sessionList.Count();
             int val = 0;
+            int infiniteTracker = 1000;
             int value = 0;
 
             for (int i = 0; i < NewSchedule.Working_days_count; i++)
@@ -400,7 +465,14 @@ namespace TimeTableManager
                                     {
                                         if (sessionCnt < sessionList.Count() && item.GroupOrsubgroupForDisplay.Equals(sessionList[sessionCnt].GroupOrsubgroupForDisplay))
                                         {
-                                            j++;
+                                            if (j + 1 < noOfSlots)
+                                            {
+                                                j++;
+                                            }
+                                            else {
+                                                break;
+                                            }
+                                           
                                         }
                                         else
                                         {
@@ -425,7 +497,7 @@ namespace TimeTableManager
                                             {
                                                 i++;
                                             }
-
+                                           
                                             j = 0;
                                         }
                                         else
@@ -525,13 +597,54 @@ namespace TimeTableManager
                     }
 
                 }
+                infiniteTracker--;
+
+
+            } while (sessionList_copy.Count() > 0 && infiniteTracker>0);
+
+            dt1 = new DataTable("emp1");
+            DataColumn dc2new= new DataColumn("Conflicts", typeof(string));
+            dt1.Columns.Add(dc2new);
+            DataRow drow;
+            
+
+            sessionList_copy = dbContext1.Sessions.ToList();
+           
+                for (int i = 0; i < NewSchedule.Working_days_count; i++)
+                {
+
+                    for (int j = 0; j < noOfSlots; j++)
+                    {
+
+                    if (arr2d[i, j].Count() > 0)//checking aray has values
+                    {
+
+                        for (int v = 0; v < arr2d[i, j].Count(); v++)
+                        {
+                            if (v + 1 < arr2d[i, j].Count())
+                            {
+                                if (arr2d[i, j][v].studentDSA.groupId == arr2d[i, j][v + 1].studentDSA.groupId)
+                                {
+                                    drow = dt1.NewRow();
+                                    drow["Conflicts"] = arr2d[i, j][v].studentDSA.groupId + "of subject" + arr2d[i, j][v].subjectDSA.SubjectName + " and " + arr2d[i, j][v+1].subjectDSA.SubjectName;
+
+                                    dt1.Rows.Add(drow);
+                                }
+                            }
+
+                        }
 
 
 
-            } while (sessionList_copy.Count() > 0);
+                    }
+                        
+                    }
+
+                }
+              
 
             l = value;
-
+            ConflictDG.ItemsSource = dt1.DefaultView;
 
             for (int i = 0; i < NewSchedule.Working_days_count; i++)
             {
@@ -546,7 +659,7 @@ namespace TimeTableManager
                         valval = item.lecturesLstByConcadinating.Split(',');
                        
                        // dbContext1.Sessions.Include(b => b.studentDSA).ToList();
-                        if (type == "Student" && item.GroupOrsubgroupForDisplay == searchVal) 
+                        if (type == "Student" && item.studentDSA.groupId == searchVal) 
                         {
 
                             session = session + " " + item.getSessionStu();

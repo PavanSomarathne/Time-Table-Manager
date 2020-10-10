@@ -54,7 +54,7 @@ namespace TimeTableManager.Models
             else
             {
 
-                return subjectDSA.SubjectName + "(" + subjectDSA.SubjectCode + ")" + "\n" + tagDSA.tags + "\n" + GroupOrsubgroupForDisplay + "\n" + "-";
+                return lecturesLstByConcadinating + "\n" + subjectDSA.SubjectName + "(" + subjectDSA.SubjectCode + ")" + "\n" + tagDSA.tags + "\n" + GroupOrsubgroupForDisplay + "\n" + "-";
             }
         }
         public String getSessionRoom()
